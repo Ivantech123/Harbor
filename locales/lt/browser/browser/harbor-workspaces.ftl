@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Erdvės
+harbor-panel-ui-spaces-label = 
+    .label = Erdvės
+harbor-panel-ui-workspaces-create = 
+    .label = Kurti erdvę
+harbor-panel-ui-folder-create = 
+    .label = Kurti aplanką
+harbor-panel-ui-live-folder-create = 
+    .label = Tiesioginis aplankas
+harbor-panel-ui-new-empty-split = 
+    .label = Naujas skaidymas
+harbor-workspaces-panel-context-delete = 
+    .label = Ištrinti erdvę
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Keisti pavadinimą
+harbor-workspaces-panel-change-icon = 
+    .label = Keisti piktogramą
+harbor-workspaces-panel-context-default-profile = 
+    .label = Nustatyti profilį
+harbor-workspaces-panel-unload = 
+    .label = Iškelti erdvę
+harbor-workspaces-panel-unload-others = 
+    .label = Iškelti visas kitas erdves
+harbor-workspaces-how-to-reorder-title = Kaip pertvarkyti erdves
+harbor-workspaces-how-to-reorder-desc = Nutempkite erdvės piktogramas šoninės juostos apačioje, kad pertvarkytumėte jas.
+harbor-workspaces-change-theme = 
+    .label = Redaguoti temą
+harbor-workspaces-panel-context-open = 
+    .label = Atverti darbo sritį
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Redaguoti darbo sritį
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Erdvės
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Papildomas
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Skaidymas
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analoginis
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadinis
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Slankusis
+harbor-panel-ui-gradient-click-to-add = Spustelėkite, kad pridėtumėte spalvą
+harbor-workspace-creation-name = 
+    .placeholder = Erdvės pavadinimas
+harbor-move-tab-to-workspace-button = 
+    .label = Perkelti į...
+    .tooltiptext = Perkelti visas korteles šiame lange į erdvę
+harbor-workspaces-panel-context-reorder = 
+    .label = Pertvarkyti erdves
+harbor-workspace-creation-profile = Profilis
+    .tooltiptext = Profiliai naudojami atskirti slapukus ir svetainės duomenis tarp erdvių.
+harbor-workspace-creation-header = Kurti erdvę
+harbor-workspace-creation-label = Erdvės naudojamos tvarkyti jūsų korteles ir seansus.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Ištrinti erdvę?
+harbor-workspaces-delete-workspace-body = Ar tikrai norite ištrinti „{ $name }“? Šio veiksmo anuliuoti negalima.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Kortelės užvertos! Naudokite <span>{ $shortcut }</span>, kad atšauktumėte.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Valyti
+    .tooltiptext = Užverti visas neprisegtas korteles
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Tolesnė erdvė
+harbor-panel-ui-workspaces-change-back = 
+    .label = Ankstesnė erdvė

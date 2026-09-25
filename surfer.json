@@ -1,0 +1,57 @@
+{
+  "name": "Harbor",
+  "vendor": "Harbor",
+  "appId": "harbor",
+  "binaryName": "harbor",
+  "version": {
+    "product": "firefox",
+    "version": "156.0.1",
+    "candidate": "156.0.1",
+    "candidateBuild": 1
+  },
+  "buildOptions": {
+    "generateBranding": true
+  },
+  "addons": {},
+  "brands": {
+    "release": {
+      "backgroundColor": "#121A1E",
+      "brandShorterName": "Harbor",
+      "brandShortName": "Harbor",
+      "brandFullName": "Harbor Browser",
+      "release": {
+        "displayVersion": "1.0.0",
+        "github": {
+          "repo": "zen-browser/desktop"
+        },
+        "archives": {
+          "windows": "harbor-windows.mar",
+          "macos-aarch64": "harbor-macos-aarch64.mar",
+          "linux": "harbor-linux.mar",
+          "macos-x64": "harbor-macos-x64.mar",
+          "windows-arm64": "harbor-windows-arm64.mar",
+          "linux-aarch64": "harbor-linux-aarch64.mar"
+        }
+      }
+    },
+    "twilight": {
+      "backgroundColor": "#121A1E",
+      "brandShorterName": "Harbor",
+      "brandShortName": "Harbor",
+      "brandFullName": "Harbor Twilight",
+      "release": {
+        "displayVersion": "1.23t",
+        "github": {
+          "repo": "zen-browser/desktop"
+        }
+      }
+    }
+  },
+  "license": {
+    "ignoredFiles": [
+      ".*\\.json"
+    ],
+    "licenseType": "MPL-2.0"
+  },
+  "updateHostname": "updates.zen-browser.app"
+}

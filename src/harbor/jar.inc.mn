@@ -1,0 +1,9 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+        content/browser/harbor-fonts/Manrope.ttf                                (../../harbor/fonts/Manrope.ttf)
+        content/browser/harbor/HarborCerts.mjs                                  (../../harbor/certs/HarborCerts.sys.mjs)
+        content/browser/harbor/HarborRuDirect.mjs                               (../../harbor/proxy/HarborRuDirect.sys.mjs)
+        content/browser/harbor/russian_trusted_root_ca.cer                      (../../harbor/certs/russian_trusted_root_ca.cer)
+        content/browser/harbor/russian_trusted_sub_ca.cer                       (../../harbor/certs/russian_trusted_sub_ca.cer)

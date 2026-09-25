@@ -1,0 +1,207 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.harbor-glance-sidebar-container {
+  position: absolute;
+  display: flex;
+  z-index: 999;
+
+  will-change: transform, opacity;
+  contain: layout style;
+
+  top: 15px;
+  padding: 12px;
+  gap: 12px;
+  max-width: 56px;
+
+  :root:not([harbor-right-side="true"]) & {
+    left: 100%;
+  }
+
+  :root[harbor-right-side="true"] & {
+    right: 100%;
+  }
+
+  & toolbarbutton {
+    width: var(--size-item-large);
+    height: var(--size-item-large);
+    background: color-mix(in srgb, light-dark(rgb(24, 24, 24), rgb(231, 231, 231)) 96%, var(--harbor-primary-color));
+    transition:
+      background 0.05s ease,
+      scale 0.05s ease;
+    border-radius: 999px;
+    appearance: none;
+    box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.07);
+    padding: 8px;
+    opacity: 1 !important;
+    color: var(--harbor-primary-color) !important;
+
+    &:hover {
+      background: light-dark(rgb(41, 41, 41), rgb(204, 204, 204));
+      scale: 1.02;
+    }
+
+    &:hover:active {
+      scale: 0.98;
+    }
+
+    & label {
+      display: none;
+
+      &::before {
+        text-overflow: unset;
+      }
+    }
+
+    &[disabled="true"] {
+      scale: 1 !important;
+      & image {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  & .harbor-glance-sidebar-close {
+    width: fit-content;
+    & label {
+      display: block;
+      max-width: 0;
+      margin: 0;
+      overflow: hidden;
+      transition:
+        max-width 0.2s ease,
+        margin-left 0.2s ease;
+    }
+
+    &[waitconfirmation] {
+      background: rgb(220, 53, 69);
+      color: white;
+      fill: white;
+      & label {
+        max-width: 4rem;
+        margin-left: 8px;
+        color: white;
+      }
+
+      & image {
+        filter: none;
+      }
+    }
+  }
+}
+
+:root[harbor-no-padding="true"] .browserSidebarContainer.harbor-glance-background {
+  --harbor-native-inner-radius: 6px;
+  --harbor-element-separation: 6px;
+}
+
+.browserSidebarContainer.harbor-glance-background {
+  box-shadow: var(--harbor-big-shadow);
+}
+
+.browserSidebarContainer.harbor-glance-background,
+:is(.browserSidebarContainer.harbor-glance-overlay, #harbor-glance-detached)
+  .browserContainer:not([fade-out="true"]) {
+  /* stylelint-disable-next-line property-no-unknown */
+  corner-shape: round;
+  border-radius: calc(var(--harbor-native-inner-radius) / var(--harbor-squircle-value));
+}
+
+:is(.browserSidebarContainer.harbor-glance-overlay, #harbor-glance-detached) {
+  box-shadow: none !important;
+  visibility: inherit;
+  z-index: 1;
+  overflow: visible !important;
+
+  :root[harbor-no-padding="true"] & {
+    --harbor-native-inner-radius: 0px;
+  }
+
+  & .browserContainer {
+    position: fixed;
+    flex: unset !important;
+    width: 80%;
+    height: 100%;
+
+    &:not([has-finished-animation="true"]) {
+      will-change: transform;
+      contain: layout size;
+      transform-origin: 0 0;
+
+      #statuspanel {
+        display: none;
+      }
+    }
+
+    &[has-finished-animation="true"] {
+      position: relative !important;
+      transition: 0s !important;
+      transform: none !important;
+      margin: auto !important;
+    }
+
+    & .browserStack {
+      overflow: hidden;
+      box-shadow: var(--harbor-big-shadow);
+      /* stylelint-disable-next-line property-no-unknown */
+      corner-shape: round;
+      border-radius: calc(var(--harbor-native-inner-radius) / var(--harbor-squircle-value));
+    }
+
+    & browser {
+      background: light-dark(rgb(255, 255, 255), rgb(17, 17, 17)) !important;
+      width: 100%;
+      height: 100%;
+    }
+
+    &[animate="true"] {
+      position: absolute;
+    }
+  }
+
+  &[fade-out="true"] {
+    & .browserStack {
+      transition: opacity 0.15s ease-in-out;
+      opacity: 0;
+    }
+  }
+}
+
+.harbor-glance-element-preview {
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 0;
+  border-radius: var(--harbor-native-inner-radius);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & image {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+#harbor-main-app-wrapper > #harbor-glance-detached {
+  position: fixed;
+  inset: calc(var(--harbor-element-separation) / 2);
+  z-index: 100;
+  display: flex;
+
+  & .harbor-glance-detached-backdrop {
+    position: fixed;
+    inset: 0;
+  }
+}

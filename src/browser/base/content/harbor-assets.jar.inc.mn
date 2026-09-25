@@ -1,0 +1,26 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+#include ../../../harbor/common/jar.inc.mn
+#include ../../../harbor/compact-mode/jar.inc.mn
+#include ../../../harbor/drag-and-drop/jar.inc.mn
+#include ../../../harbor/split-view/jar.inc.mn
+#include ../../../harbor/mods/jar.inc.mn
+#include ../../../harbor/spaces/jar.inc.mn
+#include ../../../harbor/tabs/jar.inc.mn
+#include ../../../harbor/kbs/jar.inc.mn
+#include ../../../harbor/glance/jar.inc.mn
+#include ../../../harbor/folders/jar.inc.mn
+#include ../../../harbor/welcome/jar.inc.mn
+#include ../../../harbor/media/jar.inc.mn
+#include ../../../harbor/downloads/jar.inc.mn
+#include ../../../harbor/images/jar.inc.mn
+#include ../../../harbor/vendor/jar.inc.mn
+#include ../../../harbor/fonts/jar.inc.mn
+#include ../../../harbor/boosts/jar.inc.mn
+#include ../../../harbor/live-folders/jar.inc.mn
+#include ../../../harbor/space-routing/jar.inc.mn
+#include ../../../harbor/share/jar.inc.mn
+#include ../../../harbor/library/jar.inc.mn
+#include ../../../harbor/jar.inc.mn

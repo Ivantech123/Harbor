@@ -1,0 +1,19 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+#include ../../../harbor/media/harbor-media-controls.inc.xhtml
+
+<toolbar brighttext="true"
+  id="harbor-sidebar-foot-buttons"
+  fullscreentoolbar="true"
+  class="browser-toolbar customization-target"
+  data-l10n-id="tabs-toolbar"
+  customizable="true"
+  skipintoolbarset="true"
+  context="toolbar-context-menu"
+  mode="icons">
+  <toolbarbutton removable="true" class="chromeclass-toolbar-additional toolbarbutton-1 harbor-sidebar-action-button" id="harbor-expand-sidebar-button" command="cmd_harborToggleSidebar" data-l10n-id="sidebar-harbor-expand"></toolbarbutton>
+  <harbor-workspace-icons id="harbor-workspaces-button" overflows="false" removable="false"></harbor-workspace-icons>
+  <toolbarbutton removable="true" class="chromeclass-toolbar-additional toolbarbutton-1 harbor-sidebar-action-button" id="harbor-create-new-button" context="harborCreateNewPopup" data-l10n-id="sidebar-harbor-create-new"></toolbarbutton>
+</toolbar>

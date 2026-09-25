@@ -1,0 +1,10 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+        # Styles
+        content/browser/harbor-styles/harbor-space-routing.css                          (../../harbor/space-routing/harbor-space-routing.css)
+
+        # Windows
+*       content/browser/harbor-components/windows/harbor-space-routing.xhtml            (../../harbor/space-routing/harbor-space-routing.inc.xhtml)
+        content/browser/harbor-components/windows/harbor-space-routing.js              (../../harbor/space-routing/harbor-space-routing.js)

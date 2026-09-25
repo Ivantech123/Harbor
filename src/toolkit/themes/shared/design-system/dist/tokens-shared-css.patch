@@ -1,0 +1,39 @@
+diff --git a/toolkit/themes/shared/design-system/dist/tokens-shared.css b/toolkit/themes/shared/design-system/dist/tokens-shared.css
+index b0f8fa146de335c53e73d46853f45dda9b15cc73..1b7592c0e9ca12fd9d1f8a555633fd39c2efb537 100644
+--- a/toolkit/themes/shared/design-system/dist/tokens-shared.css
++++ b/toolkit/themes/shared/design-system/dist/tokens-shared.css
+@@ -7,6 +7,8 @@
+ 
+ @layer tokens-foundation, tokens-browser-theme, tokens-foundation-brand, tokens-foundation-nova, tokens-browser-theme-nova, tokens-foundation-brand-nova, tokens-prefers-contrast, tokens-prefers-contrast-nova, tokens-forced-colors, tokens-forced-colors-nova;
+ 
++@import url("chrome://browser/content/harbor-styles/harbor-theme.css");
++
+ :root,
+ :host(.anonymous-content-host) {
+   @layer tokens-foundation {
+@@ -28,10 +30,10 @@
+     --border-color-selected: var(--color-accent-primary);
+     --border-color-transparent: transparent;
+     --border-radius-circle: 9999px;
+-    --border-radius-xsmall: 2px;
+-    --border-radius-small: 4px;
+-    --border-radius-medium: 8px;
+-    --border-radius-large: 16px;
++    --border-radius-xsmall: calc(2px * var(--harbor-squircle-value));
++    --border-radius-small: calc(4px * var(--harbor-squircle-value));
++    --border-radius-medium: calc(8px * var(--harbor-squircle-value));
++    --border-radius-large: calc(16px * var(--harbor-squircle-value));
+     --border-width: 1px;
+ 
+     /** box-shadow **/
+@@ -477,8 +479,8 @@
+     --panel-background-color-dimmed-further: var(--background-color-dimmed-further);
+     --panel-border-color: light-dark(rgb(240, 240, 244), rgb(82, 82, 94));
+     --panel-border-radius: var(--border-radius-medium);
+-    --panel-box-shadow: 0 0 var(--panel-box-shadow-margin) hsla(0, 0%, 0%, 0.2);
+-    --panel-box-shadow-margin: 4px;
++    --panel-box-shadow: var(--harbor-big-shadow);
++    --panel-box-shadow-margin: 8px;
+     --panel-menuitem-border-radius: var(--border-radius-small);
+     --panel-menuitem-margin: var(--panel-menuitem-margin-block) var(--panel-menuitem-margin-inline);
+     --panel-menuitem-margin-block: 0;

@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Työtilat
+harbor-panel-ui-spaces-label = 
+    .label = Spaces
+harbor-panel-ui-workspaces-create = 
+    .label = Luo työtila
+harbor-panel-ui-folder-create = 
+    .label = Luo kansio
+harbor-panel-ui-live-folder-create = 
+    .label = Live Folder
+harbor-panel-ui-new-empty-split = 
+    .label = Uusi Jako
+harbor-workspaces-panel-context-delete = 
+    .label = Poista Työtila
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Vaihda nimi
+harbor-workspaces-panel-change-icon = 
+    .label = Vaihda kuvake
+harbor-workspaces-panel-context-default-profile = 
+    .label = Aseta Profiili
+harbor-workspaces-panel-unload = 
+    .label = Poista Työtila
+harbor-workspaces-panel-unload-others = 
+    .label = Unload All Other Spaces
+harbor-workspaces-how-to-reorder-title = Kuinka järjestää työtiloja
+harbor-workspaces-how-to-reorder-desc = Vedä työtilan kuvakkeet sivupalkin alareunaan järjestääksesi ne uudelleen
+harbor-workspaces-change-theme = 
+    .label = Muokkaa teemaa
+harbor-workspaces-panel-context-open = 
+    .label = Avaa Työtila
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Muokkaa Työtilaa
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Spaces
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Täydentävä
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Jaa osiin
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analoginen
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadiikki
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Kelluva
+harbor-panel-ui-gradient-click-to-add = Klikkaa lisätäksesi väri
+harbor-workspace-creation-name = 
+    .placeholder = Työtilan nimi
+harbor-move-tab-to-workspace-button = 
+    .label = Move To...
+    .tooltiptext = Move all tabs in this window to a Space
+harbor-workspaces-panel-context-reorder = 
+    .label = Järjestä Työtilat Uudelleen
+harbor-workspace-creation-profile = Profiili
+    .tooltiptext = Profiileja käytetään erottamaan evästeet ja sivustontiedot tiloihin.
+harbor-workspace-creation-header = Luo työtila
+harbor-workspace-creation-label = Työtiloja käytetään järjestämään sinun välilehtiä ja istuntoja.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Poista Työtila?
+harbor-workspaces-delete-workspace-body = Oletko varma, että haluat poistaa { $name }? Tätä toimintoa ei voi peruuttaa.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Välilehdet suljettu! Peruuta toiminto käyttämällä <span>{ $shortcut }</span>.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Tyhjennä
+    .tooltiptext = Sulje kaikki kiinnittämättömät välilehdet
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Next Space
+harbor-panel-ui-workspaces-change-back = 
+    .label = Previous Space

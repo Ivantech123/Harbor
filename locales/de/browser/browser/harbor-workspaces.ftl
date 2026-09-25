@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Arbeitsbereiche
+harbor-panel-ui-spaces-label = 
+    .label = Arbeitsbereiche
+harbor-panel-ui-workspaces-create = 
+    .label = Arbeitsbereich erstellen
+harbor-panel-ui-folder-create = 
+    .label = Ordner erstellen
+harbor-panel-ui-live-folder-create = 
+    .label = Live-Ordner
+harbor-panel-ui-new-empty-split = 
+    .label = Neue geteilte Ansicht
+harbor-workspaces-panel-context-delete = 
+    .label = Arbeitsbereich löschen
+    .accesskey = L
+harbor-workspaces-panel-change-name = 
+    .label = Namen ändern
+harbor-workspaces-panel-change-icon = 
+    .label = Symbol ändern
+harbor-workspaces-panel-context-default-profile = 
+    .label = Profil festlegen
+harbor-workspaces-panel-unload = 
+    .label = Arbeitsbereich entladen
+harbor-workspaces-panel-unload-others = 
+    .label = Alle anderen Arbeitsbereiche entladen
+harbor-workspaces-how-to-reorder-title = So ordnest du Arbeitsbereiche neu an
+harbor-workspaces-how-to-reorder-desc = Zieh die Arbeitsbereich-Symbole am unteren Rand der Seitenleiste, um sie neu anzuordnen
+harbor-workspaces-change-theme = 
+    .label = Design anpassen
+harbor-workspaces-panel-context-open = 
+    .label = Arbeitsbereich öffnen
+    .accesskey = ö
+harbor-workspaces-panel-context-edit = 
+    .label = Arbeitsbereich bearbeiten
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Arbeitsbereiche
+    .accesskey = A
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Komplementär
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Split-Komplementär
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analog
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadisch
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Fließend
+harbor-panel-ui-gradient-click-to-add = Klick hier, um eine Farbe hinzuzufügen
+harbor-workspace-creation-name = 
+    .placeholder = Name des Arbeitsbereichs
+harbor-move-tab-to-workspace-button = 
+    .label = Verschieben nach...
+    .tooltiptext = Alle Tabs in diesem Fenster in einen Arbeitsbereich verschieben
+harbor-workspaces-panel-context-reorder = 
+    .label = Arbeitsbereiche neu anordnen
+harbor-workspace-creation-profile = Profil
+    .tooltiptext = Profile trennen Cookies und Website-Daten zwischen verschiedenen Arbeitsbereichen.
+harbor-workspace-creation-header = Arbeitsbereich erstellen
+harbor-workspace-creation-label = Arbeitsbereiche helfen dir, deine Tabs und Sitzungen zu organisieren.
+harbor-workspace-default-profile = Standard
+harbor-workspaces-delete-workspace-title = Arbeitsbereich löschen?
+harbor-workspaces-delete-workspace-body = Möchtest du { $name } wirklich löschen? Das lässt sich nicht rückgängig machen.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Tabs geschlossen! Nutze <span>{ $shortcut }</span>, um das rückgängig zu machen.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Aufräumen
+    .tooltiptext = Alle nicht angehefteten Tabs schließen
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Nächster Arbeitsbereich
+harbor-panel-ui-workspaces-change-back = 
+    .label = Vorheriger Arbeitsbereich

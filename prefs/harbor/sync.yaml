@@ -1,0 +1,16 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+- name: services.sync.engine.spaces
+  value: "@cond"
+  condition: "@IS_TWILIGHT@"
+
+- name: harbor.spaces-sync.debug
+  value: false
+
+- name: harbor.spaces-sync.normal-tabs
+  value: false
+
+- name: services.sync.prefs.sync.harbor.spaces-sync.normal-tabs
+  value: true

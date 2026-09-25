@@ -1,0 +1,39 @@
+diff --git a/layout/base/nsPresContext.h b/layout/base/nsPresContext.h
+index 5f27c288fd027cf245421e7f049103a7e19da18a..fcd65b74c5881a75d9cb6847379e32d0a0652e67 100644
+--- a/layout/base/nsPresContext.h
++++ b/layout/base/nsPresContext.h
+@@ -594,6 +594,22 @@ class nsPresContext : public nsISupports,
+    */
+   void SetColorSchemeOverride(mozilla::dom::PrefersColorSchemeOverride);
+ 
++  // Harbor boosts override. SVG images render in their own document, which has no
++  // BrowsingContext to carry the page's boost, so the host propagates it here.
++  void SetHarborBoostsOverride(nscolor aAccent, float aComplementaryRotation,
++                            bool aInverted) {
++    mHarborBoostsOverrideAccent = aAccent;
++    mHarborBoostsOverrideComplementaryRotation = aComplementaryRotation;
++    mHarborBoostsOverrideInverted = aInverted;
++    mHasHarborBoostsOverride = true;
++  }
++  bool HasHarborBoostsOverride() const { return mHasHarborBoostsOverride; }
++  nscolor HarborBoostsOverrideAccent() const { return mHarborBoostsOverrideAccent; }
++  float HarborBoostsOverrideComplementaryRotation() const {
++    return mHarborBoostsOverrideComplementaryRotation;
++  }
++  bool HarborBoostsOverrideInverted() const { return mHarborBoostsOverrideInverted; }
++
+   /**
+    * Sets the effective link parameters overrides, and invalidate stuff as
+    * needed.
+@@ -1434,6 +1450,11 @@ class nsPresContext : public nsISupports,
+   mozilla::StyleForcedColors mForcedColors;
+   mozilla::StyleLinkParameters mLinkParameters;
+ 
++  nscolor mHarborBoostsOverrideAccent = 0;
++  float mHarborBoostsOverrideComplementaryRotation = 0.0f;
++  bool mHarborBoostsOverrideInverted = false;
++  bool mHasHarborBoostsOverride = false;
++
+  protected:
+   virtual ~nsPresContext();
+ 

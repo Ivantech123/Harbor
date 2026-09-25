@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = 다른 워크스페이스
+harbor-panel-ui-spaces-label = 
+    .label = 스페이스
+harbor-panel-ui-workspaces-create = 
+    .label = 스페이스 만들기
+harbor-panel-ui-folder-create = 
+    .label = 폴더 생성
+harbor-panel-ui-live-folder-create = 
+    .label = 라이브 폴더
+harbor-panel-ui-new-empty-split = 
+    .label = 새 분할
+harbor-workspaces-panel-context-delete = 
+    .label = 워크스페이스 삭제
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = 이름 변경
+harbor-workspaces-panel-change-icon = 
+    .label = 아이콘 변경
+harbor-workspaces-panel-context-default-profile = 
+    .label = 프로필 설정
+harbor-workspaces-panel-unload = 
+    .label = 스페이스 로드 해제
+harbor-workspaces-panel-unload-others = 
+    .label = 다른 스페이스 언로드
+harbor-workspaces-how-to-reorder-title = 스페이스를 재정렬하는 법
+harbor-workspaces-how-to-reorder-desc = 사이드바 하단의 스페이스 아이콘을 드래그해 재정렬할 수 있습니다
+harbor-workspaces-change-theme = 
+    .label = 테마 편집
+harbor-workspaces-panel-context-open = 
+    .label = 워크스페이스 열기
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = 스페이스 편집
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = 스페이스
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = 보색
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = 분할보색
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = 유사색
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = 삼색
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = 플로팅
+harbor-panel-ui-gradient-click-to-add = 클릭으로 색을 추가하세요
+harbor-workspace-creation-name = 
+    .placeholder = 스페이스 이름
+harbor-move-tab-to-workspace-button = 
+    .label = 탭 이동...
+    .tooltiptext = 이 창의 모든 탭을 스페이스로 이동
+harbor-workspaces-panel-context-reorder = 
+    .label = 스페이스 재정렬
+harbor-workspace-creation-profile = 프로필
+    .tooltiptext = 프로필은 스페이스 간의 쿠키와 사이트 데이터를 분리하기 위해 사용됩니다.
+harbor-workspace-creation-header = 스페이스 생성
+harbor-workspace-creation-label = 스페이스는 탭과 세션을 정리하기 위해 사용됩니다.
+harbor-workspace-default-profile = 기본
+harbor-workspaces-delete-workspace-title = 워크스페이스를 삭제하시겠습니까?
+harbor-workspaces-delete-workspace-body = 정말 { $name }을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = 탭을 닫았습니다! 되돌리려면 <span>{ $shortcut }</span>을 사용하세요.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = 탭 정리
+    .tooltiptext = 고정되지 않은 모든 탭을 닫습니다
+harbor-panel-ui-workspaces-change-forward = 
+    .label = 다음 스페이스
+harbor-panel-ui-workspaces-change-back = 
+    .label = 이전 스페이스

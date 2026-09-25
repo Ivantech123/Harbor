@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Gofodau
+harbor-panel-ui-spaces-label = 
+    .label = Gofodau
+harbor-panel-ui-workspaces-create = 
+    .label = Creu Gofod
+harbor-panel-ui-folder-create = 
+    .label = Creu Ffolder
+harbor-panel-ui-live-folder-create = 
+    .label = Ffolder Byw
+harbor-panel-ui-new-empty-split = 
+    .label = Hollt Newydd
+harbor-workspaces-panel-context-delete = 
+    .label = Dileu Gofod Gwaith
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Newid Enw
+harbor-workspaces-panel-change-icon = 
+    .label = Newid Eicon
+harbor-workspaces-panel-context-default-profile = 
+    .label = Gosod Proffil
+harbor-workspaces-panel-unload = 
+    .label = Dadlwytho Gofod
+harbor-workspaces-panel-unload-others = 
+    .label = Dadlwytho Pob Gofod Arall
+harbor-workspaces-how-to-reorder-title = Sut i aildrefnu gofodau
+harbor-workspaces-how-to-reorder-desc = Llusgwch yr eiconau gofod ar waelod y bar ochr i'w haildrefnu
+harbor-workspaces-change-theme = 
+    .label = Golygu Thema
+harbor-workspaces-panel-context-open = 
+    .label = Agor Gofod Gwaith
+    .accesskey = G
+harbor-workspaces-panel-context-edit = 
+    .label = Golygu Gofod
+    .accesskey = G
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Gofodau
+    .accesskey = o
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Cyflenwol
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Hollti
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Cyfatebol
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadig
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Arnofiol
+harbor-panel-ui-gradient-click-to-add = Cliciwch i ychwanegu lliw
+harbor-workspace-creation-name = 
+    .placeholder = Enw'r Gofod
+harbor-move-tab-to-workspace-button = 
+    .label = Symud I...
+    .tooltiptext = Symud pob tab yn y ffenestr hon i Ofod
+harbor-workspaces-panel-context-reorder = 
+    .label = Aildrefnu Gofodau
+harbor-workspace-creation-profile = Proffil
+    .tooltiptext = Mae proffiliau'n cael eu defnyddio i wahanu cwcis a data gwefan rhwng gofodau.
+harbor-workspace-creation-header = Creu Gofod
+harbor-workspace-creation-label = Mae gofodau'n cael eu defnyddio i drefnu eich tabiau a'ch sesiynau.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Dileu Gofod Gwaith?
+harbor-workspaces-delete-workspace-body = Ydych chi'n siŵr eich bod chi eisiau dileu { $name }? Does dim modd dadwneud y weithred hon.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Tabiau wedi'u Cau! Defnyddiwch <span>{ $shortcut }</span> i'w hailagor.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Clirio
+    .tooltiptext = Cau pob tab heb ei binio
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Gofod Nesaf
+harbor-panel-ui-workspaces-change-back = 
+    .label = Gofod Blaenorol

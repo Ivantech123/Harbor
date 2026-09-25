@@ -1,0 +1,71 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+&:not([harbor-single-toolbar='true']) {
+  & #navigator-toolbox {
+    --harbor-toolbox-top-align: var(--harbor-element-separation);
+  }
+
+  @media -moz-pref('harbor.view.compact.hide-tabbar') {
+    & #titlebar {
+      margin-top: var(--harbor-element-separation) !important;
+    }
+  }
+
+  &[harbor-right-side='true'][harbor-window-buttons-reversed='true'] #titlebar,
+  &:not([harbor-right-side='true']):not([harbor-window-buttons-reversed='true']) #titlebar {
+    /* The same as the expression above */
+    margin-top: var(--harbor-element-separation) !important;
+  }
+
+  & #harbor-appcontent-wrapper {
+    z-index: 3 !important;
+  }
+
+  & #harbor-appcontent-navbar-wrapper {
+    & .harbor-toolbar-background {
+      display: flex;
+    }
+    transition: height var(--harbor-hidden-toolbar-transition);
+
+    height: var(--harbor-element-separation);
+    overflow: clip;
+
+    & #urlbar:not([breakout-extend]) {
+      /* Sometimes, "opacity: 1" is forced elsewhere */
+      opacity: 0 !important;
+      pointer-events: none;
+      transition: opacity var(--harbor-hidden-toolbar-transition);
+    }
+
+%include windows-captions-fix-default.inc.css
+
+    & #harbor-appcontent-navbar-container {
+      opacity: 0;
+      transition: opacity var(--harbor-hidden-toolbar-transition);
+    }
+  }
+
+  & #harbor-appcontent-navbar-wrapper:is(
+    [harbor-has-hover],
+    [has-popup-menu],
+    [harbor-compact-mode-active]
+  ) {
+    height: var(--harbor-toolbar-height-with-bookmarks);
+    overflow: inherit;
+
+%include windows-captions-fix-active.inc.css
+
+    & #urlbar {
+      opacity: 1 !important;
+      pointer-events: auto;
+    }
+
+    & #harbor-appcontent-navbar-container {
+      opacity: 1;
+    }
+  }
+}

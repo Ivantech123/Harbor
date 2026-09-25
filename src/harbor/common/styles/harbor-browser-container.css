@@ -1,0 +1,79 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+:root:not([inDOMFullscreen="true"]):not([popup-window]) {
+  & #tabbrowser-tabbox #tabbrowser-tabpanels .browserSidebarContainer {
+    --harbor-transparent-browser-background: light-dark(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+    overflow: clip;
+
+    :root:not([harbor-no-padding="true"]) &:not(.harbor-glance-overlay) {
+      box-shadow: var(--harbor-big-shadow);
+      /* stylelint-disable-next-line property-no-unknown */
+      corner-shape: round;
+      border-radius: calc(var(--harbor-native-inner-radius) / var(--harbor-squircle-value));
+    }
+
+    & browser[type="content"] {
+      &:not([transparent="true"]) {
+        background: light-dark(rgb(255, 255, 255), rgb(32, 32, 32));
+      }
+
+      &[transparent="true"] {
+        background: var(--harbor-transparent-browser-background);
+      }
+    }
+
+    /* stylelint-disable-next-line media-query-no-invalid */
+    @media not -moz-pref("layout.css.prefers-color-scheme.content-override", 2) {
+      & browser[type="content"] {
+        color-scheme: env(-moz-content-preferred-color-scheme);
+      }
+    }
+  }
+
+  /* stylelint-disable-next-line media-query-no-invalid */
+  @media (not -moz-pref("harbor.view.shift-down-site-on-hover")) and -moz-pref("harbor.view.hide-window-controls") {
+    .browserSidebarContainer:is(.deck-selected, [harbor-split="true"]) .browserContainer {
+      transition: margin var(--harbor-hidden-toolbar-transition);
+
+      :root[harbor-single-toolbar="true"] & {
+        transition-delay: 0.2s;
+        --harbor-toolbar-height: 34px;
+      }
+
+      #tabbrowser-tabpanels[has-toolbar-hovered] & {
+        --margin-top-fix: calc(-1 * var(--harbor-toolbar-height) + var(--harbor-element-separation));
+
+        :root:not([harbor-single-toolbar="true"]) & {
+          --margin-top-fix: calc(-1 * var(--harbor-toolbar-height-with-bookmarks) + var(--harbor-element-separation));
+        }
+
+        /* stylelint-disable-next-line media-query-no-invalid */
+        @media -moz-pref("harbor.view.experimental-no-window-controls") or (not -moz-pref("browser.tabs.inTitlebar")) {
+          :root:not([harbor-has-bookmarks="true"])[harbor-single-toolbar="true"] & {
+            --margin-top-fix: 0px;
+          }
+        }
+
+        margin-top: var(--margin-top-fix);
+      }
+    }
+  }
+}
+
+.harbor-pseudo-browser-image {
+  position: absolute;
+  transform: scale(1);
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 2;
+}
+
+browser[harbor-pseudo-hidden="true"] {
+  -moz-subtree-hidden-only-visually: 1 !important;
+}

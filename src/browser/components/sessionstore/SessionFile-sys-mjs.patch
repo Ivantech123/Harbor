@@ -1,0 +1,21 @@
+diff --git a/browser/components/sessionstore/SessionFile.sys.mjs b/browser/components/sessionstore/SessionFile.sys.mjs
+index 370e5c105c3d9bee05c2d9d7b63d0ee45b8331e1..1c37c19794ebe863a25f780e9a74d63526b929d7 100644
+--- a/browser/components/sessionstore/SessionFile.sys.mjs
++++ b/browser/components/sessionstore/SessionFile.sys.mjs
+@@ -25,6 +25,7 @@ const lazy = XPCOMUtils.declareLazy({
+     "moz-src:///browser/components/sessionstore/SessionStore.sys.mjs",
+   SessionWriter:
+     "moz-src:///browser/components/sessionstore/SessionWriter.sys.mjs",
++  HarborSessionStore: "resource:///modules/harbor/HarborSessionManager.sys.mjs",
+ });
+ 
+ const PREF_UPGRADE_BACKUP = "browser.sessionstore.upgradeBackup.latestBuildID";
+@@ -384,7 +385,7 @@ var SessionFileInternal = {
+     this._readOrigin = result.origin;
+ 
+     result.noFilesFound = noFilesFound;
+-
++    await lazy.HarborSessionStore.readFile();
+     return result;
+   },
+ 

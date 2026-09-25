@@ -1,0 +1,82 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+<html:template id="template-paneHarborTabManagement">
+<hbox id="HarborWorkspacesCategory"
+      class="subcategory"
+      hidden="true"
+      data-category="paneHarborTabManagement">
+</hbox>
+
+<hbox id="harborTabManagementCategory"
+      class="subcategory"
+      hidden="true"
+      data-category="paneHarborTabManagement">
+<html:h1 data-l10n-id="pane-settings-workspaces-title"/>
+</hbox>
+
+<groupbox id="harborWorkspacesGroup" data-category="paneHarborTabManagement" hidden="true" class="highlighting-group">
+      <label><html:h2 data-l10n-id="harbor-settings-workspaces-header"/></label>
+      <description class="description-deemphasized" data-l10n-id="harbor-settings-workspaces-description" />
+
+      <checkbox id="harborWorkspacesSyncUnpinnedTabs"
+            data-l10n-id="harbor-settings-workspaces-sync-unpinned-tabs"
+            preference="harbor.window-sync.sync-only-pinned-tabs"/>
+      <checkbox id="harborWorkspacesHideDefaultContainer"
+            data-l10n-id="harbor-settings-workspaces-hide-default-container-indicator"
+            preference="harbor.workspaces.hide-default-container-indicator"/>
+      <checkbox id="harborWorkspacesForceContainerTabsToWorkspace"
+            data-l10n-id="harbor-settings-workspaces-force-container-tabs-to-workspace"
+            preference="harbor.workspaces.force-container-workspace"/>
+      <checkbox id="harborTabsCloseOnBackWithNoHistory"
+            data-l10n-id="harbor-tabs-close-on-back-with-no-history"
+            preference="harbor.tabs.close-on-back-with-no-history"/>
+      <checkbox data-l10n-id="harbor-tabs-cycle-ignore-pending-tabs"
+            preference="harbor.tabs.ctrl-tab.ignore-pending-tabs"/>
+      <checkbox data-l10n-id="harbor-tabs-cycle-by-attribute"
+            preference="harbor.tabs.ctrl-tab.ignore-essential-tabs"/>
+      <description id="harborTabsCycleByAttributeWarning"
+            class="description-deemphasized"
+            data-l10n-id="harbor-tabs-cycle-by-attribute-warning"
+            hidden="true"/>
+      <checkbox data-l10n-id="harbor-tabs-select-recently-used-on-close"
+            preference="harbor.tabs.select-recently-used-on-close"/>
+</groupbox>
+
+<hbox id="harborPinnedTabsManagerCategory"
+      class="subcategory"
+      hidden="true"
+      data-category="paneHarborTabManagement">
+      <html:h1 data-l10n-id="pane-harbor-pinned-tab-manager-title"/>
+</hbox>
+
+<groupbox id="harborPinnedTabsManagerGroup" data-category="paneHarborTabManagement" hidden="true" class="highlighting-group">
+      <label><html:h2 data-l10n-id="harbor-pinned-tab-manager-header"/></label>
+      <description class="description-deemphasized" data-l10n-id="harbor-pinned-tab-manager-description" />
+
+      <checkbox id="harborPinnedTabRestorePinnedTabsToPinnedUrl"
+                data-l10n-id="harbor-pinned-tab-manager-restore-pinned-tabs-to-pinned-url"
+                preference="harbor.pinned-tab-manager.restore-pinned-tabs-to-pinned-url"/>
+      <checkbox id="harborPinnedTabContainerSpecificEssentials"
+                data-l10n-id="harbor-pinned-tab-manager-container-specific-essentials-enabled"
+                preference="harbor.workspaces.separate-essentials"/>
+
+      <hbox align="center">
+            <label id="harborPinnedTabCloseShortcutBehaviorLabel" data-l10n-id="harbor-pinned-tab-manager-close-shortcut-behavior-label"/>
+            <menulist id="harborPinnedTabCloseShortcutBehavior" preference="harbor.pinned-tab-manager.close-shortcut-behavior">
+                  <menupopup>
+                        <menuitem data-l10n-id="harbor-pinned-tab-manager-reset-unload-switch-close-shortcut-option" value="reset-unload-switch"/>
+                        <menuitem data-l10n-id="harbor-pinned-tab-manager-unload-switch-close-shortcut-option" value="unload-switch"/>
+                        <menuitem data-l10n-id="harbor-pinned-tab-manager-reset-switch-close-shortcut-option" value="reset-switch"/>
+                        <menuitem data-l10n-id="harbor-pinned-tab-manager-switch-close-shortcut-option" value="switch"/>
+                        <menuitem data-l10n-id="harbor-pinned-tab-manager-reset-close-shortcut-option" value="reset"/>
+                        <menuitem data-l10n-id="harbor-pinned-tab-manager-close-close-shortcut-option" value="close"/>
+                  </menupopup>
+            </menulist>
+      </hbox>
+</groupbox>
+
+</html:template>
+
+

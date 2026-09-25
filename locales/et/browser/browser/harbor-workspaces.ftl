@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Tööruumid
+harbor-panel-ui-spaces-label = 
+    .label = Spaces
+harbor-panel-ui-workspaces-create = 
+    .label = Uus tööruum
+harbor-panel-ui-folder-create = 
+    .label = Uus kaust
+harbor-panel-ui-live-folder-create = 
+    .label = Live Folder
+harbor-panel-ui-new-empty-split = 
+    .label = Uus jaotatud vaade
+harbor-workspaces-panel-context-delete = 
+    .label = Kustuta tööruum
+    .accesskey = K
+harbor-workspaces-panel-change-name = 
+    .label = Nimeta ümber
+harbor-workspaces-panel-change-icon = 
+    .label = Muuda ikooni
+harbor-workspaces-panel-context-default-profile = 
+    .label = Määra profiil
+harbor-workspaces-panel-unload = 
+    .label = Tööruumi mälust eemaldamine
+harbor-workspaces-panel-unload-others = 
+    .label = Unload All Other Spaces
+harbor-workspaces-how-to-reorder-title = Kuidas vahetada tööruumide järjestust
+harbor-workspaces-how-to-reorder-desc = Lohista tööruumide ikoone külgriba alumises servas, et nende järjestust muuta
+harbor-workspaces-change-theme = 
+    .label = Muuda teemat
+harbor-workspaces-panel-context-open = 
+    .label = Ava tööruum
+    .accesskey = A
+harbor-workspaces-panel-context-edit = 
+    .label = Muuda tööruumi
+    .accesskey = M
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Spaces
+    .accesskey = T
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Täiendvärvid
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Täiendvärvide kolmik
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Lähedased värvid
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Kolmkõla
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Hõljuv
+harbor-panel-ui-gradient-click-to-add = Klõpsa värvi lisamiseks
+harbor-workspace-creation-name = 
+    .placeholder = Tööruumi nimi
+harbor-move-tab-to-workspace-button = 
+    .label = Move To...
+    .tooltiptext = Move all tabs in this window to a Space
+harbor-workspaces-panel-context-reorder = 
+    .label = Muuda tööruumide järjestust
+harbor-workspace-creation-profile = Profiil
+    .tooltiptext = Profiile kasutatakse küpsiste ning saidi andmete eraldamiseks tööruumide vahel.
+harbor-workspace-creation-header = Loo uus tööruum
+harbor-workspace-creation-label = Tööruume kasutatakse kaartide ja sessioonide organiseerimiseks.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Delete Workspace?
+harbor-workspaces-delete-workspace-body = Kas oled kindel, et soovid kustutada tööruumi { $name }? Seda tegevust ei saa tagasi võtta.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Tabs Closed! Use <span>{ $shortcut }</span> to undo.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Clear
+    .tooltiptext = Close all unpinned tabs
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Next Space
+harbor-panel-ui-workspaces-change-back = 
+    .label = Previous Space

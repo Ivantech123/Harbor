@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Espacios de trabajo
+harbor-panel-ui-spaces-label = 
+    .label = Espacios
+harbor-panel-ui-workspaces-create = 
+    .label = Crear espacio
+harbor-panel-ui-folder-create = 
+    .label = Crear carpeta
+harbor-panel-ui-live-folder-create = 
+    .label = Carpeta activa
+harbor-panel-ui-new-empty-split = 
+    .label = Nueva división
+harbor-workspaces-panel-context-delete = 
+    .label = Eliminar espacio de trabajo
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Cambiar nombre
+harbor-workspaces-panel-change-icon = 
+    .label = Cambiar icono
+harbor-workspaces-panel-context-default-profile = 
+    .label = Establecer perfil
+harbor-workspaces-panel-unload = 
+    .label = Suspender espacio
+harbor-workspaces-panel-unload-others = 
+    .label = Suspender todos los demás espacios
+harbor-workspaces-how-to-reorder-title = Cómo reordenar espacios
+harbor-workspaces-how-to-reorder-desc = Arrastre los iconos de los espacios en la parte inferior de la barra lateral para reordenarlos
+harbor-workspaces-change-theme = 
+    .label = Editar tema
+harbor-workspaces-panel-context-open = 
+    .label = Abrir espacio de trabajo
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Editar espacio de trabajo
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Espacios
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Complementario
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Dividir
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Análogo
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triádico
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Flotante
+harbor-panel-ui-gradient-click-to-add = Haga clic para añadir un color
+harbor-workspace-creation-name = 
+    .placeholder = Nombre del espacio
+harbor-move-tab-to-workspace-button = 
+    .label = Mover a...
+    .tooltiptext = Mover todas las pestañas de esta ventana a un espacio
+harbor-workspaces-panel-context-reorder = 
+    .label = Reordenar espacios
+harbor-workspace-creation-profile = Perfil
+    .tooltiptext = Los perfiles se utilizan para separar las cookies y los datos de sitios entre espacios.
+harbor-workspace-creation-header = Crear un espacio
+harbor-workspace-creation-label = Los espacios se utilizan para organizar sus pestañas y sesiones.
+harbor-workspace-default-profile = Predeterminado
+harbor-workspaces-delete-workspace-title = ¿Eliminar espacio de trabajo?
+harbor-workspaces-delete-workspace-body = ¿Seguro que quiere eliminar { $name }? Esta acción no se puede deshacer.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = ¡Pestañas cerradas! Use <span>{ $shortcut }</span> para deshacerlo.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Limpiar
+    .tooltiptext = Cerrar todas las pestañas sin fijar
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Espacio siguiente
+harbor-panel-ui-workspaces-change-back = 
+    .label = Espacio anterior

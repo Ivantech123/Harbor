@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Spásanna
+harbor-panel-ui-spaces-label = 
+    .label = Spásanna
+harbor-panel-ui-workspaces-create = 
+    .label = Cruthaigh Spás
+harbor-panel-ui-folder-create = 
+    .label = Cruthaigh Fillteán
+harbor-panel-ui-live-folder-create = 
+    .label = Fillteán Beo
+harbor-panel-ui-new-empty-split = 
+    .label = Scoilt Nua
+harbor-workspaces-panel-context-delete = 
+    .label = Scrios Spás
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Athraigh Ainm
+harbor-workspaces-panel-change-icon = 
+    .label = Athraigh Deilbhín
+harbor-workspaces-panel-context-default-profile = 
+    .label = Socraigh Próifíl
+harbor-workspaces-panel-unload = 
+    .label = Díluchtaigh Spás
+harbor-workspaces-panel-unload-others = 
+    .label = Díluchtaigh Gach Spás Eile
+harbor-workspaces-how-to-reorder-title = Conas spásanna a athordú
+harbor-workspaces-how-to-reorder-desc = Tarraing na deilbhíní spáis ag bun an bharra taoibh chun iad a athordú
+harbor-workspaces-change-theme = 
+    .label = Cuir an Téama in Eagar
+harbor-workspaces-panel-context-open = 
+    .label = Oscail Spás Oibre
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Cuir Spás in Eagar
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Spásanna
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Comhlántach
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Scoilt
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analógach
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadach
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Ar snámh
+harbor-panel-ui-gradient-click-to-add = Cliceáil chun dath a chur leis
+harbor-workspace-creation-name = 
+    .placeholder = Ainm an Spáis
+harbor-move-tab-to-workspace-button = 
+    .label = Bog go...
+    .tooltiptext = Bog gach cluaisín sa fhuinneog seo go Spás
+harbor-workspaces-panel-context-reorder = 
+    .label = Athordaigh Spásanna
+harbor-workspace-creation-profile = Próifíl
+    .tooltiptext = Úsáidtear próifílí chun fianáin agus sonraí suímh a dheighilt idir spásanna.
+harbor-workspace-creation-header = Cruthaigh Spás
+harbor-workspace-creation-label = Úsáidtear spásanna chun do chluaisíní agus do sheisiúin a eagrú.
+harbor-workspace-default-profile = Réamhshocrú
+harbor-workspaces-delete-workspace-title = Scrios an spás?
+harbor-workspaces-delete-workspace-body = An bhfuil tú cinnte gur mian leat { $name } a scriosadh? Ní féidir an gníomh seo a chealú.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Cluaisíní Dúnta! Úsáid <span>{ $shortcut }</span> chun é a chealú.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Glan
+    .tooltiptext = Dún gach cluaisín neamhphionáilte
+harbor-panel-ui-workspaces-change-forward = 
+    .label = An Chéad Spás Eile
+harbor-panel-ui-workspaces-change-back = 
+    .label = Spás Roimhe Seo

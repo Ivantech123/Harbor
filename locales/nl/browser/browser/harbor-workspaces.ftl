@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Ruimtes
+harbor-panel-ui-spaces-label = 
+    .label = Ruimtes
+harbor-panel-ui-workspaces-create = 
+    .label = Ruimte aanmaken
+harbor-panel-ui-folder-create = 
+    .label = Map aanmaken
+harbor-panel-ui-live-folder-create = 
+    .label = Live map
+harbor-panel-ui-new-empty-split = 
+    .label = Nieuwe splitsing
+harbor-workspaces-panel-context-delete = 
+    .label = Ruimte verwijderen
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Naam wijzigen
+harbor-workspaces-panel-change-icon = 
+    .label = Icoon wijzigen
+harbor-workspaces-panel-context-default-profile = 
+    .label = Profiel instellen
+harbor-workspaces-panel-unload = 
+    .label = Ruimte ontladen
+harbor-workspaces-panel-unload-others = 
+    .label = Alle andere ruimtes ontladen
+harbor-workspaces-how-to-reorder-title = Hoe ruimtes te herschikken
+harbor-workspaces-how-to-reorder-desc = Sleep het ruimte icoon onderaan de zijbalk om ze te herschikken
+harbor-workspaces-change-theme = 
+    .label = Thema bewerken
+harbor-workspaces-panel-context-open = 
+    .label = Ruimte openen
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Ruimte bewerken
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Ruimtes
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Aanvullend
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Splitsen
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Vergelijkbaar
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Driezijdig
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Zwevend
+harbor-panel-ui-gradient-click-to-add = Klik om een kleur toe te voegen
+harbor-workspace-creation-name = 
+    .placeholder = Ruimte naam
+harbor-move-tab-to-workspace-button = 
+    .label = Verplaats naar...
+    .tooltiptext = Verplaats alle tabbladen in dit venster naar een ruimte
+harbor-workspaces-panel-context-reorder = 
+    .label = Ruimtes herschikken
+harbor-workspace-creation-profile = Profiel
+    .tooltiptext = Profielen worden gebruikt om cookies en site-gegevens tussen ruimtes te scheiden.
+harbor-workspace-creation-header = Maak een ruimte
+harbor-workspace-creation-label = Ruimtes worden gebruikt om je tabbladen en sessies te organiseren.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Ruimte verwijderen?
+harbor-workspaces-delete-workspace-body = Weet je zeker dat je { $name } wilt verwijderen? Deze actie kan niet ongedaan gemaakt worden.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Tabbladen gesloten! Gebruik <span>{ $shortcut }</span> om ongedaan te maken.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Wissen
+    .tooltiptext = Alle niet-vastgezette tabbladen sluiten
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Volgende ruimte
+harbor-panel-ui-workspaces-change-back = 
+    .label = Vorige ruimte

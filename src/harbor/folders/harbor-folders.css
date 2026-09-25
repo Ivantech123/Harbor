@@ -1,0 +1,338 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.tab-group-line {
+  display: none !important;
+}
+
+:root,
+/* Add harbor-folder so that accent color changes done to each
+ * specific space is applied. */
+harbor-folder {
+  --harbor-folder-behind-bgcolor: light-dark(color-mix(in srgb, var(--harbor-primary-color) 60%, gray), color-mix(in srgb, var(--harbor-primary-color) 60%, #c1c1c1));
+  --harbor-folder-front-bgcolor: light-dark(color-mix(in srgb, var(--harbor-primary-color), white 70%), color-mix(in srgb, var(--harbor-primary-color), black 40%));
+  --harbor-folder-stroke: light-dark(color-mix(in srgb, var(--harbor-primary-color) 50%, black), color-mix(in srgb, var(--harbor-colors-primary) 15%, #ebebeb));
+}
+
+harbor-folder {
+  display: flex;
+  flex-direction: column;
+  visibility: visible;
+
+  -moz-window-dragging: no-drag;
+  transition: var(--harbor-tabbox-element-indent-transition);
+
+  :root[harbor-sidebar-expanded="true"] & {
+    margin-inline-start: var(--harbor-folder-indent) !important;
+  }
+
+  &[selected] > .tab-group-label-container::before {
+    background-color: var(--harbor-toolbar-element-bg-hover);
+  }
+
+  &[collapsed][has-active] {
+    @media (prefers-reduced-motion: no-preference) {
+      #tabbrowser-tabs[movingtab] &:not(:active) {
+        transition: var(--tab-dragover-transition);
+      }
+    }
+  }
+
+  :root:not([harbor-sidebar-expanded]) & {
+    width: var(--tab-min-width) !important;
+    margin: 0 !important;
+
+    & .tab-group-label {
+      visibility: hidden !important;
+    }
+  }
+
+  & > .tab-group-container {
+    :root[harbor-sidebar-expanded] & > * {
+      --harbor-folder-indent: 14px; /* Can get overriden by the JS */
+      margin-inline-start: var(--harbor-folder-indent) !important;
+    }
+
+    & > harbor-folder {
+      transition: var(--harbor-tabbox-element-indent-transition);
+    }
+
+    & > tab::before {
+      background: none !important;
+    }
+  }
+
+  margin: 0 var(--tab-margin-block);
+  margin-inline-end: 0;
+
+  & > .tab-group-label-container {
+    flex: 0 0 auto !important;
+    top: 0 !important;
+    --tab-group-color-pale: transparent !important;
+    --tab-group-color: transparent !important;
+    padding-block-end: 0 !important;
+    margin: 0 !important;
+    height: calc(var(--tab-margin-block) * 2 + var(--tab-min-height));
+    padding-inline: var(--tab-group-label-padding);
+
+    :root[harbor-sidebar-expanded="true"] & {
+      padding-inline-end: calc(var(--tab-group-label-padding) * 2);
+    }
+
+    align-items: center;
+    font-weight: 600;
+
+    :root:not([harbor-sidebar-expanded]) {
+      width: var(--tab-min-width) !important;
+    }
+
+    .tab-group-folder-icon {
+      width: 28px;
+      height: 28px;
+      align-content: center;
+      position: absolute;
+      pointer-events: none;
+
+      :root[harbor-sidebar-expanded] & {
+        left: 5px;
+      }
+
+      & svg {
+        filter: contrast(125%);
+        transform: translate(-1px, -1px);
+
+        :root:not([harbor-sidebar-expanded]) & {
+          transition: transform 0.1s ease;
+
+          &[state="open"] {
+            transform: translate(-2px);
+          }
+        }
+
+        & image {
+          fill-opacity: 0.9;
+          -moz-context-properties: fill, fill-opacity;
+          fill: color-mix(in srgb, var(--harbor-folder-stroke) 50%, currentColor);
+          transform: translate(8.5px, 10.5px);
+        }
+
+%include harbor-folder-icon.inc.css
+
+        & .icon {
+          opacity: 1;
+        }
+
+        & .dots {
+          opacity: 0;
+        }
+
+        &[active="true"] .icon {
+          opacity: 0;
+        }
+
+        &[active="true"] .dots {
+          opacity: 1;
+        }
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: calc(100% - 4px);
+      height: calc(100% - 4px);
+      background-color: transparent;
+      border-radius: var(--border-radius-medium);
+      z-index: -1;
+    }
+
+    &:hover::before {
+      background-color: var(--tab-background-color-hover) !important;
+    }
+
+    &:after {
+      display: none;
+    }
+
+    & > label,
+    & > #tab-label-input {
+      padding: 0 0 0 32px !important;
+      width: 100%;
+    }
+
+    & > label {
+      width: 100% !important;
+      border: none !important;
+      color: var(--toolbar-color) !important;
+      margin: 0 !important;
+      font-weight: 600;
+      align-self: center !important;
+      text-align: start;
+      align-content: center;
+      height: 100% !important;
+
+      :root:not([harbor-sidebar-expanded]) & {
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+
+      &[live-folder-animation] {
+        background: linear-gradient(270deg, var(--sidebar-text-color), color-mix(in srgb, var(--sidebar-text-color) 25%, transparent));
+        background-size: 400%;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    .tab-reset-button[live-folder-action] {
+      list-style-image: url("chrome://browser/skin/harbor-icons/security-broken.svg");
+      display: flex;
+      opacity: 1;
+    }
+  }
+
+  :root[harbor-sidebar-expanded] &[has-active] > .tab-group-label-container:hover .tab-reset-button {
+    display: flex;
+  }
+}
+
+harbor-workspace[collapsedpinnedtabs] .harbor-workspace-pinned-tabs-section,
+harbor-folder[collapsed] > .tab-group-container {
+  overflow-y: clip;
+}
+
+/* Tabs popup */
+#harbor-folder-tabs-popup {
+  --panel-padding: 0;
+  width: 250px;
+
+  & #harbor-folder-tabs-search-no-results {
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    padding: 2em 0;
+    justify-content: center;
+    max-width: calc(100% - 10px);
+    margin: 0 auto;
+  }
+}
+
+#harbor-folder-tabs-popup * {
+  max-width: -moz-available;
+}
+
+#harbor-folder-tabs-popup .tabs-list-header {
+  display: flex;
+  flex-direction: row;
+  padding: 6px;
+  border-bottom: 1px solid color-mix(in srgb, currentColor, transparent 90%);
+}
+
+#harbor-folder-tabs-popup #harbor-folder-tabs-list-search {
+  background-color: transparent;
+  border: none !important;
+  outline: none !important;
+  flex: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#harbor-folder-tabs-list {
+  padding: 0 4px;
+  max-height: 263px;
+  overflow-y: auto;
+}
+
+#harbor-folder-tabs-popup .harbor-folder-tabs-list-search-icon {
+  width: var(--size-item-small);
+  height: var(--size-item-small);
+  margin: 10px 2px 10px 10px;
+  -moz-context-properties: fill;
+  fill: currentColor;
+  opacity: 0.7;
+}
+
+.folders-tabs-list-item-icon {
+  width: var(--size-item-small);
+  height: var(--size-item-small);
+  flex-shrink: 0;
+  margin-inline-end: 10px;
+  margin-inline-start: 4px;
+  fill: currentColor;
+  -moz-context-properties: fill;
+}
+
+.folders-tabs-list-item-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  color: var(--toolbox-textcolor);
+}
+
+.folders-tabs-list-item-label,
+.tab-list-item-secondary-label {
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 250px;
+  color: light-dark(black, white);
+}
+
+.tab-list-item-secondary-label {
+  opacity: 0.6;
+  font-size: 0.7em;
+  font-weight: 500;
+}
+
+#harbor-folder-tabs-popup .tabs-list-scrollbox {
+  overflow: scroll;
+}
+
+.folders-tabs-list-item {
+  position: relative;
+  border-radius: var(--harbor-border-radius);
+  cursor: default;
+}
+
+.folders-tabs-list-item-content {
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  direction: ltr;
+  padding: 0 var(--tab-inline-padding);
+  border-radius: 6px;
+  margin: 4px 0;
+
+  .folders-tabs-list-item[selected] & {
+    background-color: color-mix(in srgb, currentColor, transparent 90%);
+  }
+
+  &:last-child {
+    border-bottom-left-radius: max(calc(var(--panel-border-radius) - 2px), 4px);
+    border-bottom-right-radius: max(calc(var(--panel-border-radius) - 2px), 4px);
+  }
+
+  &:first-child {
+    border-top-left-radius: max(calc(var(--panel-border-radius) - 2px), 4px);
+    border-top-right-radius: max(calc(var(--panel-border-radius) - 2px), 4px);
+  }
+}
+
+.tab-group-overflow-count-container {
+  display: none !important;
+}
+
+:root:not([harbor-sidebar-expanded]) {
+  & #context_harborFolderRename {
+    display: none !important;
+  }
+}

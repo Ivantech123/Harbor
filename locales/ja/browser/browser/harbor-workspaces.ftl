@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = ワークスペース
+harbor-panel-ui-spaces-label = 
+    .label = スペース
+harbor-panel-ui-workspaces-create = 
+    .label = スペースを作成
+harbor-panel-ui-folder-create = 
+    .label = フォルダーを作成
+harbor-panel-ui-live-folder-create = 
+    .label = ライブフォルダー
+harbor-panel-ui-new-empty-split = 
+    .label = 新しい分割表示
+harbor-workspaces-panel-context-delete = 
+    .label = スペースを削除する
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = 名前を変更する
+harbor-workspaces-panel-change-icon = 
+    .label = アイコンを変更する
+harbor-workspaces-panel-context-default-profile = 
+    .label = プロファイルを設定する
+harbor-workspaces-panel-unload = 
+    .label = スペースをアンロードする
+harbor-workspaces-panel-unload-others = 
+    .label = 他のスペースをアンロードする
+harbor-workspaces-how-to-reorder-title = 並べ替える方法
+harbor-workspaces-how-to-reorder-desc = サイドバーの下部にあるスペースアイコンをドラッグして並べ替えます
+harbor-workspaces-change-theme = 
+    .label = テーマを編集する
+harbor-workspaces-panel-context-open = 
+    .label = ワークスペースを開く
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = ワークスペースを編集する
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = スペース
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = 補完的
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = 分割
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = 類推的
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = トライド的
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = フローティング
+harbor-panel-ui-gradient-click-to-add = クリックして色を追加する
+harbor-workspace-creation-name = 
+    .placeholder = スペース名
+harbor-move-tab-to-workspace-button = 
+    .label = 移動先…
+    .tooltiptext = このウィンドウ内のすべてのタブをスペースに移動する
+harbor-workspaces-panel-context-reorder = 
+    .label = スペースの順序を変更する
+harbor-workspace-creation-profile = プロファイル
+    .tooltiptext = プロファイルはスペース間でクッキーとサイトデータを分離するために使用されます。
+harbor-workspace-creation-header = スペースを作成する
+harbor-workspace-creation-label = スペースはタブやセッションを整理するために使用されます。
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = スペースを削除しますか？
+harbor-workspaces-delete-workspace-body = { $name }を削除してもよろしいですか？この操作は元に戻せません。
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = タブを閉じました！元に戻すには、 <span>{ $shortcut }</span>を使用してください。
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = 削除する
+    .tooltiptext = すべてのピン留めされていないタブを閉じる
+harbor-panel-ui-workspaces-change-forward = 
+    .label = 次のスペースに移動
+harbor-panel-ui-workspaces-change-back = 
+    .label = 前のスペースに移動

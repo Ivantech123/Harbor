@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Svæði
+harbor-panel-ui-spaces-label = 
+    .label = Svæði
+harbor-panel-ui-workspaces-create = 
+    .label = Búa til vinnusvæði
+harbor-panel-ui-folder-create = 
+    .label = Búa til möppu
+harbor-panel-ui-live-folder-create = 
+    .label = Beinlínutengd mappa
+harbor-panel-ui-new-empty-split = 
+    .label = Ný klofning
+harbor-workspaces-panel-context-delete = 
+    .label = Eyða vinnusvæði
+    .accesskey = E
+harbor-workspaces-panel-change-name = 
+    .label = Breyta nafni
+harbor-workspaces-panel-change-icon = 
+    .label = Skipta um táknmynd
+harbor-workspaces-panel-context-default-profile = 
+    .label = Setja notkunarsnið
+harbor-workspaces-panel-unload = 
+    .label = Afhlaða svæði
+harbor-workspaces-panel-unload-others = 
+    .label = Afhlaða öll önnur vinnusvæði
+harbor-workspaces-how-to-reorder-title = Hvernig á að endurraða vinnusvæðum
+harbor-workspaces-how-to-reorder-desc = Dragðu tákn vinnusvæða neðst í hliðarstikunni til að endurraða þeim
+harbor-workspaces-change-theme = 
+    .label = Breyta þema
+harbor-workspaces-panel-context-open = 
+    .label = Opna vinnusvæði
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Breyta svæði
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Vinnusvæði
+    .accesskey = V
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Gagnstætt
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Kljúfa
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Hliðrænt
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Þrípunkta
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Fljótandi
+harbor-panel-ui-gradient-click-to-add = Smelltu til að bæta við lit
+harbor-workspace-creation-name = 
+    .placeholder = Nafn vinnusvæðis
+harbor-move-tab-to-workspace-button = 
+    .label = Flytja í...
+    .tooltiptext = Flytja alla flipa í þessum glugga yfir í vinnusvæði
+harbor-workspaces-panel-context-reorder = 
+    .label = Endurraða vinnusvæðum
+harbor-workspace-creation-profile = Notkunarsnið
+    .tooltiptext = Notkunarsnið eru til þess að aðskilja vefkökur og gögn vefsvæða á milli vinnusvæða.
+harbor-workspace-creation-header = Búa til vinnusvæði
+harbor-workspace-creation-label = Vinnusvæði eru notuð til að skipuleggja flipana þína og vafurlotur.
+harbor-workspace-default-profile = Sjálfgefið
+harbor-workspaces-delete-workspace-title = Eyða svæði?
+harbor-workspaces-delete-workspace-body = Ertu viss um að þú viljir eyða { $name }? Þessi aðgerð er ekki afturkallanleg.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Flipum lokað! Notaðu <span>{ $shortcut }</span> til að afturkalla.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Hreinsa
+    .tooltiptext = Loka öllum ófestum flipum
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Næsta svæði
+harbor-panel-ui-workspaces-change-back = 
+    .label = Fyrra svæði

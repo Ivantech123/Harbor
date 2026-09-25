@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Områder
+harbor-panel-ui-spaces-label = 
+    .label = Områder
+harbor-panel-ui-workspaces-create = 
+    .label = Opprett område
+harbor-panel-ui-folder-create = 
+    .label = Opprett mappe
+harbor-panel-ui-live-folder-create = 
+    .label = Live Folder
+harbor-panel-ui-new-empty-split = 
+    .label = Ny splitt
+harbor-workspaces-panel-context-delete = 
+    .label = Slett område
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Endre navn
+harbor-workspaces-panel-change-icon = 
+    .label = Endre ikon
+harbor-workspaces-panel-context-default-profile = 
+    .label = Sett profil
+harbor-workspaces-panel-unload = 
+    .label = Frigjør område
+harbor-workspaces-panel-unload-others = 
+    .label = Avlast alle andre områder
+harbor-workspaces-how-to-reorder-title = Hvordan endre rekkefølge på områder
+harbor-workspaces-how-to-reorder-desc = Dra områdeikoner nederst på sidepanelet for å endre rekkefølgen på dem
+harbor-workspaces-change-theme = 
+    .label = Rediger tema
+harbor-workspaces-panel-context-open = 
+    .label = Åpne område
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Rediger område
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Områder
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Komplimentære
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Splitt
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analogisk
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadisk
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Flytende
+harbor-panel-ui-gradient-click-to-add = Klikk for å legge til en farge
+harbor-workspace-creation-name = 
+    .placeholder = Områdenavn
+harbor-move-tab-to-workspace-button = 
+    .label = Flytt til...
+    .tooltiptext = Flytt alle faner i dette vinduet til et Område
+harbor-workspaces-panel-context-reorder = 
+    .label = Omordne Områder
+harbor-workspace-creation-profile = Profil
+    .tooltiptext = Profiler er brukt til å separere informasjonskapsler og nettstedsdata mellom områder.
+harbor-workspace-creation-header = Opprett et område
+harbor-workspace-creation-label = Områder er brukt til å organisere fanene og øktene dine.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Slett Område?
+harbor-workspaces-delete-workspace-body = Er du sikker på at du vil slette { $name }? Denne handlingen kan ikke angres.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Faner lukket! Bruk <span>{ $shortcut }</span> for å angre.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Tøm
+    .tooltiptext = Lukk alle ufestede faner
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Neste område
+harbor-panel-ui-workspaces-change-back = 
+    .label = Forrige område

@@ -1,0 +1,6 @@
+<svg width="320" height="130" viewBox="0 0 320 130" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="130" rx="16" fill="#121A1E"/>
+  <path fill="#14988E" d="M36 34h28v28h22V34h28v62h-28V68H64v28H36V34z"/>
+  <path fill="#121A1E" d="M36 62c8 4 14 4 22 0s14-4 22 0 14 4 22 0 12-4 16 0v6c-4 4-8 4-16 0s-14-4-22 0-14 4-22 0-14-4-22 0v-6z"/>
+  <text x="132" y="78" fill="#E6EEEF" font-family="Manrope, sans-serif" font-size="36" font-weight="650">Harbor</text>
+</svg>

@@ -1,0 +1,38 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+        content/browser/harborThemeModifier.js                                     (../../harbor/common/harborThemeModifier.js)
+        content/browser/HarborPreloadedScripts.js                                  (../../harbor/common/HarborPreloadedScripts.js)
+        content/browser/harbor-sets.js                                             (../../harbor/common/harbor-sets.js)
+
+        content/browser/HarborStartup.mjs                                          (../../harbor/common/modules/HarborStartup.mjs)
+        content/browser/HarborUpdates.mjs                                          (../../harbor/common/modules/HarborUpdates.mjs)
+        content/browser/HarborUIManager.mjs                                        (../../harbor/common/modules/HarborUIManager.mjs)
+        content/browser/harbor-components/HarborCommonUtils.mjs                       (../../harbor/common/modules/HarborCommonUtils.mjs)
+        content/browser/harbor-components/HarborSessionStore.mjs                      (../../harbor/common/modules/HarborSessionStore.mjs)
+        content/browser/harbor-components/HarborHasPolyfill.mjs                       (../../harbor/common/modules/HarborHasPolyfill.mjs)
+        content/browser/harbor-components/HarborSidebarNotification.mjs               (../../harbor/common/modules/HarborSidebarNotification.mjs)
+        content/browser/harbor-components/HarborMenubar.mjs                           (../../harbor/common/modules/HarborMenubar.mjs)
+
+        content/browser/harbor-components/HarborEmojisData.min.mjs                    (../../harbor/common/emojis/HarborEmojisData.min.mjs)
+        content/browser/harbor-components/HarborEmojiPicker.mjs                       (../../harbor/common/emojis/HarborEmojiPicker.mjs)
+
+*       content/browser/harbor-styles/harbor-theme.css                                (../../harbor/common/styles/harbor-theme.css)
+        content/browser/harbor-styles/harbor-buttons.css                              (../../harbor/common/styles/harbor-buttons.css)
+        content/browser/harbor-styles/harbor-browser-ui.css                           (../../harbor/common/styles/harbor-browser-ui.css)
+        content/browser/harbor-styles/harbor-animations.css                           (../../harbor/common/styles/harbor-animations.css)
+        content/browser/harbor-styles/harbor-panel-ui.css                             (../../harbor/common/styles/harbor-panel-ui.css)
+*       content/browser/harbor-styles/harbor-single-components.css                    (../../harbor/common/styles/harbor-single-components.css)
+        content/browser/harbor-styles/harbor-sidebar.css                              (../../harbor/common/styles/harbor-sidebar.css)
+*       content/browser/harbor-styles/harbor-toolbar.css                              (../../harbor/common/styles/harbor-toolbar.css)
+        content/browser/harbor-styles/harbor-browser-container.css                    (../../harbor/common/styles/harbor-browser-container.css)
+        content/browser/harbor-styles/harbor-omnibox.css                              (../../harbor/common/styles/harbor-omnibox.css)
+        content/browser/harbor-styles/harbor-popup.css                                (../../harbor/common/styles/harbor-popup.css)
+        content/browser/harbor-styles/harbor-branding.css                             (../../harbor/common/styles/harbor-branding.css)
+        content/browser/harbor-styles/harbor-sidebar-notification.css                 (../../harbor/common/styles/harbor-sidebar-notification.css)
+*       content/browser/harbor-styles/harbor-backdrop-filters.svg                     (../../harbor/common/styles/harbor-backdrop-filters.svg)
+
+        content/browser/harbor-styles/harbor-panels/bookmarks.css                     (../../harbor/common/styles/harbor-panels/bookmarks.css)
+        content/browser/harbor-styles/harbor-panels/print.css                         (../../harbor/common/styles/harbor-panels/print.css)
+        content/browser/harbor-styles/harbor-panels/dialog.css                        (../../harbor/common/styles/harbor-panels/dialog.css)

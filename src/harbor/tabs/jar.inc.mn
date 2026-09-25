@@ -1,0 +1,8 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+        content/browser/harbor-components/HarborPinnedTabManager.mjs                  (../../harbor/tabs/HarborPinnedTabManager.mjs)
+        content/browser/harbor-components/HarborEssentialsPromo.mjs                   (../../harbor/tabs/HarborEssentialsPromo.mjs)
+*       content/browser/harbor-styles/harbor-tabs.css                                 (../../harbor/tabs/harbor-tabs.css)
+        content/browser/harbor-styles/harbor-tabs/vertical-tabs.css                   (../../harbor/tabs/harbor-tabs/vertical-tabs.css)

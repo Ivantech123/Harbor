@@ -1,0 +1,18 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+//
+// This file lists preferences that are ignored when running mochitests.
+// Add here any preference that is not relevant for testing Harbor Modus.
+// This prevents unnecessary test re-runs when these preferences are changed.
+[
+  "harbor.mods.updated-value-observer",
+  "harbor.mods.last-update",
+  "harbor.view.compact.enable-at-startup",
+  "harbor.urlbar.suggestions-learner",
+  "browser.newtabpage.activity-stream.trendingSearch.defaultSearchEngine",
+
+  // From the imported safebrowsing tests
+  "urlclassifier.phishTable",
+  "urlclassifier.malwareTable"
+]

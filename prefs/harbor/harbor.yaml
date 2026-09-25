@@ -1,0 +1,54 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+- name: harbor.tabs.vertical
+  value: true
+
+- name: harbor.tabs.vertical.right-side
+  value: false
+
+- name: harbor.tabs.rename-tabs
+  value: true
+
+- name: harbor.tabs.essentials.max
+  value: 12
+
+- name: harbor.tabs.show-newtab-vertical
+  value: true
+
+- name: harbor.tabs.close-window-with-empty
+  value: true
+
+- name: harbor.tabs.select-recently-used-on-close
+  value: true
+
+- name: harbor.tabs.folder-dragover-threshold-percent
+  value: 20 # Percentage of folder height to trigger dragover
+
+- name: harbor.tabs.dnd-switch-space-delay
+  value: 500 # milliseconds
+
+- name: harbor.ctrlTab.show-pending-tabs
+  value: false
+
+- name: harbor.mediacontrols.enabled
+  value: true
+
+- name: harbor.haptic-feedback.enabled
+  value: true
+
+- name: harbor.startup.smooth-scroll-in-tabs
+  value: true
+
+- name: harbor.tabs.open-pinned-in-new-tab
+  value: true
+
+- name: harbor.tabs.close-on-back-with-no-history
+  value: true
+
+- name: harbor.tabs.ctrl-tab.ignore-essential-tabs
+  value: false
+
+- name: harbor.tabs.ctrl-tab.ignore-pending-tabs
+  value: false

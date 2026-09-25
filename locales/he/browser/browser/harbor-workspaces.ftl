@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = מרחבים
+harbor-panel-ui-spaces-label = 
+    .label = מרחבים
+harbor-panel-ui-workspaces-create = 
+    .label = יצירת מרחב
+harbor-panel-ui-folder-create = 
+    .label = יצירת תיקייה
+harbor-panel-ui-live-folder-create = 
+    .label = תיקייה חיה
+harbor-panel-ui-new-empty-split = 
+    .label = פיצול חדש
+harbor-workspaces-panel-context-delete = 
+    .label = מחיקת מרחב
+    .accesskey = ג
+harbor-workspaces-panel-change-name = 
+    .label = שינוי שם
+harbor-workspaces-panel-change-icon = 
+    .label = שינוי סמל
+harbor-workspaces-panel-context-default-profile = 
+    .label = הגדרת פרופיל
+harbor-workspaces-panel-unload = 
+    .label = כיבוי מרחב
+harbor-workspaces-panel-unload-others = 
+    .label = Unload All Other Spaces
+harbor-workspaces-how-to-reorder-title = איך לסדר מרחבים מחדש
+harbor-workspaces-how-to-reorder-desc = גרירה והזזה של סמלי המרחבים בתחתית סרגל הצד תשנה את הסדר שלהם
+harbor-workspaces-change-theme = 
+    .label = עריכת ערכת נושא
+harbor-workspaces-panel-context-open = 
+    .label = פתיחת מרחב עבודה
+    .accesskey = ם
+harbor-workspaces-panel-context-edit = 
+    .label = עריכת מרחב עבודה
+    .accesskey = ק
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = מרחבים
+    .accesskey = '
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = משלים
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = חצוי
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = אנלוגי
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = טריאדי
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = מרחף
+harbor-panel-ui-gradient-click-to-add = יש ללחוץ כדי להוסיף צבע
+harbor-workspace-creation-name = 
+    .placeholder = שם מרחב
+harbor-move-tab-to-workspace-button = 
+    .label = העברה אל...
+    .tooltiptext = העברת כל הלשוניות בחלון זה למרחב
+harbor-workspaces-panel-context-reorder = 
+    .label = שינוי סדר מרחבים
+harbor-workspace-creation-profile = פרופיל
+    .tooltiptext = פרופילים משמשים להפרדת קובצי Cookie ונתוני אתר בין מרחבים שונים.
+harbor-workspace-creation-header = יצירת מרחב
+harbor-workspace-creation-label = המרחבים משמשים לסידור לשוניות והפעלות.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = למחוק את המרחב?
+harbor-workspaces-delete-workspace-body = למחוק את { $name }? לא ניתן לבטל פעולה זו.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = הלשוניות נסגרו! לחיצה על <span>{ $shortcut }</span> תבטל את הסגירה.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = ניקוי
+    .tooltiptext = סגירת כל הלשוניות שאינן מוצמדות
+harbor-panel-ui-workspaces-change-forward = 
+    .label = מרחב הבא
+harbor-panel-ui-workspaces-change-back = 
+    .label = מרחב קודם

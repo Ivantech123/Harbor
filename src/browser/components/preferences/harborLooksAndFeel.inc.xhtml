@@ -1,0 +1,127 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+<script type="text/javascript" src="chrome://browser/content/preferences/harbor-settings.js"/>
+<html:template id="template-paneHarborLooks">
+
+<hbox id="harborVerticalTabsCategory"
+      class="subcategory"
+      hidden="true"
+      data-category="paneHarborLooks">
+<html:h1 data-l10n-id="harbor-vertical-tabs-title"/>
+</hbox>
+
+<groupbox id="harborVerticalTabsGroup" data-category="paneHarborLooks" hidden="true" class="highlighting-group">
+  <label><html:h2 data-l10n-id="harbor-vertical-tabs-layout-header"/></label>
+    <description class="description-deemphasized" data-l10n-id="harbor-vertical-tabs-layout-description" />
+    <hbox id="harborLayoutList">
+      <hbox layout="single">
+        <html:img src="chrome://browser/content/harbor-images/layouts/single-toolbar.png" />
+        <label data-l10n-id="harbor-layout-single-toolbar"></label>
+      </hbox>
+      <hbox layout="multiple">
+        <html:img src="chrome://browser/content/harbor-images/layouts/multiple-toolbar.png" />
+        <label data-l10n-id="harbor-layout-multiple-toolbar"></label>
+      </hbox>
+      <hbox layout="collapsed">
+        <html:img src="chrome://browser/content/harbor-images/layouts/collapsed.png" />
+        <label data-l10n-id="harbor-layout-collapsed-toolbar"></label>
+      </hbox>
+    </hbox>
+  <label><html:h2 data-l10n-id="harbor-vertical-tabs-header"/></label>
+      <description class="description-deemphasized" data-l10n-id="harbor-vertical-tabs-description" />
+
+      <checkbox id="harborLooksAndFeelNewtabUnderLastTab"
+            data-l10n-id="harbor-vertical-tabs-newtab-on-tab-list"
+            preference="harbor.tabs.show-newtab-vertical"/>
+    <vbox class="indent">
+        <checkbox id="harborLooksAndFeelMoveNewtabToTop"
+                data-l10n-id="harbor-vertical-tabs-newtab-top-button-up"
+                preference="harbor.view.show-newtab-button-top"/>
+    </vbox>
+    <html:div data-l10n-id="preferences-web-appearance-footer">
+        <html:a id="web-appearance-manage-themes-link" class="text-link" data-l10n-name="themes-link" href="about:addons" target="_blank" />
+    </html:div>
+</groupbox>
+
+<hbox id="harborThemeCategory"
+      class="subcategory"
+      hidden="true"
+      data-category="paneHarborLooks">
+<html:h1 data-l10n-id="pane-harbor-theme-title"/>
+</hbox>
+
+<groupbox id="harborThemeGroup" data-category="paneHarborLooks" hidden="true" class="highlighting-group">
+      <label><html:h2 data-l10n-id="harbor-look-and-feel-compact-view-header"/></label>
+      <description class="description-deemphasized" data-l10n-id="harbor-look-and-feel-compact-view-description" />
+
+      <vbox class="indent">
+            <checkbox id="harborLooksAndFeelEnableToolbarFlashPopup"
+                      data-l10n-id="harbor-look-and-feel-compact-toolbar-flash-popup"
+                      preference="harbor.view.compact.toolbar-flash-popup"/>
+      </vbox>
+
+      <label><html:h2 data-l10n-id="harbor-look-and-feel-window-drag-header"/></label>
+      <description class="description-deemphasized" data-l10n-id="harbor-look-and-feel-window-drag-description" />
+
+      <vbox class="indent">
+            <checkbox id="harborLooksAndFeelWindowDragEnabled"
+                  data-l10n-id="harbor-window-drag-enabled"
+                  preference="harbor.view.drag-window-from-content"/>
+      </vbox>
+</groupbox>
+
+<hbox id="harborGlanceCategory"
+      class="subcategory"
+      hidden="true"
+      data-category="paneHarborLooks">
+<html:h1 data-l10n-id="harbor-glance-title"/>
+</hbox>
+
+<groupbox id="harborGlanceGroup" data-category="paneHarborLooks" hidden="true" class="highlighting-group">
+      <label><html:h2 data-l10n-id="harbor-glance-header"/></label>
+      <description class="description-deemphasized" data-l10n-id="harbor-glance-description" />
+
+      <checkbox id="harborLooksAndFeelGlanceEnabled"
+            data-l10n-id="harbor-glance-enabled"
+            preference="harbor.glance.enabled"/>
+      <hbox align="center">
+            <label id="harborGlanceTriggerLabel" data-l10n-id="harbor-glance-trigger-label"/>
+            <menulist id="harborGlanceTrigger" preference="harbor.glance.activation-method">
+                  <menupopup>
+                        <menuitem data-l10n-id="harbor-glance-trigger-ctrl-click" value="ctrl"/>
+                        <menuitem data-l10n-id="harbor-glance-trigger-alt-click" value="alt"/>
+                        <menuitem data-l10n-id="harbor-glance-trigger-shift-click" value="shift"/>
+#ifdef XP_MACOSX
+                        <menuitem data-l10n-id="harbor-glance-trigger-meta-click" value="meta"/>
+#endif
+                  </menupopup>
+            </menulist>
+        </hbox>
+</groupbox>
+
+<hbox id="harborUrlBarCategory"
+      class="subcategory"
+      hidden="true"
+      data-category="paneHarborLooks">
+<html:h1 data-l10n-id="harbor-urlbar-title"/>
+</hbox>
+
+<groupbox id="harborUrlbarGroup" data-category="paneHarborLooks" hidden="true" class="highlighting-group">
+      <label><html:h2 data-l10n-id="harbor-urlbar-header"/></label>
+      <description class="description-deemphasized" data-l10n-id="harbor-urlbar-description" />
+
+      <hbox align="center">
+            <label data-l10n-id="harbor-urlbar-behavior-label"/>
+            <menulist preference="harbor.urlbar.behavior">
+                  <menupopup>
+                        <menuitem data-l10n-id="harbor-urlbar-behavior-normal" value="normal"/>
+                        <menuitem data-l10n-id="harbor-urlbar-behavior-floating-on-type" value="floating-on-type"/>
+                        <menuitem data-l10n-id="harbor-urlbar-behavior-float" value="float"/>
+                  </menupopup>
+            </menulist>
+        </hbox>
+</groupbox>
+
+</html:template>

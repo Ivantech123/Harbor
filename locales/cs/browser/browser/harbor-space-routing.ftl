@@ -1,0 +1,30 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-space-routing-settings = 
+    .label = Space Routing Settings
+harbor-space-routing-rulepanel-placeholder = Routes let you choose where specific sites open inside Harbor. For example, you can route YouTube links to always open inside your Personal space.
+harbor-space-routing-dialog-title = Space Routing Settings
+harbor-space-routing-external-default = Default route for external links
+harbor-space-routing-new-route = New Route
+harbor-space-routing-open-in-space = Otevřít v prostoru
+harbor-space-routing-most-recent-space = Nejnovější prostor
+harbor-space-routing-close-button = 
+    .aria-label = Zavřít
+    .tooltiptext = Zavřít
+harbor-space-routing-contains = 
+    .label = Obsahuje
+harbor-space-routing-equal-to = 
+    .label = Je rovno
+harbor-space-routing-regex = 
+    .label = RegEx
+harbor-space-routing-open-in = Otevřít v
+harbor-space-routing-url = URL
+harbor-space-routing-tab-routed-toast = New tab opened in { $targetWorkspace }
+tab-context-harbor-add-domain-to-sr = 
+    .label =
+        { $tabCount ->
+            [one] Add Route for Domain
+           *[other] Add Route for Domains
+        }

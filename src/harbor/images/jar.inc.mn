@@ -1,0 +1,31 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+        content/browser/harbor-images/layouts/collapsed.png                        (../../harbor/images/layouts/collapsed.png)
+        content/browser/harbor-images/layouts/multiple-toolbar.png                 (../../harbor/images/layouts/multiple-toolbar.png)
+        content/browser/harbor-images/layouts/single-toolbar.png                   (../../harbor/images/layouts/single-toolbar.png)
+        content/browser/harbor-images/grain-bg.png                                 (../../harbor/images/grain-bg.png)
+        content/browser/harbor-images/note-indicator.svg                           (../../harbor/images/note-indicator.svg)
+
+        content/browser/harbor-images/downloads/download.svg                       (../../harbor/images/downloads/download.svg)
+        content/browser/harbor-images/downloads/archive.svg                        (../../harbor/images/downloads/archive.svg)
+
+        # FavIcons for startup
+        content/browser/harbor-images/favicons/calendar.svg                        (../../harbor/images/favicons/calendar.svg)
+        content/browser/harbor-images/favicons/discord.svg                         (../../harbor/images/favicons/discord.svg)
+        content/browser/harbor-images/favicons/figma.svg                           (../../harbor/images/favicons/figma.svg)
+        content/browser/harbor-images/favicons/github.svg                          (../../harbor/images/favicons/github.svg)
+        content/browser/harbor-images/favicons/yandex.svg                          (../../harbor/images/favicons/yandex.svg)
+        content/browser/harbor-images/favicons/yandex-mail.svg                     (../../harbor/images/favicons/yandex-mail.svg)
+        content/browser/harbor-images/favicons/yandex-music.svg                    (../../harbor/images/favicons/yandex-music.svg)
+        content/browser/harbor-images/favicons/telegram.svg                        (../../harbor/images/favicons/telegram.svg)
+        content/browser/harbor-images/favicons/vk.svg                              (../../harbor/images/favicons/vk.svg)
+        content/browser/harbor-images/favicons/gosuslugi.svg                       (../../harbor/images/favicons/gosuslugi.svg)
+        content/browser/harbor-images/favicons/dzen.svg                            (../../harbor/images/favicons/dzen.svg)
+        content/browser/harbor-images/favicons/youtube.svg                         (../../harbor/images/favicons/youtube.svg)
+        content/browser/harbor-images/favicons/notion.svg                          (../../harbor/images/favicons/notion.svg)
+        content/browser/harbor-images/favicons/obsidian.svg                        (../../harbor/images/favicons/obsidian.svg)
+        content/browser/harbor-images/favicons/slack.svg                           (../../harbor/images/favicons/slack.svg)
+        content/browser/harbor-images/favicons/tuta.svg                            (../../harbor/images/favicons/tuta.svg)
+        content/browser/harbor-images/favicons/trello.svg                          (../../harbor/images/favicons/trello.svg)

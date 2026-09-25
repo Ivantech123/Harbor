@@ -1,0 +1,1825 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+import { nsHarborMultiWindowFeature } from "chrome://browser/content/harbor-components/HarborCommonUtils.mjs";
+import { nsHarborMenuBar } from "chrome://browser/content/harbor-components/HarborMenubar.mjs";
+import { UrlbarShared } from "chrome://browser/content/urlbar/UrlbarShared.mjs";
+
+window.gHarborUIManager = {
+  _popupTrackingElements: [],
+  _hoverPausedForExpand: false,
+  _hasLoadedDOM: false,
+  testingEnabled: Services.prefs.getBoolPref("harbor.testing.enabled", false),
+  profilingEnabled: Services.prefs.getBoolPref(
+    "harbor.testing.profiling.enabled",
+    false
+  ),
+
+  _lastClickPosition: null,
+
+  _toastTimeouts: [],
+
+  init() {
+    window.gHarborMenubar = new nsHarborMenuBar();
+
+    document.addEventListener("popupshowing", this.onPopupShowing.bind(this));
+    document.addEventListener("popuphidden", this.onPopupHidden.bind(this));
+
+    document.addEventListener(
+      "mousedown",
+      this.handleMouseDown.bind(this),
+      true
+    );
+
+    ChromeUtils.defineLazyGetter(this, "motion", () => {
+      Services.scriptloader.loadSubScript(
+        "chrome://browser/content/harbor-vendor/motion.min.mjs",
+        window
+      );
+      const motion = window.Motion;
+      delete window.Motion;
+      return motion;
+    });
+
+    ChromeUtils.defineLazyGetter(this, "_toastContainer", () => {
+      return document.getElementById("harbor-toast-container");
+    });
+
+    new ResizeObserver(
+      gHarborCommonActions.throttle(
+        gHarborCompactModeManager.getAndApplySidebarWidth.bind(
+          gHarborCompactModeManager
+        ),
+        Services.prefs.getIntPref("harbor.view.sidebar-height-throttle", 500)
+      )
+    ).observe(gNavToolbox);
+
+    gHarborWorkspaces.promiseInitialized.finally(() => {
+      this._hasLoadedDOM = true;
+      this.updateTabsToolbar();
+    });
+
+    window.addEventListener("TabClose", this.onTabClose.bind(this));
+    window.addEventListener(
+      "Harbor:UrlbarSearchModeChanged",
+      this.onUrlbarSearchModeChanged.bind(this)
+    );
+
+    gHarborMediaController.init();
+    gHarborVerticalTabsManager.init();
+    gHarborLiveFoldersUI.init();
+
+    this._initCreateNewPopup();
+    this._debloatContextMenus();
+    this._addNewCustomizableButtonsIfNeeded();
+    this._initOmnibox();
+    this._initBookmarkCollapseListener();
+
+    gURLBar._setPlaceholder(null);
+
+    document
+      .getElementById("PersonalToolbar")
+      .setAttribute("fullscreentoolbar", "true");
+  },
+
+  /**
+   * Animate an element using Element.animate API.
+   * This is not using gHarborUIManager.motion, because motion library has some issues
+   * with certain properties and we want to have a simple wrapper for that.
+   *
+   * @param {Element} element
+   * @param {object} rawKeyframes
+   * @param {...any} args
+   */
+  async elementAnimate(element, rawKeyframes, ...args) {
+    rawKeyframes = { ...rawKeyframes };
+    // Convert 'y' property to 'transform' with translateY and 'x' to translateX,
+    // and 'scale' to 'transform' with scale.
+    if (
+      (rawKeyframes.y || rawKeyframes.x || rawKeyframes.scale) &&
+      !rawKeyframes.transform
+    ) {
+      const yValues = rawKeyframes.y || [];
+      const xValues = rawKeyframes.x || [];
+      const scaleYValues = rawKeyframes.scaleY || [];
+      const scaleXValues = rawKeyframes.scaleX || [];
+      delete rawKeyframes.y;
+      delete rawKeyframes.x;
+      delete rawKeyframes.scaleY;
+      delete rawKeyframes.scaleX;
+      rawKeyframes.transform = [];
+      if (
+        yValues.length !== 0 &&
+        xValues.length !== 0 &&
+        yValues.length !== xValues.length
+      ) {
+        console.error("y and x keyframes must have the same length");
+      }
+      const keyframeLength = Math.max(
+        yValues.length,
+        xValues.length,
+        scaleYValues.length,
+        scaleXValues.length
+      );
+      for (let i = 0; i < keyframeLength; i++) {
+        const y = yValues[i] !== undefined ? `translateY(${yValues[i]}px)` : "";
+        const x = xValues[i] !== undefined ? `translateX(${xValues[i]}px)` : "";
+        const scaleY =
+          scaleYValues[i] !== undefined ? `scaleY(${scaleYValues[i]})` : "";
+        const scaleX =
+          scaleXValues[i] !== undefined ? `scaleX(${scaleXValues[i]})` : "";
+        rawKeyframes.transform.push(`${x} ${y} ${scaleX} ${scaleY}`.trim());
+      }
+    }
+    let keyframes = [];
+    for (let i = 0; i < Object.values(rawKeyframes)[0].length; i++) {
+      let frame = {};
+      for (const [property, values] of Object.entries(rawKeyframes)) {
+        frame[property] = values[i];
+      }
+      keyframes.push(frame);
+    }
+    return await new Promise(resolve => {
+      const animation = element.animate(keyframes, ...args);
+      animation.onfinish = () => resolve();
+    });
+  },
+
+  /**
+   * Shakes an element from side to side to catch the user's eye.
+   *
+   * @param {Element} element
+   * @param {number} delay Milliseconds to wait before shaking.
+   */
+  shakeElement(element, delay = 0) {
+    return this.elementAnimate(
+      element,
+      { x: [0, -12, 8, -4, 2, 0] },
+      { duration: 600, delay, easing: "ease-out" }
+    );
+  },
+
+  _addNewCustomizableButtonsIfNeeded() {
+    const kPref = "harbor.ui.migration.compact-mode-button-added";
+    let navbarPlacements = CustomizableUI.getWidgetIdsInArea(
+      "harbor-sidebar-top-buttons"
+    );
+    try {
+      if (
+        !navbarPlacements.length &&
+        !Services.prefs.getBoolPref(kPref, false)
+      ) {
+        CustomizableUI.addWidgetToArea(
+          "harbor-toggle-compact-mode",
+          "harbor-sidebar-top-buttons",
+          0
+        );
+        gHarborVerticalTabsManager._topButtonsSeparatorElement.before(
+          document.getElementById("harbor-toggle-compact-mode")
+        );
+      }
+    } catch (e) {
+      console.error("Error adding compact mode button to sidebar:", e);
+    }
+    Services.prefs.setBoolPref(kPref, true);
+  },
+
+  _initBookmarkCollapseListener() {
+    const bookmarkToolbar = document.getElementById("PersonalToolbar");
+    if (!bookmarkToolbar.hasAttribute("collapsed")) {
+      // Set it initially if bookmarks toolbar is visible, customizable UI
+      // is ran before this function.
+      document.documentElement.setAttribute("harbor-has-bookmarks", "true");
+    }
+    bookmarkToolbar.addEventListener("toolbarvisibilitychange", event => {
+      const visible = event.detail.visible;
+      if (visible) {
+        document.documentElement.setAttribute("harbor-has-bookmarks", "true");
+      } else {
+        document.documentElement.removeAttribute("harbor-has-bookmarks");
+      }
+    });
+  },
+
+  _initOmnibox() {
+    const { registerHarborUrlbarProviders } = ChromeUtils.importESModule(
+      "resource:///modules/HarborUBProvider.sys.mjs"
+    );
+    const { nsHarborSiteDataPanel: HarborSiteDataPanel } = ChromeUtils.importESModule(
+      "resource:///modules/HarborSiteDataPanel.sys.mjs"
+    );
+    registerHarborUrlbarProviders();
+    window.gHarborSiteDataPanel = new HarborSiteDataPanel(window);
+    gURLBar._harborTrimURL = this.urlbarTrim.bind(this);
+  },
+
+  _debloatContextMenus() {
+    if (!Services.prefs.getBoolPref("harbor.view.context-menu.refresh", false)) {
+      return;
+    }
+    const contextMenusToClean = [
+      // Remove the 'new tab below' context menu.
+      // reason: It doesn't properly work with zen and it's philosophy of not having
+      //   new tabs. It's also semi-not working as it doesn't create a new tab below
+      //   the current one.
+      "context_openANewTab",
+    ];
+    for (const id of contextMenusToClean) {
+      const menu = document.getElementById(id);
+      if (!menu) {
+        continue;
+      }
+      menu.setAttribute("hidden", "true");
+    }
+  },
+
+  _initCreateNewPopup() {
+    const popup = document.getElementById("harborCreateNewPopup");
+
+    popup.addEventListener("popupshowing", () => {
+      const button = document.getElementById("harbor-create-new-button");
+      if (!button) {
+        return;
+      }
+      const image = button.querySelector("image");
+      button.setAttribute("open", "true");
+      gHarborUIManager.motion.animate(
+        image,
+        { transform: ["rotate(0deg)", "rotate(45deg)"] },
+        { duration: 0.2 }
+      );
+      popup.addEventListener(
+        "popuphidden",
+        () => {
+          button.removeAttribute("open");
+          gHarborUIManager.motion.animate(
+            image,
+            { transform: ["rotate(45deg)", "rotate(0deg)"] },
+            { duration: 0.2 }
+          );
+        },
+        { once: true }
+      );
+    });
+  },
+
+  handleMouseDown(event) {
+    this._lastClickPosition = {
+      clientX: event.clientX,
+      clientY: event.clientY,
+    };
+  },
+
+  updateTabsToolbar(fromResizeEvent = false) {
+    const kUrlbarHeight = 333;
+    gURLBar.style.setProperty(
+      "--harbor-urlbar-top",
+      `${window.innerHeight / 2 - Math.max(kUrlbarHeight, window.windowUtils.getBoundsWithoutFlushing(gURLBar).height) / 2}px`
+    );
+    gURLBar.style.setProperty(
+      "--harbor-urlbar-width",
+      `${Math.min(window.innerWidth / 1.5, 750)}px`
+    );
+    gHarborVerticalTabsManager.actualWindowButtons.removeAttribute(
+      "harbor-has-hover"
+    );
+    gHarborVerticalTabsManager.recalculateURLBarHeight(!fromResizeEvent);
+    if (!this._preventToolbarRebuild && !fromResizeEvent) {
+      setTimeout(() => {
+        gHarborWorkspaces.updateTabsContainers();
+      }, 0);
+    }
+    delete this._preventToolbarRebuild;
+  },
+
+  get tabsWrapper() {
+    if (this._tabsWrapper) {
+      return this._tabsWrapper;
+    }
+    this._tabsWrapper = document.getElementById("harbor-tabs-wrapper");
+    return this._tabsWrapper;
+  },
+
+  onTabClose(event = undefined) {
+    if (!event?.target?._closedInMultiselection) {
+      this.updateTabsToolbar();
+    }
+  },
+
+  onFloatingURLBarOpen() {
+    requestAnimationFrame(() => {
+      this.updateTabsToolbar();
+    });
+  },
+
+  openAndChangeToTab(url, options) {
+    if (window.parent) {
+      const tab = window.parent.gBrowser.addTrustedTab(url, options);
+      window.parent.gBrowser.selectedTab = tab;
+      return tab;
+    }
+    const tab = window.gBrowser.addTrustedTab(url, options);
+    window.gBrowser.selectedTab = tab;
+    return tab;
+  },
+
+  generateUuidv4() {
+    return Services.uuid.generateUUID().toString();
+  },
+
+  createValidXULText(text) {
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  },
+
+  /**
+   * Adds the 'has-popup-menu' attribute to the element when popup is opened on it.
+   *
+   * @param {Element} element element to track
+   */
+  addPopupTrackingAttribute(element) {
+    this._popupTrackingElements.push(element);
+  },
+
+  removePopupTrackingAttribute(element) {
+    this._popupTrackingElements.remove(element);
+  },
+
+  // On macOS, the app menu panel is displayed as a native NSPopover which
+  // silently clips content beyond the screen without informing Firefox's
+  // layout engine. This makes bottom menu items unreachable by scrolling.
+  // Setting max-height based on available screen space lets Firefox's layout
+  // handle the constraint, enabling proper overflow scrolling.
+  // See gh-12782
+  _constrainNativePopoverHeight(panel) {
+    const panelIds = [
+      "appMenu-popup",
+      "customizationui-widget-panel",
+      "widget-overflow",
+    ];
+    if (!panelIds.includes(panel.id)) {
+      return;
+    }
+    // NSPopover adds 13px of chrome on all sides (26px vertical total),
+    // measured via Accessibility Inspector on macOS 26 (Tahoe).
+    // Previous macOS versions have similar or smaller values, so this is a
+    // conservative upper bound.
+    const popoverChrome = 26;
+    const maxHeight = window.screen.availHeight - popoverChrome;
+    panel.style.maxHeight = `${maxHeight}px`;
+  },
+
+  onPopupShowing(showEvent) {
+    if (
+      AppConstants.platform === "macosx" &&
+      Services.prefs.getBoolPref("widget.macos.native-context-menus", false)
+    ) {
+      this._constrainNativePopoverHeight(showEvent.target);
+    }
+    for (const el of this._popupTrackingElements) {
+      // target may be inside a shadow root, not directly under the element
+      // we also ignore menus inside panels
+      if (
+        !el.contains(showEvent.explicitOriginalTarget) ||
+        (Element.isInstance(showEvent.explicitOriginalTarget) &&
+          showEvent.explicitOriginalTarget?.closest("panel")) ||
+        // See bug #7590: Ignore menupopup elements opening.
+        // Also see #10612 for the exclusion of the harbor-appcontent-navbar-wrapper
+        (showEvent.explicitOriginalTarget.tagName === "menupopup" &&
+          el.id !== "harbor-appcontent-navbar-wrapper")
+      ) {
+        continue;
+      }
+      document.removeEventListener("mousemove", this.__removeHasPopupAttribute);
+      gHarborCompactModeManager._setElementExpandAttribute(
+        el,
+        true,
+        "has-popup-menu"
+      );
+      this.__currentPopup = showEvent.target;
+      this.__currentPopupTrackElement = el;
+      break;
+    }
+  },
+
+  onPopupHidden(hideEvent) {
+    if (!this.__currentPopup || this.__currentPopup !== hideEvent.target) {
+      return;
+    }
+    const element = this.__currentPopupTrackElement;
+    if (document.getElementById("main-window").matches(":hover")) {
+      gHarborCompactModeManager._setElementExpandAttribute(
+        element,
+        false,
+        "has-popup-menu"
+      );
+    } else {
+      this.__removeHasPopupAttribute = () =>
+        gHarborCompactModeManager._setElementExpandAttribute(
+          element,
+          false,
+          "has-popup-menu"
+        );
+      document.addEventListener("mousemove", this.__removeHasPopupAttribute, {
+        once: true,
+      });
+    }
+    this.__currentPopup = null;
+    this.__currentPopupTrackElement = null;
+  },
+
+  // Section: URL bar
+
+  onUrlbarOpen() {
+    setTimeout(() => {
+      const hadValid = gURLBar.getAttribute("pageproxystate") === "valid";
+      gURLBar.setPageProxyState("invalid", false);
+      gURLBar.setAttribute("had-proxystate", hadValid);
+    }, 0);
+  },
+
+  onUrlbarClose() {
+    if (gURLBar.getAttribute("had-proxystate") == "true") {
+      gURLBar.setPageProxyState("valid", false);
+    }
+    gURLBar.removeAttribute("had-proxystate");
+  },
+
+  onUrlbarSearchModeChanged(event) {
+    if (gReduceMotion) {
+      return;
+    }
+    const { searchMode } = event.detail;
+    const input = gURLBar;
+    if (gURLBar.hasAttribute("breakout-extend") && !this._animatingSearchMode) {
+      this._animatingSearchMode = true;
+      this.motion
+        .animate(input, { scale: [1, 0.98, 1] }, { duration: 0.25 })
+        .then(() => {
+          delete this._animatingSearchMode;
+        });
+      if (searchMode) {
+        gURLBar.setAttribute("animate-searchmode", "true");
+        this._animatingSearchModeTimeout = setTimeout(() => {
+          requestAnimationFrame(() => {
+            gURLBar.removeAttribute("animate-searchmode");
+            delete this._animatingSearchModeTimeout;
+          });
+        }, 1000);
+      }
+    }
+  },
+
+  enableCommandsMode(event) {
+    event.preventDefault();
+    if (!gURLBar.hasAttribute("breakout-extend") || this._animatingSearchMode) {
+      return;
+    }
+    const currentSearchMode = gURLBar.getSearchMode(gBrowser.selectedBrowser);
+    let searchMode = null;
+    if (!currentSearchMode) {
+      searchMode = {
+        source: UrlbarShared.RESULT_SOURCE.HARBOR_ACTIONS,
+        isPreview: true,
+      };
+    }
+    gURLBar.removeAttribute("animate-searchmode");
+    if (this._animatingSearchModeTimeout) {
+      clearTimeout(this._animatingSearchModeTimeout);
+      delete this._animatingSearchModeTimeout;
+    }
+    gURLBar.searchMode = searchMode;
+    gURLBar.startQuery({
+      allowAutofill: false,
+      event,
+    });
+  },
+
+  get newtabButtons() {
+    return document.querySelectorAll("#tabs-newtab-button");
+  },
+
+  _prevUrlbarLabel: null,
+  _lastSearch: "",
+  _clearTimeout: null,
+  _lastTab: null,
+
+  _urlbarSessionCounter: 0,
+  _urlbarOwner: null,
+
+  _isOwner(closeSeq) {
+    return this._urlbarOwner === closeSeq;
+  },
+
+  // Check if browser elements are in a valid state for tab operations
+  _validateBrowserState() {
+    // Check if browser window is still open
+    if (window.closed) {
+      return false;
+    }
+
+    // Check if gBrowser is available
+    if (!gBrowser || !gBrowser.tabContainer) {
+      return false;
+    }
+
+    // Check if URL bar is available
+    if (!gURLBar) {
+      return false;
+    }
+
+    return true;
+  },
+
+  handleNewTab(
+    werePassedURL,
+    searchClipboard,
+    where,
+    overridePreferance = false,
+    closeToken = {}
+  ) {
+    // Keep this here. It's better to make sure every
+    // call has a different token rather then forgetting
+    // to increment it in one of the early returns.
+    const closeSeq = ++this._urlbarSessionCounter;
+    closeToken.id = closeSeq;
+
+    // Validate browser state first
+    if (!this._validateBrowserState()) {
+      console.warn("Browser state invalid for new tab operation");
+      return false;
+    }
+
+    if (this.testingEnabled && !overridePreferance) {
+      return false;
+    }
+
+    if (document.documentElement.hasAttribute("harbor-welcome-stage")) {
+      return false;
+    }
+
+    const shouldOpenURLBar =
+      overridePreferance ||
+      (gHarborVerticalTabsManager._canReplaceNewTab &&
+        !werePassedURL &&
+        !searchClipboard &&
+        where === "tab");
+
+    if (!shouldOpenURLBar) {
+      return false;
+    }
+
+    // Close the new tab popup on cmd/ctrl + t
+    if (!overridePreferance && gURLBar.hasAttribute("harbor-newtab")) {
+      // The _harborHandleUrlbarClose holds a token in it's closure.
+      // Call that instead.
+      if (gURLBar._harborHandleUrlbarClose) {
+        gURLBar._harborHandleUrlbarClose();
+      } else {
+        this.handleUrlbarClose(closeSeq);
+      }
+      return true;
+    }
+
+    // Clear any existing timeout
+    if (this._clearTimeout) {
+      clearTimeout(this._clearTimeout);
+      this._clearTimeout = null;
+    }
+
+    // Store the current tab
+    this._lastTab = gBrowser.selectedTab;
+    if (!this._lastTab) {
+      console.warn("No selected tab found when creating new tab");
+      return false;
+    }
+
+    // Set visual state with proper validation
+    if (this._lastTab && !this._lastTab.closing) {
+      this._lastTab._visuallySelected = false;
+    }
+
+    // Store URL bar state
+    this._prevUrlbarLabel = gURLBar._untrimmedValue || "";
+
+    // Set up URL bar for new tab
+    gURLBar._harborHandleUrlbarClose = (onSwitch, onElementPicked) =>
+      this.handleUrlbarClose(closeSeq, onSwitch, onElementPicked);
+    this._urlbarOwner = closeSeq;
+    gURLBar.setAttribute("harbor-newtab", true);
+
+    // Update newtab buttons
+    for (const button of this.newtabButtons) {
+      button.setAttribute("in-urlbar", true);
+    }
+
+    // Open location command
+    try {
+      gURLBar.search(this._lastSearch || "");
+      document.getElementById("Browser:OpenLocation").doCommand();
+    } catch (e) {
+      console.error("Error opening location in new tab:", e);
+      this.handleUrlbarClose(closeSeq, false, false);
+      return false;
+    }
+    return true;
+  },
+
+  /**
+   * Check whether the closeToken given by handleNewTab
+   * corresponds to a close event.
+   *
+   * @param {object} closeToken - Token previously passed to handleNewTab.
+   * @param {CustomEvent} event - A HarborURLBarClosed event.
+   * @returns {boolean}
+   */
+  matchesCloseToken(closeToken, event) {
+    return (
+      typeof closeToken?.id === "number" &&
+      event?.detail?.closeSeq === closeToken.id
+    );
+  },
+
+  clearUrlbarData() {
+    this._prevUrlbarLabel = null;
+    this._lastSearch = "";
+  },
+
+  handleUrlbarClose(closeSeq, onSwitch = false, onElementPicked = false) {
+    // Validate browser state first
+    if (!this._validateBrowserState()) {
+      console.warn("Browser state invalid for URL bar close operation");
+      return;
+    }
+
+    // Reset URL bar state
+    if (gURLBar._harborHandleUrlbarClose) {
+      gURLBar._harborHandleUrlbarClose = null;
+    }
+
+    const isFocusedBefore = gURLBar.focused;
+    setTimeout(() => {
+      /* If someone else opened the url bar in the meantime don't be
+       * stingy and leave it open for them.*/
+      if (this._isOwner(closeSeq)) {
+        // We use this attribute on Tabbrowser::addTab
+        gURLBar.removeAttribute("harbor-newtab");
+
+        // Safely restore tab visual state with proper validation
+        if (
+          this._lastTab &&
+          !this._lastTab.closing &&
+          this._lastTab.documentGlobal &&
+          !this._lastTab.documentGlobal.closed &&
+          gBrowser.selectedTab === this._lastTab
+        ) {
+          this._lastTab._visuallySelected = true;
+          this._lastTab = null;
+        }
+
+        // Reset newtab buttons
+        for (const button of this.newtabButtons) {
+          button.removeAttribute("in-urlbar");
+        }
+
+        // Handle search data
+        if (onSwitch) {
+          this.clearUrlbarData();
+        } else {
+          this._lastSearch = gURLBar._untrimmedValue || "";
+
+          if (this._clearTimeout) {
+            clearTimeout(this._clearTimeout);
+          }
+
+          this._clearTimeout = setTimeout(() => {
+            this.clearUrlbarData();
+          }, this.urlbarWaitToClear);
+        }
+
+        // Safely restore URL bar state with proper validation
+        if (this._prevUrlbarLabel) {
+          gURLBar.setURI({
+            uri: this._prevUrlbarLabel,
+            dueToTabSwitch: onSwitch,
+            isSameDocument: !onSwitch,
+          });
+        }
+
+        gURLBar.handleRevert();
+      }
+
+      if (isFocusedBefore) {
+        setTimeout(() => {
+          window.dispatchEvent(
+            new CustomEvent("HarborURLBarClosed", {
+              detail: { onSwitch, onElementPicked, closeSeq },
+            })
+          );
+
+          if (!this._isOwner(closeSeq)) {
+            return;
+          }
+          this._urlbarOwner = null;
+
+          gURLBar.view.close({ elementPicked: onElementPicked });
+          gURLBar.updateTextOverflow();
+
+          if (onElementPicked && onSwitch) {
+            gURLBar.setURI({ dueToTabSwitch: onSwitch });
+          }
+
+          // Ensure tab and browser are valid before updating state
+          const selectedTab = gBrowser.selectedTab;
+          if (
+            selectedTab &&
+            selectedTab.linkedBrowser &&
+            !selectedTab.closing &&
+            onSwitch
+          ) {
+            const browserState = gURLBar.getBrowserState(
+              selectedTab.linkedBrowser
+            );
+            if (browserState) {
+              browserState.urlbarFocused = false;
+            }
+          }
+        }, 0);
+      } else if (this._isOwner(closeSeq)) {
+        this._urlbarOwner = null;
+      }
+    }, 0);
+  },
+
+  urlbarTrim(aURL) {
+    if (gURLBar.hasAttribute("breakout-extend")) {
+      return aURL;
+    }
+    if (
+      gHarborVerticalTabsManager._hasSetSingleToolbar &&
+      this.urlbarShowDomainOnly
+    ) {
+      let url = BrowserUIUtils.removeSingleTrailingSlashFromURL(aURL);
+      let stripped = url.startsWith("https://") ? url.split("/")[2] : url;
+      if (stripped.startsWith("www.")) {
+        stripped = stripped.substring(4);
+      }
+      return stripped;
+    }
+    return BrowserUIUtils.trimURL(aURL);
+  },
+
+  // Section: Notification messages
+  _createToastElement(messageId, options) {
+    const createButton = () => {
+      const button = document.createXULElement("button");
+      button.id = options.button.id;
+      button.classList.add("footer-button");
+      button.classList.add("primary");
+      button.addEventListener("command", options.button.command);
+      return button;
+    };
+
+    // Check if this message ID already exists
+    for (const child of this._toastContainer.children) {
+      if (child._messageId === messageId) {
+        child.removeAttribute("button");
+        if (options.button) {
+          const button = createButton();
+          const existingButton = child.querySelector("button");
+          if (existingButton) {
+            existingButton.remove();
+          }
+          child.appendChild(button);
+          child.setAttribute("button", true);
+        }
+        return [child, true];
+      }
+    }
+    const wrapper = document.createXULElement("hbox");
+    const element = document.createXULElement("vbox");
+    const label = document.createXULElement("label");
+    document.l10n.setAttributes(label, messageId, options.l10nArgs);
+    element.appendChild(label);
+    if (options.descriptionId) {
+      const description = document.createXULElement("label");
+      description.classList.add("description");
+      document.l10n.setAttributes(description, options.descriptionId, options);
+      element.appendChild(description);
+    }
+    wrapper.appendChild(element);
+    if (options.button) {
+      const button = createButton();
+      wrapper.appendChild(button);
+      wrapper.setAttribute("button", true);
+    }
+    wrapper.classList.add("harbor-toast");
+    wrapper._messageId = messageId;
+    return [wrapper, false];
+  },
+
+  async showToast(messageId, options = {}) {
+    const [toast, reused] = this._createToastElement(messageId, options);
+    this._toastContainer.removeAttribute("hidden");
+    this._toastContainer.appendChild(toast);
+    const timeoutFunction = () => {
+      if (Services.prefs.getBoolPref("ui.popup.disable_autohide")) {
+        return;
+      }
+      this.motion
+        .animate(
+          toast,
+          { opacity: [1, 0], scale: [1, 0.5] },
+          { duration: 0.2, bounce: 0 }
+        )
+        .then(() => {
+          toast.remove();
+          if (this._toastContainer.children.length === 0) {
+            this._toastContainer.setAttribute("hidden", true);
+          }
+        });
+    };
+    if (reused) {
+      await this.motion.animate(
+        toast,
+        { scale: 0.2 },
+        { duration: 0.1, bounce: 0 }
+      );
+    } else {
+      toast.addEventListener("mouseover", () => {
+        if (this._toastTimeouts[messageId]) {
+          clearTimeout(this._toastTimeouts[messageId]);
+        }
+      });
+      toast.addEventListener("mouseout", () => {
+        if (this._toastTimeouts[messageId]) {
+          clearTimeout(this._toastTimeouts[messageId]);
+        }
+        this._toastTimeouts[messageId] = setTimeout(
+          timeoutFunction,
+          options.timeout || 2000
+        );
+      });
+    }
+    if (!toast.style.transform) {
+      toast.style.transform = "scale(0)";
+    }
+    await this.motion.animate(
+      toast,
+      { scale: 1 },
+      { type: "spring", bounce: 0.2, duration: 0.5 }
+    );
+    if (this._toastTimeouts[messageId]) {
+      clearTimeout(this._toastTimeouts[messageId]);
+    }
+    this._toastTimeouts[messageId] = setTimeout(
+      timeoutFunction,
+      options.timeout || 2000
+    );
+  },
+
+  panelUIPosition(panel, anchor) {
+    // The alignment position of the panel is determined during the "popuppositioned" event
+    // when the panel opens. The alignment positions help us determine in which orientation
+    // the panel is anchored to the screen space.
+    //
+    // *  "after_start": The panel is anchored at the top-left     corner in LTR locales, top-right    in RTL locales.
+    // *    "after_end": The panel is anchored at the top-right    corner in LTR locales, top-left     in RTL locales.
+    // * "before_start": The panel is anchored at the bottom-left  corner in LTR locales, bottom-right in RTL locales.
+    // *   "before_end": The panel is anchored at the bottom-right corner in LTR locales, bottom-left  in RTL locales.
+    //
+    //   ┌─Anchor(LTR)          ┌─Anchor(RTL)
+    //   │       Anchor(RTL)─┐  │       Anchor(LTR)─┐
+    //   │                   │  │                   │
+    //   x───────────────────x  x───────────────────x
+    //   │                   │  │                   │
+    //   │       Panel       │  │       Panel       │
+    //   │   "after_start"   │  │    "after_end"    │
+    //   │                   │  │                   │
+    //   └───────────────────┘  └───────────────────┘
+    //
+    //   ┌───────────────────┐  ┌───────────────────┐
+    //   │                   │  │                   │
+    //   │       Panel       │  │       Panel       │
+    //   │   "before_start"  │  │    "before_end"   │
+    //   │                   │  │                   │
+    //   x───────────────────x  x───────────────────x
+    //   │                   │  │                   │
+    //   │       Anchor(RTL)─┘  │       Anchor(LTR)─┘
+    //   └─Anchor(LTR)          └─Anchor(RTL)
+    //
+    // The default choice for the panel is "after_start", to match the content context menu's alignment. However, it is
+    // possible to end up with any of the four combinations. Before the panel is opened, the XUL popup manager needs to
+    // make a determination about the size of the panel and whether or not it will fit within the visible screen area with
+    // the intended alignment. The manager may change the panel's alignment before opening to ensure the panel is fully visible.
+    //
+    // For example, if the panel is opened such that the bottom edge would be rendered off screen, then the XUL popup manager
+    // will change the alignment from "after_start" to "before_start", anchoring the panel's bottom corner to the target screen
+    // location instead of its top corner. This transformation ensures that the whole of the panel is visible on the screen.
+    //
+    // When the panel is anchored by one of its bottom corners (the "before_..." options), then it causes unintentionally odd
+    // behavior where dragging the text-area resizer downward with the mouse actually grows the panel's top edge upward, since
+    // the bottom of the panel is anchored in place. We want to disable the resizer if the panel was positioned to be anchored
+    // from one of its bottom corners.
+    let block = "bottomleft";
+    let inline = "topleft";
+    if (anchor?.closest("#harbor-sidebar-top-buttons")) {
+      block = "topleft";
+    }
+    if (
+      (gHarborVerticalTabsManager._hasSetSingleToolbar &&
+        gHarborVerticalTabsManager._prefsRightSide) ||
+      (panel?.id === "harbor-unified-site-data-panel" &&
+        !gHarborVerticalTabsManager._hasSetSingleToolbar) ||
+      (panel?.id === "unified-extensions-panel" &&
+        gHarborVerticalTabsManager._hasSetSingleToolbar)
+    ) {
+      block = "bottomright";
+      inline = "topright";
+    }
+    return `${block} ${inline}`;
+  },
+
+  urlStringsDomainMatch(url1, url2) {
+    if (!url1.startsWith("http") || !url2?.startsWith("http")) {
+      return false;
+    }
+    return Services.io.newURI(url1).host === Services.io.newURI(url2).host;
+  },
+
+  getOpenUILinkWhere(url, browser, openUILinkWhere) {
+    try {
+      let tab = gBrowser.getTabForBrowser(browser);
+      if (
+        openUILinkWhere === "current" &&
+        !this.urlStringsDomainMatch(url, browser.currentURI.spec) &&
+        tab.pinned &&
+        Services.prefs.getBoolPref("harbor.tabs.open-pinned-in-new-tab")
+      ) {
+        return "tab";
+      }
+    } catch (e) {
+      console.error("Error in getOpenUILinkWhere:", e);
+    }
+    return openUILinkWhere;
+  },
+};
+
+XPCOMUtils.defineLazyPreferenceGetter(
+  gHarborUIManager,
+  "contentElementSeparation",
+  "harbor.theme.content-element-separation",
+  0
+);
+
+XPCOMUtils.defineLazyPreferenceGetter(
+  gHarborUIManager,
+  "urlbarWaitToClear",
+  "harbor.urlbar.wait-to-clear",
+  0
+);
+XPCOMUtils.defineLazyPreferenceGetter(
+  gHarborUIManager,
+  "urlbarShowDomainOnly",
+  "harbor.urlbar.show-domain-only-in-sidebar",
+  true
+);
+
+window.gHarborVerticalTabsManager = {
+  init() {
+    this._multiWindowFeature = new nsHarborMultiWindowFeature();
+    this._initWaitPromise();
+
+    ChromeUtils.defineLazyGetter(this, "isWindowsStyledButtons", () => {
+      return !(
+        window.AppConstants.platform === "macosx" ||
+        window.matchMedia("(-moz-gtk-csd-reversed-placement)").matches ||
+        Services.prefs.getBoolPref(
+          "harbor.view.experimental-force-window-controls-left"
+        )
+      );
+    });
+
+    ChromeUtils.defineLazyGetter(this, "hidesTabsToolbar", () => {
+      return document.documentElement.hasAttribute("popup-window");
+    });
+
+    XPCOMUtils.defineLazyPreferenceGetter(
+      this,
+      "_canReplaceNewTab",
+      "harbor.urlbar.replace-newtab",
+      true
+    );
+    var updateEvent = this._updateEvent.bind(this);
+    var onPrefChange = this._onPrefChange.bind(this);
+
+    this.initializePreferences(onPrefChange);
+    this._toolbarOriginalParent =
+      document.getElementById("nav-bar").parentElement;
+
+    gHarborCompactModeManager.addEventListener(updateEvent);
+    this.initRightSideOrderContextMenu();
+
+    window.addEventListener(
+      "customizationstarting",
+      this._preCustomize.bind(this)
+    );
+    window.addEventListener(
+      "aftercustomization",
+      this._postCustomize.bind(this)
+    );
+
+    this._updateEvent();
+
+    if (!this.isWindowsStyledButtons) {
+      document.documentElement.setAttribute(
+        "harbor-window-buttons-reversed",
+        true
+      );
+    }
+
+    this._renameTabHalt = this.renameTabHalt.bind(this);
+    gBrowser.tabContainer.addEventListener(
+      "dblclick",
+      this.renameTabStart.bind(this)
+    );
+  },
+
+  toggleExpand() {
+    const newVal = !Services.prefs.getBoolPref("harbor.view.sidebar-expanded");
+    Services.prefs.setBoolPref("harbor.view.sidebar-expanded", newVal);
+    Services.prefs.setBoolPref("harbor.view.use-single-toolbar", false);
+  },
+
+  get navigatorToolbox() {
+    return gNavToolbox;
+  },
+
+  initRightSideOrderContextMenu() {
+    const kConfigKey = "harbor.tabs.vertical.right-side";
+    const fragment = window.MozXULElement.parseXULToFragment(`
+      <menuitem id="harbor-toolbar-context-tabs-right"
+                type="checkbox"
+                ${Services.prefs.getBoolPref(kConfigKey) ? 'checked="true"' : ""}
+                data-lazy-l10n-id="harbor-toolbar-context-tabs-right"
+                command="cmd_harborToggleTabsOnRight"
+        />
+    `);
+    document.getElementById("toolbar-context-customize").before(fragment);
+  },
+
+  get _topButtonsSeparatorElement() {
+    if (this.__topButtonsSeparatorElement) {
+      return this.__topButtonsSeparatorElement;
+    }
+    this.__topButtonsSeparatorElement = document.getElementById(
+      "harbor-sidebar-top-buttons-separator"
+    );
+    return this.__topButtonsSeparatorElement;
+  },
+
+  animateItemOpen(aItem) {
+    if (
+      gReduceMotion ||
+      !gHarborUIManager.motion ||
+      !aItem ||
+      !gHarborUIManager._hasLoadedDOM ||
+      !aItem.isConnected ||
+      // We do want to do some animations during testing with profiling enabled
+      // so we can capture and improve them.
+      (gHarborUIManager.testingEnabled && !gHarborUIManager.profilingEnabled) ||
+      !gHarborStartup.isReady ||
+      aItem.group?.hasAttribute("split-view-group")
+    ) {
+      return;
+    }
+    // get next visible tab
+    const isLastItem = () => {
+      const visibleItems = gBrowser.tabContainer.ariaFocusableItems;
+      return visibleItems[visibleItems.length - 1] === aItem;
+    };
+
+    try {
+      const itemSize =
+        window.windowUtils.getBoundsWithoutFlushing(aItem).height;
+      const transform = `-${itemSize}px`;
+      gHarborUIManager.motion
+        .animate(
+          aItem,
+          {
+            opacity: [0, 1],
+            transform: ["scale(0.95)", "scale(1)"],
+            marginBottom: isLastItem() ? ["0px", "0px"] : [transform, "0px"],
+          },
+          {
+            duration: 0.12,
+            easing: "easeOut",
+          }
+        )
+        .then(() => {})
+        .catch(err => {
+          console.error(err);
+        })
+        .finally(() => {
+          aItem.style.removeProperty("margin-bottom");
+          aItem.style.removeProperty("transform");
+          aItem.style.removeProperty("opacity");
+        });
+      const itemLabel =
+        aItem.querySelector(".tab-group-label-container") ||
+        aItem.querySelector(".tab-content");
+      gHarborUIManager.motion
+        .animate(
+          itemLabel,
+          {
+            filter: ["blur(1px)", "blur(0px)"],
+          },
+          {
+            duration: 0.1,
+            easing: "easeOut",
+          }
+        )
+        .then(() => {})
+        .catch(err => {
+          console.error(err);
+        })
+        .finally(() => {
+          itemLabel.style.removeProperty("filter");
+        });
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  animateItemClose(aItem) {
+    if (
+      aItem.hasAttribute("harbor-essential") ||
+      aItem.group?.hasAttribute("split-view-group") ||
+      !gHarborUIManager.motion ||
+      gReduceMotion
+    ) {
+      return Promise.resolve();
+    }
+    const height = window.windowUtils.getBoundsWithoutFlushing(aItem).height;
+    const visibleItems = gBrowser.tabContainer.ariaFocusableItems;
+    const isLastItem = visibleItems[visibleItems.length - 1] === aItem;
+    return gHarborUIManager.motion.animate(
+      aItem,
+      {
+        opacity: [1, 0],
+        transform: ["scale(1)", "scale(0.95)"],
+        ...(isLastItem
+          ? {}
+          : {
+              marginBottom: [`0px`, `-${height}px`],
+            }),
+      },
+      {
+        duration: 0.1,
+        easing: "easeOut",
+      }
+    );
+  },
+
+  get actualWindowButtons() {
+    // we have multiple ".titlebar-buttonbox-container" in the DOM, because of the titlebar
+    if (!this.__actualWindowButtons) {
+      this.__actualWindowButtons = !this.isWindowsStyledButtons
+        ? document.querySelector(".titlebar-buttonbox-container") // TODO: test if it works 100% of the time
+        : document.querySelector("#nav-bar .titlebar-buttonbox-container");
+      this.__actualWindowButtons.setAttribute("overflows", "false");
+    }
+    return this.__actualWindowButtons;
+  },
+
+  async _preCustomize() {
+    await this._multiWindowFeature.foreachWindowAsActive(async browser => {
+      browser.gHarborVerticalTabsManager._updateEvent({
+        forCustomizableMode: true,
+        dontRebuildAreas: true,
+      });
+    });
+    this.rebuildAreas();
+    this.navigatorToolbox.setAttribute("harbor-sidebar-expanded", "true");
+    document.documentElement.setAttribute("harbor-sidebar-expanded", "true"); // force expanded sidebar
+  },
+
+  _postCustomize() {
+    // No need to use `await` here, because the customization is already done
+    this._multiWindowFeature.foreachWindowAsActive(async browser => {
+      browser.gHarborVerticalTabsManager._updateEvent({ dontRebuildAreas: true });
+    });
+  },
+
+  initializePreferences(updateEvent) {
+    XPCOMUtils.defineLazyPreferenceGetter(
+      this,
+      "_prefsVerticalTabs",
+      "harbor.tabs.vertical",
+      true,
+      updateEvent
+    );
+    XPCOMUtils.defineLazyPreferenceGetter(
+      this,
+      "_prefsRightSide",
+      "harbor.tabs.vertical.right-side",
+      false,
+      updateEvent
+    );
+    XPCOMUtils.defineLazyPreferenceGetter(
+      this,
+      "_prefsUseSingleToolbar",
+      "harbor.view.use-single-toolbar",
+      false,
+      updateEvent
+    );
+    XPCOMUtils.defineLazyPreferenceGetter(
+      this,
+      "_prefsSidebarExpanded",
+      "harbor.view.sidebar-expanded",
+      false,
+      updateEvent
+    );
+    XPCOMUtils.defineLazyPreferenceGetter(
+      this,
+      "_prefsSidebarExpandedMaxWidth",
+      "harbor.view.sidebar-expanded.max-width",
+      300,
+      updateEvent
+    );
+  },
+
+  _initWaitPromise() {
+    this._waitPromise = new Promise(resolve => {
+      this._resolveWaitPromise = resolve;
+    });
+  },
+
+  async _onPrefChange() {
+    this._resolveWaitPromise();
+
+    // only run if we are in the active window
+    await this._multiWindowFeature.foreachWindowAsActive(async browser => {
+      if (
+        browser.gHarborVerticalTabsManager._multiWindowFeature.windowIsActive(
+          browser
+        )
+      ) {
+        return;
+      }
+      await browser.gHarborVerticalTabsManager._waitPromise;
+      browser.gHarborVerticalTabsManager._updateEvent({ dontRebuildAreas: true });
+      browser.gHarborVerticalTabsManager._initWaitPromise();
+    });
+
+    if (nsHarborMultiWindowFeature.isActiveWindow) {
+      this._updateEvent();
+      this._initWaitPromise();
+    }
+  },
+
+  recalculateURLBarHeight(updateFormat = false) {
+    if (gHarborWorkspaces._processingResize) {
+      return;
+    }
+    this._pendingUrlbarFormatUpdate ||= updateFormat;
+    if (this._urlbarHeightRecalcScheduled) {
+      return;
+    }
+    this._urlbarHeightRecalcScheduled = true;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        delete this._urlbarHeightRecalcScheduled;
+        const shouldUpdateFormat = this._pendingUrlbarFormatUpdate;
+        delete this._pendingUrlbarFormatUpdate;
+        gURLBar.removeAttribute("--urlbar-height");
+        let height;
+        if (!this._hasSetSingleToolbar) {
+          height = AppConstants.platform == "macosx" ? 34 : 32;
+        } else if (!gURLBar.hasAttribute("breakout-extend")) {
+          height = 38;
+        }
+        if (typeof height !== "undefined") {
+          gURLBar.style.setProperty("--urlbar-height", `${height}px`);
+        }
+        if (shouldUpdateFormat) {
+          gURLBar.harborFormatURLValue();
+        }
+      });
+    });
+  },
+
+  // eslint-disable-next-line complexity
+  _updateEvent({ forCustomizableMode = false, dontRebuildAreas = false } = {}) {
+    if (this._isUpdating) {
+      return;
+    }
+    this._isUpdating = true;
+    try {
+      this._updateMaxWidth();
+
+      if (window.docShell) {
+        window.docShell.treeOwner
+          .QueryInterface(Ci.nsIInterfaceRequestor)
+          .getInterface(Ci.nsIAppWindow)
+          .rollupAllPopups();
+      }
+
+      const topButtons = document.getElementById("harbor-sidebar-top-buttons");
+      const isCompactMode =
+        gHarborCompactModeManager.preference && !forCustomizableMode;
+      const isVerticalTabs = this._prefsVerticalTabs || forCustomizableMode;
+      const isSidebarExpanded = this._prefsSidebarExpanded || !isVerticalTabs;
+      const isRightSide = this._prefsRightSide && isVerticalTabs;
+      const isSingleToolbar =
+        ((this._prefsUseSingleToolbar && isVerticalTabs && isSidebarExpanded) ||
+          !isVerticalTabs) &&
+        !forCustomizableMode &&
+        !this.hidesTabsToolbar;
+      const titlebar = document.getElementById("titlebar");
+
+      gBrowser.tabContainer.setAttribute(
+        "orient",
+        isVerticalTabs ? "vertical" : "horizontal"
+      );
+      gBrowser.tabContainer.arrowScrollbox.setAttribute(
+        "orient",
+        isVerticalTabs ? "vertical" : "horizontal"
+      );
+      // on purpose, we set the orient to horizontal, because the arrowScrollbox is vertical
+      gBrowser.tabContainer.arrowScrollbox.scrollbox.setAttribute(
+        "orient",
+        isVerticalTabs ? "vertical" : "horizontal"
+      );
+
+      const buttonsTarget = document.getElementById(
+        "harbor-sidebar-top-buttons-customization-target"
+      );
+      if (isRightSide) {
+        this.navigatorToolbox.setAttribute("harbor-right-side", "true");
+        document.documentElement.setAttribute("harbor-right-side", "true");
+      } else {
+        this.navigatorToolbox.removeAttribute("harbor-right-side");
+        document.documentElement.removeAttribute("harbor-right-side");
+      }
+
+      const wasSidebarExpanded = document.documentElement.hasAttribute(
+        "harbor-sidebar-expanded"
+      );
+      if (isSidebarExpanded !== wasSidebarExpanded) {
+        delete this._hadSidebarCollapse;
+        if (isSidebarExpanded) {
+          this._hadSidebarCollapse = true;
+          this.navigatorToolbox.setAttribute("harbor-sidebar-expanded", "true");
+          document.documentElement.setAttribute("harbor-sidebar-expanded", "true");
+          gBrowser.tabContainer.setAttribute("expanded", "true");
+        } else {
+          this.navigatorToolbox.removeAttribute("harbor-sidebar-expanded");
+          document.documentElement.removeAttribute("harbor-sidebar-expanded");
+          gBrowser.tabContainer.removeAttribute("expanded");
+        }
+      }
+
+      const appContentNavbarContaienr = document.getElementById(
+        "harbor-appcontent-navbar-container"
+      );
+      const appContentNavbarWrapper = document.getElementById(
+        "harbor-appcontent-navbar-wrapper"
+      );
+      appContentNavbarWrapper.style.transition = "none";
+      let shouldHide = false;
+      if (
+        ((!isRightSide && this.isWindowsStyledButtons) ||
+          (isRightSide && !this.isWindowsStyledButtons) ||
+          (isCompactMode && isSingleToolbar && this.isWindowsStyledButtons)) &&
+        isSingleToolbar
+      ) {
+        appContentNavbarWrapper.setAttribute("should-hide", true);
+        shouldHide = true;
+      } else {
+        appContentNavbarWrapper.removeAttribute("should-hide");
+      }
+
+      // Check if the sidebar is in hover mode
+      if (
+        !this.navigatorToolbox.hasAttribute("harbor-right-side") &&
+        !isCompactMode
+      ) {
+        this.navigatorToolbox.prepend(topButtons);
+      }
+
+      let windowButtons = this.actualWindowButtons;
+      let doNotChangeWindowButtons =
+        !isCompactMode && isRightSide && this.isWindowsStyledButtons;
+      const navBar = document.getElementById("nav-bar");
+
+      if (isSingleToolbar) {
+        this._navbarParent = navBar.parentElement;
+        let elements = Array.from(
+          document.querySelectorAll(
+            '#nav-bar-customization-target > :is([cui-areatype="toolbar"], .chromeclass-toolbar-additional):not(#urlbar-container):not(toolbarspring)'
+          )
+        );
+        let normalButtons = [];
+        let extensionButtons = [];
+        for (const element of elements) {
+          if (
+            element.hasAttribute("data-extensionid") &&
+            Services.prefs.getBoolPref("harbor.view.overflow-webext-toolbar", true)
+          ) {
+            extensionButtons.push(element);
+          } else {
+            normalButtons.push(element);
+          }
+        }
+        // Add separator if it doesn't exist
+        if (!this._hasSetSingleToolbar) {
+          buttonsTarget.append(this._topButtonsSeparatorElement);
+        }
+        this._hasSetSingleToolbar = true;
+        for (const button of normalButtons.reverse()) {
+          this.appendCustomizableItem(this._topButtonsSeparatorElement, button);
+        }
+        for (const extension of extensionButtons) {
+          this.appendCustomizableItem(
+            this._topButtonsSeparatorElement,
+            extension
+          );
+        }
+        buttonsTarget.prepend(
+          document.getElementById("unified-extensions-button")
+        );
+        const panelUIButton = document.getElementById("PanelUI-button");
+        buttonsTarget.prepend(panelUIButton);
+        panelUIButton.setAttribute("overflows", "false");
+        buttonsTarget.parentElement.append(
+          document.getElementById("nav-bar-overflow-button")
+        );
+        if (this.isWindowsStyledButtons && !doNotChangeWindowButtons) {
+          appContentNavbarContaienr.append(windowButtons);
+        }
+        if (isCompactMode) {
+          titlebar.moveBefore(navBar, titlebar.firstChild);
+          titlebar.moveBefore(topButtons, titlebar.firstChild);
+        } else {
+          titlebar.parentNode.moveBefore(topButtons, titlebar);
+          titlebar.parentNode.moveBefore(navBar, titlebar);
+        }
+        document.documentElement.setAttribute("harbor-single-toolbar", true);
+      } else if (this._hasSetSingleToolbar) {
+        this._hasSetSingleToolbar = false;
+        // Do the opposite
+        this._navbarParent.prepend(navBar);
+        const elements = document.querySelectorAll(
+          '#harbor-sidebar-top-buttons-customization-target > :is([cui-areatype="toolbar"], .chromeclass-toolbar-additional)'
+        );
+        for (const button of elements) {
+          document
+            .getElementById("nav-bar-customization-target")
+            .append(button);
+        }
+        this._topButtonsSeparatorElement.remove();
+        document.documentElement.removeAttribute("harbor-single-toolbar");
+        const panelUIButton = document.getElementById("PanelUI-button");
+        navBar.appendChild(panelUIButton);
+        panelUIButton.removeAttribute("overflows");
+        navBar.appendChild(document.getElementById("nav-bar-overflow-button"));
+        this._toolbarOriginalParent.prepend(navBar);
+        if (!dontRebuildAreas) {
+          this.rebuildAreas();
+        }
+      }
+
+      if (isCompactMode) {
+        titlebar.prepend(topButtons);
+      } else if (isSidebarExpanded) {
+        titlebar.before(topButtons);
+      } else {
+        titlebar.prepend(topButtons);
+      }
+
+      // Case: single toolbar, not compact mode, not right side and macos styled buttons
+      if (
+        !doNotChangeWindowButtons &&
+        isSingleToolbar &&
+        !isCompactMode &&
+        !isRightSide &&
+        !this.isWindowsStyledButtons
+      ) {
+        topButtons.prepend(windowButtons);
+      }
+
+      const canHideTabBarPref = Services.prefs.getBoolPref(
+        "harbor.view.compact.hide-tabbar"
+      );
+      const captionsShouldStayOnSidebar =
+        !canHideTabBarPref &&
+        ((!this.isWindowsStyledButtons && !isRightSide) ||
+          (this.isWindowsStyledButtons && isRightSide));
+      if (
+        (!isSingleToolbar && isCompactMode && !captionsShouldStayOnSidebar) ||
+        !isSidebarExpanded
+      ) {
+        navBar.prepend(topButtons);
+      }
+
+      // Case: single toolbar, compact mode, right side and windows styled buttons
+      if (
+        isSingleToolbar &&
+        isCompactMode &&
+        isRightSide &&
+        this.isWindowsStyledButtons
+      ) {
+        topButtons.prepend(windowButtons);
+      }
+
+      if (doNotChangeWindowButtons) {
+        if (isRightSide && !isSidebarExpanded) {
+          navBar.appendChild(windowButtons);
+        } else {
+          topButtons.appendChild(windowButtons);
+        }
+      } else if (!isSingleToolbar && !isCompactMode) {
+        if (this.isWindowsStyledButtons) {
+          if (isRightSide) {
+            appContentNavbarContaienr.append(windowButtons);
+          } else {
+            navBar.append(windowButtons);
+          }
+        } else {
+          // not windows styled buttons
+          // eslint-disable-next-line no-lonely-if
+          if (isRightSide || !isSidebarExpanded) {
+            navBar.prepend(windowButtons);
+          } else {
+            topButtons.prepend(windowButtons);
+          }
+        }
+      } else if (!isSingleToolbar && isCompactMode) {
+        if (captionsShouldStayOnSidebar) {
+          topButtons.prepend(windowButtons);
+        } else {
+          navBar.appendChild(windowButtons);
+        }
+      } else if (isSingleToolbar && isCompactMode) {
+        if (!isRightSide && !this.isWindowsStyledButtons) {
+          topButtons.prepend(windowButtons);
+        }
+      }
+
+      if (shouldHide) {
+        appContentNavbarContaienr.append(windowButtons);
+      }
+
+      if (
+        this._hasSetSingleToolbar &&
+        Services.prefs.getBoolPref("harbor.view.overflow-webext-toolbar", true)
+      ) {
+        topButtons.setAttribute(
+          "addon-webext-overflowtarget",
+          "harbor-overflow-extensions-list"
+        );
+      } else {
+        topButtons.setAttribute(
+          "addon-webext-overflowtarget",
+          "overflowed-extensions-list"
+        );
+      }
+
+      gHarborCompactModeManager.updateCompactModeContext(isSingleToolbar);
+
+      // Always move the splitter next to the sidebar
+      const splitter = document.getElementById("harbor-sidebar-splitter");
+      splitter.addEventListener("dragover", gBrowser.tabContainer);
+      this.navigatorToolbox.after(splitter);
+      window.dispatchEvent(new Event("resize"));
+      if (!isCompactMode) {
+        gHarborCompactModeManager.getAndApplySidebarWidth({});
+      }
+      gHarborUIManager.updateTabsToolbar();
+      this.rebuildURLBarMenus();
+      appContentNavbarWrapper.style.transition = "";
+    } catch (e) {
+      console.error(e);
+    }
+    this._isUpdating = false;
+  },
+
+  rebuildURLBarMenus() {
+    gURLBar.updatePlaceholder();
+  },
+
+  rebuildAreas() {
+    CustomizableUI.harborInternalCU._rebuildRegisteredAreas(
+      /* harborDontRebuildCollapsed */ true
+    );
+  },
+
+  _updateMaxWidth() {
+    const maxWidth = Services.prefs.getIntPref(
+      "harbor.view.sidebar-expanded.max-width"
+    );
+    const toolbox = gNavToolbox;
+    if (!this._prefsCompactMode) {
+      toolbox.style.maxWidth = `${maxWidth}px`;
+    } else {
+      toolbox.style.removeProperty("maxWidth");
+    }
+  },
+
+  get expandButton() {
+    if (this._expandButton) {
+      return this._expandButton;
+    }
+    this._expandButton = document.getElementById("harbor-expand-sidebar-button");
+    return this._expandButton;
+  },
+
+  toggleTabsOnRight() {
+    const newVal = !Services.prefs.getBoolPref("harbor.tabs.vertical.right-side");
+    Services.prefs.setBoolPref("harbor.tabs.vertical.right-side", newVal);
+  },
+
+  appendCustomizableItem(target, child, placements = []) {
+    if (
+      this._hasSetSingleToolbar &&
+      (target.id === "harbor-sidebar-top-buttons-customization-target" ||
+        target === this._topButtonsSeparatorElement)
+    ) {
+      if (placements.includes(child.id)) {
+        this._topButtonsSeparatorElement.before(child);
+        return;
+      } else if (
+        child.hasAttribute("data-extensionid") &&
+        Services.prefs.getBoolPref("harbor.view.overflow-webext-toolbar", true)
+      ) {
+        if (gURLBar._isOverflowingItems) {
+          const overflowElements = document.getElementById(
+            "harbor-overflow-extensions-list"
+          );
+          overflowElements.appendChild(child);
+        } else {
+          const element = document.getElementById("page-action-buttons");
+          child.setAttribute("context", "toolbar-context-menu");
+          element.before(child);
+        }
+        return;
+      }
+    }
+    if (target === this._topButtonsSeparatorElement) {
+      this._topButtonsSeparatorElement.after(child);
+    } else {
+      target.appendChild(child);
+    }
+  },
+
+  async renameTabKeydown(event) {
+    event.stopPropagation();
+    if (event.key === "Enter") {
+      const isTab = !!event.target.closest(".tabbrowser-tab");
+      let label = isTab
+        ? this._tabEdited.querySelector(".tab-label-container-editing")
+        : this._tabEdited;
+      let input = document.getElementById("tab-label-input");
+      let newName = input.value.replace(/\s+/g, " ").trim();
+      const hasChanged = input.value !== input._originalValue && newName;
+
+      document.documentElement.removeAttribute("harbor-renaming-tab");
+      input.remove();
+      if (!isTab) {
+        await this._tabEdited.onRenameFinished(newName);
+      } else {
+        // Check if name is blank, reset if so
+        // Always remove, so we can always rename and if it's empty,
+        // it will reset to the original name anyway
+        if (hasChanged || (this._tabEdited.harborStaticLabel && newName)) {
+          this._tabEdited.harborStaticLabel = newName;
+          gBrowser._setTabLabel(this._tabEdited, newName, {
+            _harborChangeLabelFlag: true,
+          });
+          gHarborUIManager.showToast("harbor-tabs-renamed");
+        } else {
+          delete this._tabEdited.harborStaticLabel;
+          gBrowser.setTabTitle(this._tabEdited);
+        }
+
+        gHarborUIManager.motion.animate(
+          this._tabEdited,
+          {
+            scale: [1, 0.98, 1],
+          },
+          {
+            duration: 0.25,
+          }
+        );
+      }
+
+      const editorContainer = this._tabEdited.querySelector(
+        ".tab-editor-container"
+      );
+      if (editorContainer) {
+        editorContainer.remove();
+      }
+      label.classList.remove("tab-label-container-editing");
+
+      this._tabEdited = null;
+    } else if (event.key === "Escape") {
+      event.target.blur();
+    }
+  },
+
+  renameTabStart(event) {
+    let target = event.target;
+    if (event.target.id === "context_harbor-edit-tab-title") {
+      target = TabContextMenu.contextTab;
+    }
+    const isTab = !!target.closest(".tabbrowser-tab");
+    if (
+      this._tabEdited ||
+      ((!Services.prefs.getBoolPref("harbor.tabs.rename-tabs") ||
+        (Services.prefs.getBoolPref("browser.tabs.closeTabByDblclick") &&
+          event.type === "dblclick")) &&
+        isTab) ||
+      !gHarborVerticalTabsManager._prefsSidebarExpanded
+    ) {
+      return;
+    }
+    if (
+      isTab &&
+      !target.closest(".tab-label-container") &&
+      event.type === "dblclick"
+    ) {
+      return;
+    }
+    this._tabEdited =
+      target.closest(".tabbrowser-tab") ||
+      target.closest(".harbor-current-workspace-indicator-name") ||
+      (event.explicit && target.closest(".tab-group-label"));
+    if (
+      !this._tabEdited ||
+      (this._tabEdited.hasAttribute("harbor-essential") && isTab)
+    ) {
+      this._tabEdited = null;
+      return;
+    }
+    gHarborFolders.cancelPopupTimer();
+    event.stopPropagation?.();
+    document.documentElement.setAttribute("harbor-renaming-tab", "true");
+    const label = isTab
+      ? this._tabEdited.querySelector(".tab-label-container")
+      : this._tabEdited;
+    label.classList.add("tab-label-container-editing");
+
+    if (isTab) {
+      const container = window.MozXULElement.parseXULToFragment(`
+        <vbox class="tab-label-container tab-editor-container" flex="1" align="start" pack="center"></vbox>
+      `);
+      label.after(container);
+    }
+    const input = document.createElement("input");
+    const content = isTab ? this._tabEdited.label : this._tabEdited.textContent;
+    input.id = "tab-label-input";
+    input._originalValue = content;
+    input.value = content;
+    input.addEventListener("keydown", this.renameTabKeydown.bind(this));
+
+    if (isTab) {
+      const containerHtml = this._tabEdited.querySelector(
+        ".tab-editor-container"
+      );
+      containerHtml.appendChild(input);
+    } else {
+      this._tabEdited.after(input);
+    }
+    input.focus();
+    input.setSelectionRange(0, input.value.length, "backward");
+    input.scrollLeft = 0;
+
+    input.addEventListener("blur", this._renameTabHalt);
+  },
+
+  renameTabHalt(event) {
+    if (document.activeElement === event.target || !this._tabEdited) {
+      return;
+    }
+    document.documentElement.removeAttribute("harbor-renaming-tab");
+    const editorContainer = this._tabEdited.querySelector(
+      ".tab-editor-container"
+    );
+    let input = document.getElementById("tab-label-input");
+    input.remove();
+    if (editorContainer) {
+      editorContainer.remove();
+    }
+    const isTab = !!this._tabEdited.closest(".tabbrowser-tab");
+    const label = isTab
+      ? this._tabEdited.querySelector(".tab-label-container-editing")
+      : this._tabEdited;
+    label.classList.remove("tab-label-container-editing");
+
+    this._tabEdited = null;
+  },
+};

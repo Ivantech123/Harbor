@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Простори
+harbor-panel-ui-spaces-label = 
+    .label = Простори
+harbor-panel-ui-workspaces-create = 
+    .label = Створити простір
+harbor-panel-ui-folder-create = 
+    .label = Створити теку
+harbor-panel-ui-live-folder-create = 
+    .label = Жива тека
+harbor-panel-ui-new-empty-split = 
+    .label = Нове розділення
+harbor-workspaces-panel-context-delete = 
+    .label = Видалити простір
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Змінити назву
+harbor-workspaces-panel-change-icon = 
+    .label = Змінити значок
+harbor-workspaces-panel-context-default-profile = 
+    .label = Встановити профіль
+harbor-workspaces-panel-unload = 
+    .label = Вивантажити простір
+harbor-workspaces-panel-unload-others = 
+    .label = Вивантажити всі інші простори
+harbor-workspaces-how-to-reorder-title = Як впорядкувати простори
+harbor-workspaces-how-to-reorder-desc = Перетягніть значок простору в нижній частині панелі для зміни їхнього порядку
+harbor-workspaces-change-theme = 
+    .label = Змінити тему
+harbor-workspaces-panel-context-open = 
+    .label = Відкрити робочу область
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Редагувати простір
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Простори
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Додатковий
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Роздільний
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Аналоговий
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Трійковий
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Плавучий
+harbor-panel-ui-gradient-click-to-add = Клацніть, щоби додати колір
+harbor-workspace-creation-name = 
+    .placeholder = Назва простору
+harbor-move-tab-to-workspace-button = 
+    .label = Перемістити до...
+    .tooltiptext = Перемістити всі вкладки в цьому вікні в простір
+harbor-workspaces-panel-context-reorder = 
+    .label = Упорядкувати області
+harbor-workspace-creation-profile = Профіль
+    .tooltiptext = Профілі використовуються для розділення файлів cookie і даних сайту між просторами.
+harbor-workspace-creation-header = Створити простір
+harbor-workspace-creation-label = Простори використовуються для організації ваших вкладок та сеансів.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Видалити простір?
+harbor-workspaces-delete-workspace-body = Упевнені, що хочете видалити { $name }? Цю дію неможливо скасувати.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Вкладки закрито! Скористайтеся <span>{ $shortcut }</span>, аби повернути їх.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Очистити
+    .tooltiptext = Закрити всі відкріплені вкладки
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Наступний простір
+harbor-panel-ui-workspaces-change-back = 
+    .label = Попередній простір

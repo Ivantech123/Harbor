@@ -1,0 +1,32 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+EXTRA_JS_MODULES.harbor.boosts += [
+  "HarborBoostsEditor.mjs",
+  "HarborBoostsManager.sys.mjs",
+  "HarborBoostStyles.sys.mjs",
+  "HarborSelectorComponent.sys.mjs",
+  "HarborZapDissolve.sys.mjs",
+  "HarborZapOverlayChild.sys.mjs",
+]
+
+FINAL_TARGET_FILES.actors += [
+    "actors/HarborBoostsChild.sys.mjs",
+    "actors/HarborBoostsParent.sys.mjs",
+]
+
+EXPORTS.mozilla += [
+    "nsHarborBoostsBackend.h",
+]
+
+SOURCES += [
+    "nsHarborBCOverrides.cpp",
+    "nsHarborBoostsBackend.cpp",
+]
+
+FINAL_LIBRARY = "xul"
+
+TEST_DIRS += [
+    "gtest",
+]

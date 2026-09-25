@@ -1,0 +1,25 @@
+diff --git a/browser/modules/BrowserWindowTracker.sys.mjs b/browser/modules/BrowserWindowTracker.sys.mjs
+index 7e2f1d2b9ca10bd48fa1a0cd1f175a99b4169b90..505d6fc5110b99c73a0054abbe098c154227cf50 100644
+--- a/browser/modules/BrowserWindowTracker.sys.mjs
++++ b/browser/modules/BrowserWindowTracker.sys.mjs
+@@ -330,6 +330,7 @@ export const BrowserWindowTracker = {
+       args = null,
+       remote = undefined,
+       fission = undefined,
++    harborSyncedWindow = true,
+     } = options;
+ 
+     args = lazy.AIWindow.handleAIWindowOptions(options);
+@@ -386,6 +387,12 @@ export const BrowserWindowTracker = {
+       windowFeatures,
+       args
+     );
++    win._harborStartupSyncFlag = Services.prefs.getBoolPref("harbor.window-sync.prefer-unsynced-windows")
++      ? (harborSyncedWindow ? 'unsynced' : 'synced')
++      : (harborSyncedWindow ? 'synced' : 'unsynced');
++    if (win._harborStartupSyncFlag === 'unsynced' && openerWindow) {
++      win._harborStartupUnsyncedUserContextId = openerWindow.gHarborWorkspaces.getCurrentSpaceContainerId();
++    }
+     this.registerOpeningWindow(win, isPrivate);
+ 
+     win.addEventListener(

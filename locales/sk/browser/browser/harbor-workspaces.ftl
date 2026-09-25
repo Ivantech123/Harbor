@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Priestory
+harbor-panel-ui-spaces-label = 
+    .label = Priestory
+harbor-panel-ui-workspaces-create = 
+    .label = Vytvoriť priestor
+harbor-panel-ui-folder-create = 
+    .label = Vytvoriť priečinok
+harbor-panel-ui-live-folder-create = 
+    .label = Live Folder
+harbor-panel-ui-new-empty-split = 
+    .label = Nové rozdelenie
+harbor-workspaces-panel-context-delete = 
+    .label = Odstrániť priestor
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Zmeniť názov
+harbor-workspaces-panel-change-icon = 
+    .label = Zmeniť ikonu
+harbor-workspaces-panel-context-default-profile = 
+    .label = Nastaviť profil
+harbor-workspaces-panel-unload = 
+    .label = Uvoľniť priestor z pamäte
+harbor-workspaces-panel-unload-others = 
+    .label = Unload All Other Spaces
+harbor-workspaces-how-to-reorder-title = Ako zmeniť poradie priestorov
+harbor-workspaces-how-to-reorder-desc = Zmeňte poradie priestorov potiahnutím ich ikon v dolnej časti bočného panela
+harbor-workspaces-change-theme = 
+    .label = Upraviť motív
+harbor-workspaces-panel-context-open = 
+    .label = Otvoriť pracovnú plochu
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Upraviť priestor
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Priestory
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Komplementárny
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Rozdeliť
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analógový
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadický
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Plávajúci
+harbor-panel-ui-gradient-click-to-add = Kliknutím pridajte farbu
+harbor-workspace-creation-name = 
+    .placeholder = Názov priestoru
+harbor-move-tab-to-workspace-button = 
+    .label = Presunúť do...
+    .tooltiptext = Presunúť všetky karty v tomto okne do priestoru
+harbor-workspaces-panel-context-reorder = 
+    .label = Zmeniť poradie priestorov
+harbor-workspace-creation-profile = Profil
+    .tooltiptext = Profily sa používajú na oddelenie súborov cookie a údajov stránok medzi priestormi.
+harbor-workspace-creation-header = Vytvoriť priestor
+harbor-workspace-creation-label = Priestory sa používajú na organizáciu vašich kariet a relácií.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Odstrániť priestor?
+harbor-workspaces-delete-workspace-body = Naozaj chcete odstrániť priestor { $name }? Túto akciu nie je možné vrátiť späť.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Karty boli zatvorené! Použite <span>{ $shortcut }</span> na vrátenie späť.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Vyčistiť
+    .tooltiptext = Zatvoriť všetky nepripnuté karty
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Nasledujúci priestor
+harbor-panel-ui-workspaces-change-back = 
+    .label = Predchádzajúci priestor

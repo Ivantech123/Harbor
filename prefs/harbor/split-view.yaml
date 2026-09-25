@@ -1,0 +1,24 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+- name: harbor.splitView.enable-tab-drop
+  value: true
+
+- name: harbor.splitView.enable-tab-click-split
+  value: true
+
+- name: harbor.splitView.min-resize-width
+  value: 7
+
+- name: harbor.splitView.rearrange-hover-size
+  value: 24
+
+- name: harbor.splitView.enable-drag-over-split
+  value: true
+
+- name: harbor.splitView.drag-over-split-delayMC
+  value: 500
+
+- name: harbor.splitView.drag-over-split-threshold
+  value: 40

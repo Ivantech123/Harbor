@@ -1,0 +1,313 @@
+
+@property --harbor-library-progress {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+#harbor-sidebar-foot-buttons,
+#tabbrowser-tabs {
+  --harbor-library-open-duration: 0.3s;
+  --harbor-library-open-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --harbor-library-entry-easing: linear(0, 0.34 12%, 0.7 24%, 0.93 38%, 1.03 55%, 1);
+  transition: --harbor-library-progress var(--harbor-library-open-duration) var(--harbor-library-open-easing);
+
+  &[harbor-library-stack-open] {
+    --harbor-library-progress: 1;
+  }
+}
+
+#harbor-library-button {
+  position: relative;
+
+  --harbor-library-sprite-size: 18px;
+  &::before {
+    content: "";
+    position: absolute;
+    width: var(--harbor-library-sprite-size);
+    height: var(--harbor-library-sprite-size);
+    background-image: url("chrome://browser/skin/harbor-icons/library/library-sprite.svg");
+    scale: 1.08;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &::before {
+      animation: harbor-library-sprite-unhover 0.3s steps(36, jump-none);
+    }
+    &:hover::before {
+      animation: harbor-library-sprite-hover 0.35s steps(36, jump-none) forwards;
+    }
+  }
+}
+
+#harbor-library-button > .toolbarbutton-badge-stack {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: none !important;
+  pointer-events: none;
+
+  &[downloading] {
+    animation: 0.4s library-badge-download ease;
+  }
+
+  /* The badge flies from its spot on the button to the newest entry's badge
+   * along an arc, the target being set as the list opens. */
+  & #library-button-badge {
+    position: absolute;
+    margin: 0 !important;
+    transform-origin: left top;
+
+    --harbor-library-badge-x: 14px;
+    --harbor-library-badge-y: -8px;
+    --harbor-library-badge-to-x: var(--harbor-library-badge-x);
+    --harbor-library-badge-to-y: var(--harbor-library-badge-y);
+    --harbor-library-badge-mid-x: calc(
+      (var(--harbor-library-badge-x) + var(--harbor-library-badge-to-x)) / 2 +
+        abs(var(--harbor-library-badge-to-y) - var(--harbor-library-badge-y)) / 2
+    );
+    --harbor-library-badge-mid-y: calc(
+      (var(--harbor-library-badge-y) + var(--harbor-library-badge-to-y)) / 2 -
+        abs(var(--harbor-library-badge-to-x) - var(--harbor-library-badge-x)) / 2
+    );
+    --harbor-library-left: calc(1 - var(--harbor-library-progress));
+    left: calc(
+      var(--harbor-library-left) * var(--harbor-library-left) * var(--harbor-library-badge-x) +
+        2 * var(--harbor-library-left) * var(--harbor-library-progress) * var(--harbor-library-badge-mid-x) +
+        var(--harbor-library-progress) * var(--harbor-library-progress) * var(--harbor-library-badge-to-x)
+    );
+    top: calc(
+      var(--harbor-library-left) * var(--harbor-library-left) * var(--harbor-library-badge-y) +
+        2 * var(--harbor-library-left) * var(--harbor-library-progress) * var(--harbor-library-badge-mid-y) +
+        var(--harbor-library-progress) * var(--harbor-library-progress) * var(--harbor-library-badge-to-y)
+    );
+
+    &:not([downloading]) {
+      transform: scale(calc((var(--harbor-library-progress) * 0.5 + 0.5) * 100%));
+    }
+
+    &[downloading] {
+      transform: scale(calc((var(--harbor-library-progress) * 0.2 + 0.8) * 100%));
+    }
+  }
+}
+
+#library-button-badge,
+#harbor-sidebar-foot-buttons[harbor-library-badge] #harbor-library-download-list > :last-child .harbor-library-download-badge {
+  visibility: hidden;
+}
+
+#harbor-sidebar-foot-buttons[harbor-library-badge] {
+  & #library-button-badge {
+    visibility: visible;
+  }
+
+  &[harbor-library-stack-open] {
+    & #library-button-badge {
+      visibility: hidden;
+      transition: visibility 0s var(--harbor-library-open-duration);
+    }
+
+    & #harbor-library-download-list > :last-child .harbor-library-download-badge {
+      visibility: visible;
+      transition: visibility 0s var(--harbor-library-open-duration);
+    }
+  }
+}
+
+.harbor-library-download-badge {
+  pointer-events: none;
+}
+
+.harbor-library-download-badge:not([downloading]) {
+  background-image: var(--download-image);
+  width: 20px;
+  height: 20px;
+  border-radius: var(--border-radius-xsmall);
+  background-size: cover;
+  scale: 2;
+
+  & .harbor-library-download-progress {
+    display: none !important;
+  }
+}
+
+.harbor-library-download-badge[downloading] {
+  will-change: transform;
+  align-self: start;
+  transform: translateX(-2px);
+
+  --border-color: color-mix(in srgb, var(--harbor-primary-color), light-dark(rgba(0,0,0,.8), white) 70%);
+
+  background-color: color-mix(in srgb, var(--harbor-primary-color), light-dark(white, rgba(0,0,0,.5)) 80%);
+  border: 3px solid transparent;
+  box-shadow: 0 0 6px 2px rgba(0,0,0,.1);
+  color: var(--border-color);
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+
+  position: relative;
+}
+
+.harbor-library-download-badge[downloading]::after {
+  background-image: url("chrome://browser/skin/harbor-icons/forward.svg");
+  rotate: 90deg;
+
+  position: absolute;
+  content: '';
+  background-size: contain;
+  inset: 2px;
+  fill: currentColor;
+  -moz-context-properties: fill;
+}
+
+.harbor-library-download-progress {
+  position: absolute;
+  inset: 1px;
+  border-radius: 50%;
+
+  --badge-size: 25px;
+  --border-width: 4px;
+  --size: calc(var(--badge-size) + 2 * var(--border-width));
+  margin: calc(-1 * var(--border-width));
+
+  --thickness: 3px;
+  --progress: var(--harbor-accent-button-background);
+
+  background:
+    conic-gradient(
+        from 0deg,
+        var(--progress) calc(var(--value) * 1%),
+        transparent 0
+      )
+      border-box,
+    var(--border-color) border-box;
+
+  mask: radial-gradient(
+    circle closest-side,
+    transparent calc(100% - var(--thickness)),
+    black calc(100% - var(--thickness))
+  );
+}
+
+#harbor-sidebar-foot-buttons:is([harbor-library-stack-open], [harbor-library-stack-closing]) {
+  z-index: 3;
+}
+
+#harbor-library-download-list {
+  width: 100%;
+  height: auto;
+
+  position: absolute;
+  bottom: 100%;
+
+  visibility: hidden;
+  transition: visibility 0s var(--harbor-library-open-duration);
+
+  #harbor-sidebar-foot-buttons[harbor-library-stack-open] & {
+    visibility: visible;
+    transition: none;
+  }
+
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  padding-top: 10px;
+  gap: 4px;
+
+  .harbor-library-download-list-download {
+    container-type: inline-size;
+    -moz-window-dragging: no-drag;
+
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    position: relative;
+    padding: 0 4px;
+
+    --harbor-library-progress: 0;
+    --harbor-library-entry-index: 0;
+    --harbor-library-entry-delay: calc(var(--harbor-library-entry-index) * 12ms);
+    --harbor-library-entry-settle: 0s;
+    transition:
+      --harbor-library-progress 0.22s var(--harbor-library-entry-easing) var(--harbor-library-entry-delay),
+      pointer-events 0s var(--harbor-library-entry-settle) allow-discrete;
+
+    pointer-events: none;
+
+    &:nth-last-child(2) {
+      --harbor-library-entry-index: 1;
+    }
+    &:nth-last-child(3) {
+      --harbor-library-entry-index: 2;
+    }
+    &:nth-last-child(4) {
+      --harbor-library-entry-index: 3;
+    }
+
+    #harbor-sidebar-foot-buttons[harbor-library-stack-open] & {
+      --harbor-library-progress: 1;
+      --harbor-library-entry-settle: calc(0.22s + var(--harbor-library-entry-delay));
+      pointer-events: auto;
+    }
+
+    transform: translateY(calc((1 - var(--harbor-library-progress)) * 25px));
+    opacity: var(--harbor-library-progress);
+
+    &:hover {
+      background: var(--harbor-toolbar-element-bg);
+    }
+
+    & .harbor-library-download-list-title-container {
+      @container (max-width: 50px) {
+        display: none !important;
+      }
+
+      margin: auto 0;
+      min-width: 0;
+      flex: 1;
+
+      & .harbor-library-download-list-title {
+        font-size: 11pt;
+        opacity: 0.9;
+
+        text-overflow: ellipsis;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      & .harbor-library-download-list-subtitle {
+        font-size: 9pt;
+        opacity: 0.6;
+
+        text-overflow: ellipsis;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+
+    & .harbor-library-download-badge {
+      margin: auto 20px auto 8px;
+      @container (max-width: 50px) {
+        margin: auto;
+      }
+    }
+
+    & .harbor-library-download-action {
+      display: none;
+      margin: auto 4px auto 0;
+
+      @container (max-width: 50px) {
+        display: none !important;
+      }
+    }
+
+    &[downloading] .harbor-library-download-action {
+      display: flex;
+      list-style-image: url("chrome://browser/skin/harbor-icons/close.svg");
+    }
+  }
+}

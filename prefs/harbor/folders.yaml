@@ -1,0 +1,15 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+- name: harbor.folders.search.enabled
+  value: true
+
+- name: harbor.folders.search.hover-delay
+  value: 500 # ms
+
+- name: harbor.folders.max-subfolders
+  value: 5
+
+- name: harbor.folders.owned-tabs-in-folder
+  value: false

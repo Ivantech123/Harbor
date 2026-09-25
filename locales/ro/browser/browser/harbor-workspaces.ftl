@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Spații
+harbor-panel-ui-spaces-label = 
+    .label = Spații
+harbor-panel-ui-workspaces-create = 
+    .label = Creează Spațiu
+harbor-panel-ui-folder-create = 
+    .label = Creează Folder
+harbor-panel-ui-live-folder-create = 
+    .label = Folder Live
+harbor-panel-ui-new-empty-split = 
+    .label = Împărțire nouă
+harbor-workspaces-panel-context-delete = 
+    .label = Șterge Spațiu
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Change Name
+harbor-workspaces-panel-change-icon = 
+    .label = Change Icon
+harbor-workspaces-panel-context-default-profile = 
+    .label = Schimbă profilul
+harbor-workspaces-panel-unload = 
+    .label = Închide Spațiul
+harbor-workspaces-panel-unload-others = 
+    .label = Închide Toate Celelalte Spații
+harbor-workspaces-how-to-reorder-title = Cum să reordonezi spațiile
+harbor-workspaces-how-to-reorder-desc = Trage iconițele spațiilor din josul barei laterale pentru a le reordone
+harbor-workspaces-change-theme = 
+    .label = Edit Theme
+harbor-workspaces-panel-context-open = 
+    .label = Deschide Spațiul de Lucru
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Modifică Spațiul
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Spații
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Complementar
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Împărțire
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analogic
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadic
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Plutitor
+harbor-panel-ui-gradient-click-to-add = Apasă pentru a adăuga o culoare
+harbor-workspace-creation-name = 
+    .placeholder = Numele Spațiului
+harbor-move-tab-to-workspace-button = 
+    .label = Move To...
+    .tooltiptext = Mută toate filele din această fereastră într-un Spațiu
+harbor-workspaces-panel-context-reorder = 
+    .label = Reordonează Spațiile
+harbor-workspace-creation-profile = Profil
+    .tooltiptext = Profilurile sunt folosite pentru a separa cookie-urile și datele site-ului între spații.
+harbor-workspace-creation-header = Creează un Spațiu
+harbor-workspace-creation-label = Spațiile sunt folosite pentru a organiza filele și sesiunile tale.
+harbor-workspace-default-profile = Implicit
+harbor-workspaces-delete-workspace-title = Ștergi Spațiul?
+harbor-workspaces-delete-workspace-body = Ești sigur că vrei să ștergi { $name }? Această acțiune nu poate fi anulată.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = File închise! Apasă <span>{ $shortcut }</span> pentru a anula.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Curăță
+    .tooltiptext = Închide toate filele nefixate
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Spațiul Următor
+harbor-panel-ui-workspaces-change-back = 
+    .label = Spațiul Anterior

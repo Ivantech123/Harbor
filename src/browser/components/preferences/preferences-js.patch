@@ -1,0 +1,41 @@
+diff --git a/browser/components/preferences/preferences.js b/browser/components/preferences/preferences.js
+index 94612d8e28af58fcb04914440348b899a0a1e08f..da3b1ffd09745d09589283356d1001dbfb76a468 100644
+--- a/browser/components/preferences/preferences.js
++++ b/browser/components/preferences/preferences.js
+@@ -132,6 +132,7 @@ ChromeUtils.defineLazyGetter(this, "gSubDialog", function () {
+       styleSheets: [
+         "chrome://browser/skin/preferences/dialog.css",
+         "chrome://browser/skin/preferences/preferences.css",
++        "chrome://browser/skin/preferences/harbor-preferences.css",
+       ],
+       resizeCallback: async ({ title, frame }) => {
+         // Search within main document and highlight matched keyword.
+@@ -471,6 +472,8 @@ const CONFIG_PANES = Object.freeze({
+   tabsBrowsing: {
+     l10nId: "tabs-browsing-section",
+     groupIds: [
++      "defaultBrowserHome",
++      "startupHome",
+       "browserLayout",
+       "tabs",
+       "pageNavigation",
+@@ -518,7 +521,7 @@ function register_module(categoryName, categoryObject) {
+       }
+       this._initted = true;
+       let template = document.getElementById("template-" + categoryName);
+-      if (template && !srdSectionPrefs.all) {
++      if (template && (!srdSectionPrefs.all || categoryName.startsWith("paneHarbor"))) {
+         // Replace the template element with the nodes inside of it.
+         template.replaceWith(template.content);
+ 
+@@ -562,6 +565,10 @@ function init_all() {
+   register_module("paneHome", gHomePane);
+   register_module("paneSearch", gSearchPane);
+   register_module("panePrivacy", gPrivacyPane);
++  register_module("paneHarborLooks", gHarborLooksAndFeel);
++  register_module("paneHarborTabManagement", gHarborWorkspacesSettings);
++  register_module("paneHarborCKS", gHarborCKSSettings);
++  register_module("paneHarborMarketplace", gHarborMarketplaceManager);
+ 
+   // Restore the cached Firefox Labs nav button visibility so it shows
+   // immediately when recipes are expected to be available, before

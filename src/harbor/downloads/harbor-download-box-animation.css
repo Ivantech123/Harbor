@@ -1,0 +1,27 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+.harbor-download-box-animation {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--toolbar-color);
+  border-radius: var(--harbor-border-radius);
+  box-shadow: var(--harbor-big-shadow);
+  pointer-events: none;
+  z-index: 1100;
+}
+
+.harbor-download-box-animation-icon {
+  width: 50%;
+  height: 50%;
+  background-color: var(--harbor-primary-color);
+  mask: url("chrome://browser/skin/harbor-icons/library/library.svg") no-repeat center;
+  mask-size: contain;
+  display: block;
+}

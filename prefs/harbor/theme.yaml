@@ -1,0 +1,48 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+- name: harbor.theme.accent-color
+  value: "#14988E"
+
+- name: harbor.theme.content-element-separation
+  value: 8
+
+- name: harbor.theme.dark-mode-bias
+  value: 0.3
+
+- name: harbor.theme.gradient.show-custom-colors
+  value: false
+
+- name: harbor.theme.essentials-favicon-bg
+  value: true
+
+- name: harbor.theme.acrylic-elements
+  value: "@IS_TWILIGHT@"
+
+
+- name: harbor.theme.disable-lightweight
+  value: true
+
+- name: harbor.theme.use-system-colors
+  value: false
+
+- name: harbor.theme.hide-tab-throbber
+  value: true
+
+- name: harbor.theme.styled-status-panel
+  value: "@IS_TWILIGHT@"
+
+- name: harbor.theme.styled-status-panel
+  value: true
+  condition: "defined(XP_MACOSX)"
+
+- name: harbor.theme.hide-unified-extensions-button
+  value: true
+
+# ==== Mark: border radius ====
+
+# -1 will use platform-native values
+# Set to a positive value to override with a custom radius
+- name: harbor.theme.border-radius
+  value: 6

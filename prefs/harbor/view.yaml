@@ -1,0 +1,74 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+- name: harbor.view.sidebar-height-throttle
+  value: 0
+
+- name: harbor.view.sidebar-expanded.max-width
+  value: 500
+
+- name: harbor.view.mac.show-three-dot-menu
+  value: false
+  condition: "defined(XP_MACOSX)"
+
+- name: harbor.widget.mac.mono-window-controls
+  value: true
+  condition: "defined(XP_MACOSX)"
+
+- name: harbor.view.use-single-toolbar
+  value: true
+
+- name: harbor.view.sidebar-expanded
+  value: true
+
+- name: harbor.view.experimental-force-window-controls-left
+  value: false
+
+- name: harbor.view.hide-window-controls
+  value: true
+
+- name: harbor.view.experimental-no-window-controls
+  value: false
+
+- name: harbor.view.grey-out-inactive-windows
+  cpptype: bool
+  value: true
+  mirror: always
+  type: static
+
+- name: harbor.view.show-newtab-button-top
+  value: true
+
+- name: harbor.view.window.scheme
+  value: 2
+
+- name: harbor.view.context-menu.refresh
+  value: "@IS_TWILIGHT@"
+
+- name: harbor.view.drag-window-from-content
+  value: true
+
+- name: harbor.view.drag-window-from-content.height-percentage
+  value: 5
+
+- name: harbor.view.borderless-fullscreen
+  value: true
+
+- name: harbor.view.shift-down-site-on-hover
+  value: false
+
+- name: harbor.view.show-clear-tabs-button
+  value: true
+
+- name: harbor.view.draggable-sidebar
+  value: true
+
+- name: harbor.view.overflow-webext-toolbar
+  value: true
+
+- name: harbor.view.overflow-webext-toolbar-threshold
+  value: 55
+
+- name: harbor.view.enable-loading-indicator
+  value: true

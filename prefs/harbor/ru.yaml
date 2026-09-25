@@ -1,0 +1,23 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Russian-market defaults. Region stays RU, so Firefox's search list
+# picks Yandex instead of following an IP lookup.
+
+- name: browser.search.region
+  value: "RU"
+  locked: true
+
+- name: browser.search.geoip.url
+  value: ""
+  locked: true
+
+- name: intl.locale.requested
+  value: "ru"
+
+- name: intl.accept_languages
+  value: "ru-RU, ru, en-US, en"
+
+- name: spellchecker.dictionary
+  value: "ru"

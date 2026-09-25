@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Arbetsytor
+harbor-panel-ui-spaces-label = 
+    .label = Arbetsytor
+harbor-panel-ui-workspaces-create = 
+    .label = Skapa arbetsyta
+harbor-panel-ui-folder-create = 
+    .label = Skapa mapp
+harbor-panel-ui-live-folder-create = 
+    .label = Live mapp
+harbor-panel-ui-new-empty-split = 
+    .label = Ny delad vy
+harbor-workspaces-panel-context-delete = 
+    .label = Ta bort arbetsyta
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Ändra namn
+harbor-workspaces-panel-change-icon = 
+    .label = Ändra ikon
+harbor-workspaces-panel-context-default-profile = 
+    .label = Ange profil
+harbor-workspaces-panel-unload = 
+    .label = Frigör arbetsyta
+harbor-workspaces-panel-unload-others = 
+    .label = Avlasta alla andra arbetsytor
+harbor-workspaces-how-to-reorder-title = Hur man flyttar runt arbetsytor
+harbor-workspaces-how-to-reorder-desc = Dra arbetsyta ikoner längst ner i sidofältet för att ändra ordningen på dem
+harbor-workspaces-change-theme = 
+    .label = Redigera tema
+harbor-workspaces-panel-context-open = 
+    .label = Öppen arbetsyta
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Redigera arbetsyta
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Arbetsytor
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Komplementär
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Delad vy
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analog
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadisk
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Flytande
+harbor-panel-ui-gradient-click-to-add = Klicka för att lägga till en färg
+harbor-workspace-creation-name = 
+    .placeholder = Namn på arbetsyta
+harbor-move-tab-to-workspace-button = 
+    .label = Flytta till...
+    .tooltiptext = Flytta alla flikar i detta fönster till en arbetsyta
+harbor-workspaces-panel-context-reorder = 
+    .label = Flytta om arbetsytor
+harbor-workspace-creation-profile = Profil
+    .tooltiptext = Profiler används för att separera kakor och webbplatsdata mellan arbetsytor.
+harbor-workspace-creation-header = Skapa en arbetsyta
+harbor-workspace-creation-label = Arbetsytor används för att organisera dina flikar och sessioner.
+harbor-workspace-default-profile = Standard
+harbor-workspaces-delete-workspace-title = Ta bort arbetsyta?
+harbor-workspaces-delete-workspace-body = Är du säker på att du vill radera { $name }? den här åtgärden kan inte ångras.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Flikar stängda! Använd <span>{ $shortcut }</span> för att ångra.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Rensa
+    .tooltiptext = Stäng alla flikar som inte är fästa
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Nästa arbetsyta
+harbor-panel-ui-workspaces-change-back = 
+    .label = Föregående arbetsyta

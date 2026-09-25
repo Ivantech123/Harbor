@@ -1,0 +1,354 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+const lazy = {};
+
+ChromeUtils.defineLazyGetter(lazy, "browserBackgroundElement", () => {
+  return document.getElementById("harbor-browser-background");
+});
+
+ChromeUtils.defineLazyGetter(lazy, "toolbarBackgroundElement", () => {
+  return document.getElementById("harbor-toolbar-background");
+});
+
+ChromeUtils.defineESModuleGetters(
+  lazy,
+  { HarborLibrary: "moz-src:///zen/library/HarborLibrary.mjs" },
+  { global: "current" }
+);
+
+export class HarborSpacesSwipe {
+  _swipeState = {
+    isGestureActive: false,
+    lastDelta: 0,
+    direction: null,
+    isSwipingLibrary: false,
+    beforeLibraryState: 0,
+  };
+
+  constructor() {
+    this.attachWorkspaceSwipeGestures(gNavToolbox);
+    this._popupOpenHandler = this._popupOpenHandler.bind(this);
+  }
+
+  get #stripWidth() {
+    return (
+      window.windowUtils.getBoundsWithoutFlushing(
+        document.getElementById("navigator-toolbox")
+      ).width +
+      window.windowUtils.getBoundsWithoutFlushing(
+        document.getElementById("harbor-sidebar-splitter")
+      ).width
+    );
+  }
+
+  #readySwipeLibrary = null;
+  #readySwipeOpenLibrary() {
+    if (this.#readySwipeLibrary) {
+      return this.#readySwipeLibrary;
+    }
+
+    const spaces = gHarborWorkspaces.getWorkspaces();
+    const current = gHarborWorkspaces.getActiveWorkspaceFromCache();
+    const libraryEnabled = Services.prefs.getBoolPref("harbor.library.enabled");
+    const libraryOnRight = lazy.HarborLibrary.libraryOnRight;
+
+    this.#readySwipeLibrary =
+      spaces.indexOf(current) === (libraryOnRight ? spaces.length - 1 : 0) &&
+      libraryEnabled;
+    return this.#readySwipeLibrary;
+  }
+
+  attachWorkspaceSwipeGestures(element) {
+    const gestureControl = {
+      _handleSwipeMayStart: this._handleSwipeMayStart.bind(this),
+      _handleSwipeStart: this._handleSwipeStart.bind(this),
+      _handleSwipeUpdate: this._handleSwipeUpdate.bind(this),
+      _handleSwipeEnd: this._handleSwipeEnd.bind(this),
+      _handleSwipeAnimationEnd: this.onSwipeGestureAnimationEnd.bind(this),
+    };
+
+    element.addEventListener(
+      "MozSwipeGestureMayStart",
+      gestureControl._handleSwipeMayStart,
+      true
+    );
+    element.addEventListener(
+      "MozSwipeGestureStart",
+      gestureControl._handleSwipeStart,
+      true
+    );
+    element.addEventListener(
+      "MozSwipeGestureUpdate",
+      gestureControl._handleSwipeUpdate,
+      true
+    );
+
+    // Use MozSwipeGesture instead of MozSwipeGestureEnd because MozSwipeGestureEnd is fired after animation ends,
+    // while MozSwipeGesture is fired immediately after swipe ends.
+    element.addEventListener(
+      "MozSwipeGesture",
+      gestureControl._handleSwipeEnd,
+      true
+    );
+
+    element.addEventListener(
+      "MozSwipeGestureEnd",
+      gestureControl._handleSwipeAnimationEnd,
+      true
+    );
+
+    return gestureControl;
+  }
+
+  detachWorkspaceSwipeGestures(element, gestureControl) {
+    element.removeEventListener(
+      "MozSwipeGestureMayStart",
+      gestureControl._handleSwipeMayStart,
+      true
+    );
+    element.removeEventListener(
+      "MozSwipeGestureStart",
+      gestureControl._handleSwipeStart,
+      true
+    );
+    element.removeEventListener(
+      "MozSwipeGestureUpdate",
+      gestureControl._handleSwipeUpdate,
+      true
+    );
+
+    // Use MozSwipeGesture instead of MozSwipeGestureEnd because MozSwipeGestureEnd is fired after animation ends,
+    // while MozSwipeGesture is fired immediately after swipe ends.
+    element.removeEventListener(
+      "MozSwipeGesture",
+      gestureControl._handleSwipeEnd,
+      true
+    );
+
+    element.removeEventListener(
+      "MozSwipeGestureEnd",
+      gestureControl._handleSwipeAnimationEnd,
+      true
+    );
+  }
+
+  _handleSwipeMayStart(event) {
+    const ws = gHarborWorkspaces;
+
+    if (ws.privateWindowOrDisabled || ws.isChangingWorkspace) {
+      return;
+    }
+    if (
+      event.target.closest("#harbor-sidebar-foot-buttons") ||
+      event.target.closest('#urlbar[harbor-floating-urlbar="true"]')
+    ) {
+      return;
+    }
+
+    // Only handle horizontal swipes
+    if (
+      event.direction === event.DIRECTION_LEFT ||
+      event.direction === event.DIRECTION_RIGHT
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Set allowed directions based on available workspaces
+      event.allowedDirections |= event.DIRECTION_LEFT | event.DIRECTION_RIGHT;
+    }
+  }
+
+  #toggleSwipeGestureAttr(enable) {
+    const elements = [
+      "harbor-workspace",
+      "#tabbrowser-arrowscrollbox",
+      ".harbor-browser-grain",
+    ];
+    elements.forEach(el =>
+      document
+        .querySelectorAll(el)
+        .forEach(node => node?.toggleAttribute("swipe-gesture", enable))
+    );
+  }
+
+  _handleSwipeStart(event) {
+    const ws = gHarborWorkspaces;
+
+    if (!ws.workspaceEnabled) {
+      return;
+    }
+
+    gHarborFolders.cancelPopupTimer();
+
+    this.#toggleSwipeGestureAttr(true);
+    document.addEventListener("popupshown", this._popupOpenHandler, {
+      once: true,
+    });
+
+    event.preventDefault();
+    event.stopPropagation();
+    this._swipeState = {
+      isGestureActive: true,
+      lastDelta: 0,
+      direction: null,
+      isSwipingLibrary: false,
+      beforeLibraryState: 0,
+    };
+    Services.prefs.setBoolPref("harbor.swipe.is-fast-swipe", true);
+  }
+
+  _handleSwipeUpdate(event) {
+    const ws = gHarborWorkspaces;
+
+    if (!ws.workspaceEnabled || !this._swipeState?.isGestureActive) {
+      return;
+    }
+
+    const stripWidth = this.#stripWidth;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const delta =
+      event.delta *
+      Services.prefs.getIntPref(
+        "harbor.workspaces.swipe-actions.delta-multiplier"
+      );
+    let translateX = this._swipeState.lastDelta + delta;
+    // Add a force multiplier as we are translating the strip depending on how close to the edge we are
+    let forceMultiplier = Math.min(
+      1,
+      1 - Math.abs(translateX) / (stripWidth * 4.5)
+    ); // 4.5 instead of 4 to add a bit of a buffer
+    if (forceMultiplier > 0.5) {
+      translateX *= forceMultiplier;
+      this._swipeState.lastDelta = delta + (translateX - delta) * 0.5;
+    } else {
+      translateX = this._swipeState.lastDelta;
+    }
+
+    if (Math.abs(delta) > 0.9) {
+      delete ws._hasAnimatedBackgrounds;
+      this._swipeState.direction = delta > 0 ? "left" : "right";
+    }
+
+    const libraryOnRight = lazy.HarborLibrary.libraryOnRight;
+    const libraryOpen = lazy.HarborLibrary.isLibraryOpen;
+    const couldClose = libraryOpen;
+    const wantsOpen =
+      !libraryOpen &&
+      (libraryOnRight ? translateX < 0 : translateX > 0) &&
+      this.#readySwipeOpenLibrary();
+
+    if (wantsOpen || couldClose || this._swipeState.isSwipingLibrary) {
+      if (!this._swipeState.isSwipingLibrary) {
+        this._swipeState.isSwipingLibrary = true;
+        this._swipeState.beforeLibraryState = libraryOpen ? 1 : 0;
+        lazy.HarborLibrary.startSwipe();
+      }
+
+      const rubberBand = function (offset, dimension, constant = 0.55) {
+        if (offset === 0 || dimension === 0) {
+          return 0;
+        }
+        return (
+          dimension *
+          (1 - Math.exp(-(Math.abs(offset) * constant) / dimension)) *
+          Math.sign(offset)
+        );
+      };
+
+      const DAMPING_DIMENSION = 0.2;
+      const RUBBER_BAND_CONSTANT = 0.08;
+
+      const LIBRARY_SWIPE_FULL = 0.8;
+      const translation = libraryOnRight ? -translateX : translateX;
+      const deltaProgress = (translation / stripWidth) * LIBRARY_SWIPE_FULL;
+      const progress = this._swipeState.beforeLibraryState + deltaProgress;
+
+      let progressDamped;
+      if (progress < 0) {
+        progressDamped =
+          0 + rubberBand(progress, DAMPING_DIMENSION, RUBBER_BAND_CONSTANT);
+      } else if (progress > 1) {
+        progressDamped =
+          1 + rubberBand(progress - 1, DAMPING_DIMENSION, RUBBER_BAND_CONSTANT);
+      } else {
+        progressDamped = progress;
+      }
+
+      lazy.HarborLibrary.swipeProgress(progressDamped);
+      return;
+    }
+
+    // Apply a translateX to the tab strip to give the user feedback on the swipe
+    const currentWorkspace = ws.getActiveWorkspaceFromCache();
+    ws._organizeWorkspaceStripLocations(currentWorkspace, true, translateX);
+  }
+
+  async _handleSwipeEnd(event) {
+    const ws = gHarborWorkspaces;
+
+    if (!ws.workspaceEnabled) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    const isRTL = document.documentElement.matches(":-moz-locale-dir(rtl)");
+    const moveForward =
+      (event.direction === SimpleGestureEvent.DIRECTION_RIGHT) !== isRTL;
+
+    const rawDirection = moveForward ? 1 : -1;
+    const direction = ws.naturalScroll ? -1 : 1;
+
+    if (this._swipeState.isSwipingLibrary) {
+      lazy.HarborLibrary.stopSwipe(rawDirection * direction);
+      this.#readySwipeLibrary = null;
+      return;
+    }
+
+    await ws.changeWorkspaceShortcut(rawDirection * direction, true);
+  }
+
+  onSwipeGestureAnimationEnd() {
+    const ws = gHarborWorkspaces;
+
+    if (this._swipeState.isSwipingLibrary) {
+      lazy.HarborLibrary.stopSwipe(null);
+      this.#readySwipeLibrary = null;
+    }
+
+    // Reset swipe state
+    this._swipeState = {
+      isGestureActive: false,
+      lastDelta: 0,
+      direction: null,
+      isSwipingLibrary: false,
+      beforeLibraryState: 0,
+    };
+
+    Services.prefs.setBoolPref("harbor.swipe.is-fast-swipe", false);
+    this.#toggleSwipeGestureAttr(false);
+    gHarborUIManager.tabsWrapper.style.removeProperty("scrollbar-width");
+    [lazy.browserBackgroundElement, lazy.toolbarBackgroundElement].forEach(
+      element => {
+        element.style.setProperty("--harbor-background-opacity", "1");
+      }
+    );
+    delete ws._hasAnimatedBackgrounds;
+    ws.updateTabsContainers();
+    document.removeEventListener("popupshown", this._popupOpenHandler, {
+      once: true,
+    });
+  }
+
+  _popupOpenHandler() {
+    this.onSwipeGestureAnimationEnd();
+  }
+
+  get isGestureActive() {
+    return this._swipeState?.isGestureActive;
+  }
+}

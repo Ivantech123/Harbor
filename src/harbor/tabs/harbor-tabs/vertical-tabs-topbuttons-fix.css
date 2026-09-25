@@ -1,0 +1,15 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/* stylelint-disable-next-line stylelint-plugin-mozilla/no-has-selector */
+&:not([harbor-compact-animating])
+  #harbor-sidebar-top-buttons:not(:has(#harbor-sidebar-top-buttons-customization-target > *:not(#harbor-sidebar-top-buttons-separator), .titlebar-buttonbox-container)) {
+  max-height: 0 !important;
+  min-height: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}

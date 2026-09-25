@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Ruang Kerja Lainnya
+harbor-panel-ui-spaces-label = 
+    .label = Ruang
+harbor-panel-ui-workspaces-create = 
+    .label = Buat Ruang
+harbor-panel-ui-folder-create = 
+    .label = Buat Folder
+harbor-panel-ui-live-folder-create = 
+    .label = Live Folder
+harbor-panel-ui-new-empty-split = 
+    .label = Split Baru
+harbor-workspaces-panel-context-delete = 
+    .label = Hapus Ruang
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Ubah Nama
+harbor-workspaces-panel-change-icon = 
+    .label = Ubah Ikon
+harbor-workspaces-panel-context-default-profile = 
+    .label = Atur Profil
+harbor-workspaces-panel-unload = 
+    .label = Lepaskan Ruang
+harbor-workspaces-panel-unload-others = 
+    .label = Lepaskan Ruang Lainnya
+harbor-workspaces-how-to-reorder-title = Cara Mengurutkan Ulang Ruang
+harbor-workspaces-how-to-reorder-desc = Seret ikon ruang di bagian bawah bilah sisi untuk menyusun ulang urutannya
+harbor-workspaces-change-theme = 
+    .label = Edit Tema
+harbor-workspaces-panel-context-open = 
+    .label = Buka Ruang Kerja
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Edit Ruang
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Ruang
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Komplementer
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Pisahkan
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analog
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadik
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Melayang
+harbor-panel-ui-gradient-click-to-add = Klik untuk menambahkan warna
+harbor-workspace-creation-name = 
+    .placeholder = Nama Ruang
+harbor-move-tab-to-workspace-button = 
+    .label = Pindahkan ke...
+    .tooltiptext = Pindahkan semua tab di jendela ini ke sebuah Ruang
+harbor-workspaces-panel-context-reorder = 
+    .label = Urutkan Ruang
+harbor-workspace-creation-profile = Profil
+    .tooltiptext = Profil (Kontainer) digunakan untuk memisahkan cookie dan data situs antar Ruang.
+harbor-workspace-creation-header = Buat sebuah Ruang
+harbor-workspace-creation-label = Ruang digunakan untuk mengorganisasikan tab dan sesi Anda.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Hapus Ruang?
+harbor-workspaces-delete-workspace-body = Apakah Anda yakin ingin menghapus { $name }? Tindakan ini tidak bisa dibatalkan.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Tab Ditutup! Gunakan <span>{ $shortcut }</span> untuk membatalkan.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Bersihkan
+    .tooltiptext = Tutup semua tab yang tidak disematkan
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Ruang Selanjutnya
+harbor-panel-ui-workspaces-change-back = 
+    .label = Ruang Sebelumnya

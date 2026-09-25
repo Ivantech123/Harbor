@@ -1,0 +1,15 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+        content/browser/harbor-styles/harbor-boosts.css                               (../../harbor/boosts/harbor-boosts.css)
+        content/browser/harbor-styles/content/harbor-zap.css                          (../../harbor/boosts/harbor-zap.css)
+        content/browser/harbor-styles/content/harbor-selector.css                     (../../harbor/boosts/harbor-selector.css)
+        content/browser/harbor-styles/harbor-advanced-color-options.css               (../../harbor/boosts/harbor-advanced-color-options.css)
+
+        # Windows
+*       content/browser/harbor-components/windows/harbor-boost-editor.xhtml           (../../harbor/boosts/harbor-boost-editor.inc.xhtml)
+        content/browser/harbor-components/windows/harbor-boost-editor.js              (../../harbor/boosts/harbor-boost-editor.js)
+
+        # Images
+        content/browser/harbor-images/boost-indicator.svg                          (../../harbor/images/boost-indicator.svg)

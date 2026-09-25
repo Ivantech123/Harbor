@@ -1,0 +1,42 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+<html:template id="template-paneHarborMarketplace">
+<hbox id="HarborMarketplaceCategory"
+      class="subcategory"
+      hidden="true"
+      data-category="paneHarborMarketplace">
+<html:h1 data-l10n-id="pane-harbor-marketplace-title"/>
+</hbox>
+
+<groupbox id="harborMarketplaceGroup" data-category="paneHarborMarketplace" hidden="true" class="highlighting-group">
+
+      <hbox id="harborMarketplaceHeader">
+        <html:h2 data-l10n-id="harbor-theme-marketplace-header"/>
+      </hbox>
+      <description class="description-deemphasized" data-l10n-id="harbor-theme-marketplace-description" />
+      <hbox class="indent">
+            <html:a id="harborThemeMarketplaceLink" href="https://zen-browser.app/mods/" target="_blank" data-l10n-id="harbor-theme-marketplace-link" />
+            <button id="harborThemeMarketplaceImport" data-l10n-id="harbor-theme-marketplace-import-button" />
+            <button id="harborThemeMarketplaceExport" data-l10n-id="harbor-theme-marketplace-export-button" />
+            <button id="harborThemeMarketplaceCheckForUpdates" data-l10n-id="harbor-theme-marketplace-check-for-updates-button" />
+      </hbox>
+
+      <checkbox id="harborThemeMarketplaceAutoUpdate"
+            data-l10n-id="harbor-themes-auto-update"
+            preference="harbor.mods.auto-update"/>
+
+      <description class="description-deemphasized" data-l10n-id="harbor-theme-marketplace-updates-success" hidden="true" id="harborThemeMarketplaceUpdatesSuccess" />
+      <description class="description-deemphasized" data-l10n-id="harbor-theme-marketplace-updates-failure" hidden="true" id="harborThemeMarketplaceUpdatesFailure" />
+
+      <description class="description-deemphasized" data-l10n-id="harbor-theme-marketplace-import-success" hidden="true" id="harborThemeMarketplaceImportSuccess" />
+      <description class="description-deemphasized" data-l10n-id="harbor-theme-marketplace-import-failure" hidden="true" id="harborThemeMarketplaceImportFailure" />
+
+      <description class="description-deemphasized" data-l10n-id="harbor-theme-marketplace-export-success" hidden="true" id="harborThemeMarketplaceExportSuccess" />
+      <description class="description-deemphasized" data-l10n-id="harbor-theme-marketplace-export-failure" hidden="true" id="harborThemeMarketplaceExportFailure" />
+
+      <vbox id="harborThemeMarketplaceList"></vbox>
+</groupbox>
+
+</html:template>

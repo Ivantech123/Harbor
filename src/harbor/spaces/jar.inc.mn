@@ -1,0 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+        content/browser/harbor-components/HarborSpaceBookmarksStorage.js              (../../harbor/spaces/HarborSpaceBookmarksStorage.js)
+*       content/browser/harbor-styles/harbor-workspaces.css                           (../../harbor/spaces/harbor-workspaces.css)
+        content/browser/harbor-styles/harbor-gradient-generator.css                   (../../harbor/spaces/harbor-gradient-generator.css)

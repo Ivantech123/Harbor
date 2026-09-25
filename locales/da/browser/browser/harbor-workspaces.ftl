@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Arbejdsområder
+harbor-panel-ui-spaces-label = 
+    .label = Rum
+harbor-panel-ui-workspaces-create = 
+    .label = Opret rum
+harbor-panel-ui-folder-create = 
+    .label = Opret mappe
+harbor-panel-ui-live-folder-create = 
+    .label = Live Mappe
+harbor-panel-ui-new-empty-split = 
+    .label = Ny Opdeling
+harbor-workspaces-panel-context-delete = 
+    .label = Slet arbejdsområde
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Skift navn
+harbor-workspaces-panel-change-icon = 
+    .label = Skift ikon
+harbor-workspaces-panel-context-default-profile = 
+    .label = Indstil profil
+harbor-workspaces-panel-unload = 
+    .label = Sæt Rum i Dvale
+harbor-workspaces-panel-unload-others = 
+    .label = Sæt Alle Andre Rum i Dvale
+harbor-workspaces-how-to-reorder-title = Sådan omarrangerer du rum
+harbor-workspaces-how-to-reorder-desc = Træk rumikonerne nederst i sidepanelet for at omarrangere dem
+harbor-workspaces-change-theme = 
+    .label = Rediger tema
+harbor-workspaces-panel-context-open = 
+    .label = Åbn arbejdsområde
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Rediger arbejdsområde
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Rum
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Komplementær
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Split
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analog
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triadisk
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Flydende
+harbor-panel-ui-gradient-click-to-add = Klik for at tilføje en farve
+harbor-workspace-creation-name = 
+    .placeholder = Rumnavn
+harbor-move-tab-to-workspace-button = 
+    .label = Move To...
+    .tooltiptext = Bevæg alle faner i dette vindue til et Rum
+harbor-workspaces-panel-context-reorder = 
+    .label = Omarranger rum
+harbor-workspace-creation-profile = Profil
+    .tooltiptext = Profiler bruges til at adskille cookies og webstedsdata mellem forskellige rum.
+harbor-workspace-creation-header = Opret et rum
+harbor-workspace-creation-label = Rum bruges til at organisere dine faner og sessioner.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Slet arbejdsområde?
+harbor-workspaces-delete-workspace-body = Er du sikker på, at du vil slette { $name }? Dette kan ikke fortrydes.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Faner Lukket! Brug <span>{ $shortcut }</span> for at fortryd.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Ryd
+    .tooltiptext = Luk alle ikke-fastgjorte faner
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Nyt Rum
+harbor-panel-ui-workspaces-change-back = 
+    .label = Tidligere Rum

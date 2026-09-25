@@ -1,0 +1,30 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+base_path: locales
+files:
+  - source: en-US/browser/browser/harbor-general.ftl
+    translation: browser/browser/harbor-general.ftl
+  - source: en-US/browser/browser/harbor-split-view.ftl
+    translation: browser/browser/harbor-split-view.ftl
+  - source: en-US/browser/browser/harbor-menubar.ftl
+    translation: browser/browser/harbor-menubar.ftl
+  - source: en-US/browser/browser/harbor-vertical-tabs.ftl
+    translation: browser/browser/harbor-vertical-tabs.ftl
+  - source: en-US/browser/browser/harbor-welcome.ftl
+    translation: browser/browser/harbor-welcome.ftl
+  - source: en-US/browser/browser/harbor-workspaces.ftl
+    translation: browser/browser/harbor-workspaces.ftl
+  - source: en-US/browser/browser/preferences/harbor-preferences.ftl
+    translation: browser/browser/preferences/harbor-preferences.ftl
+  - source: en-US/browser/browser/harbor-folders.ftl
+    translation: browser/browser/harbor-folders.ftl
+  - source: en-US/browser/browser/harbor-boosts.ftl
+    translation: browser/browser/harbor-boosts.ftl
+  - source: en-US/browser/browser/harbor-space-routing.ftl
+    translation: browser/browser/harbor-space-routing.ftl
+  - source: en-US/browser/browser/harbor-command-palette.ftl
+    translation: browser/browser/harbor-command-palette.ftl
+  - source: en-US/browser/browser/harbor-share.ftl
+    translation: browser/browser/harbor-share.ftl

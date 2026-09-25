@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Không gian
+harbor-panel-ui-spaces-label = 
+    .label = Không gian
+harbor-panel-ui-workspaces-create = 
+    .label = Tạo không gian
+harbor-panel-ui-folder-create = 
+    .label = Tạo thư mục thẻ
+harbor-panel-ui-live-folder-create = 
+    .label = Thư mục động
+harbor-panel-ui-new-empty-split = 
+    .label = Khung chia mới
+harbor-workspaces-panel-context-delete = 
+    .label = Xóa không gian
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Đổi tên
+harbor-workspaces-panel-change-icon = 
+    .label = Đổi biểu tượng
+harbor-workspaces-panel-context-default-profile = 
+    .label = Thiết lập hồ sơ
+harbor-workspaces-panel-unload = 
+    .label = Giải phóng không gian
+harbor-workspaces-panel-unload-others = 
+    .label = Ngưng tải tất cả không gian khác
+harbor-workspaces-how-to-reorder-title = Cách sắp xếp thứ tự không gian
+harbor-workspaces-how-to-reorder-desc = Kéo các biểu tượng không gian dưới thanh bên để sắp xếp thứ tự
+harbor-workspaces-change-theme = 
+    .label = Chỉnh sửa chủ đề
+harbor-workspaces-panel-context-open = 
+    .label = Mở không gian làm việc
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Chỉnh sửa không gian
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Không gian
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Bổ túc
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Xen kẽ
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Tương đồng
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Bộ ba
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Nổi
+harbor-panel-ui-gradient-click-to-add = Nhấn để thêm màu sắc
+harbor-workspace-creation-name = 
+    .placeholder = Tên không gian
+harbor-move-tab-to-workspace-button = 
+    .label = Di chuyển đến...
+    .tooltiptext = Di chuyển toàn bộ thẻ trong cửa sổ này đến một không gian
+harbor-workspaces-panel-context-reorder = 
+    .label = Sắp xếp lại không gian
+harbor-workspace-creation-profile = Hồ sơ
+    .tooltiptext = Các hồ sơ sẽ không dùng chung dữ liệu giữa các không gian làm việc.
+harbor-workspace-creation-header = Tạo không gian
+harbor-workspace-creation-label = Không gian dùng để sắp xếp các thẻ và phiên làm việc của bạn.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Xóa không gian?
+harbor-workspaces-delete-workspace-body = Bạn có chắc chắn muốn xóa { $name }? Thao tác này không thể hoàn tác.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Đã đóng các thẻ! Nhấn <span>{ $shortcut }</span> để hoàn tác.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Đóng
+    .tooltiptext = Đóng toàn bộ thẻ chưa ghim
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Không gian tiếp theo
+harbor-panel-ui-workspaces-change-back = 
+    .label = Không gian trước đó

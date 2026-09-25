@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Alanlar
+harbor-panel-ui-spaces-label = 
+    .label = Alanlar
+harbor-panel-ui-workspaces-create = 
+    .label = Alan oluştur
+harbor-panel-ui-folder-create = 
+    .label = Klasör oluştur
+harbor-panel-ui-live-folder-create = 
+    .label = Dinamik klasör
+harbor-panel-ui-new-empty-split = 
+    .label = Yeni bölünmüş görünüm
+harbor-workspaces-panel-context-delete = 
+    .label = Çalışma alanını sil
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Adı değiştir…
+harbor-workspaces-panel-change-icon = 
+    .label = Simgeyi değiştir…
+harbor-workspaces-panel-context-default-profile = 
+    .label = Profil ayarla
+harbor-workspaces-panel-unload = 
+    .label = Alanı boşalt
+harbor-workspaces-panel-unload-others = 
+    .label = Diğer tüm çalışma alanlarını uyut
+harbor-workspaces-how-to-reorder-title = Alanlar nasıl yeniden sıralanır
+harbor-workspaces-how-to-reorder-desc = Alanları yeniden sıralamak için kenar çubuğunun altındaki alan simgelerini sürükleyin
+harbor-workspaces-change-theme = 
+    .label = Temayı düzenle…
+harbor-workspaces-panel-context-open = 
+    .label = Çalışma alanı aç
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Çalışma alanını düzenle
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Alanlar
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Tamamlayıcı
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Böl
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Benzer
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Üçlü
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Kayan
+harbor-panel-ui-gradient-click-to-add = Renk eklemek için tıkla
+harbor-workspace-creation-name = 
+    .placeholder = Alan adı
+harbor-move-tab-to-workspace-button = 
+    .label = Şuraya taşı
+    .tooltiptext = Bu penceredeki tüm sekmeleri bir Alana taşı
+harbor-workspaces-panel-context-reorder = 
+    .label = Alanları yeniden sırala
+harbor-workspace-creation-profile = Profil
+    .tooltiptext = Profiller, alanlar arasındaki çerezleri ve site verilerini ayırmak için kullanılır.
+harbor-workspace-creation-header = Bir Alan Oluştur
+harbor-workspace-creation-label = Alanlar, sekme ve oturumlarınızı düzenlemek için kullanılır.
+harbor-workspace-default-profile = Varsayılan
+harbor-workspaces-delete-workspace-title = Alan Silinsin mi?
+harbor-workspaces-delete-workspace-body = { $name } ögesini silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Sekmeler kapatıldı! Geri almak için <span>{ $shortcut }</span> tuşlarını kullan.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Temizle
+    .tooltiptext = Sabitlenmemiş tüm sekmeleri kapat
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Sonraki alan
+harbor-panel-ui-workspaces-change-back = 
+    .label = Önceki alan

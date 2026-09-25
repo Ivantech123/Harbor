@@ -1,0 +1,412 @@
+diff --git a/browser/components/urlbar/content/UrlbarInputBase.mjs b/browser/components/urlbar/content/UrlbarInputBase.mjs
+index 8be35b58c5369e123ca69426e852e3849bf75513..778d8aecce4da6748ecbf8b86a38c2da6e01bec5 100644
+--- a/browser/components/urlbar/content/UrlbarInputBase.mjs
++++ b/browser/components/urlbar/content/UrlbarInputBase.mjs
+@@ -83,6 +83,12 @@ if (lazy) {
+       Ci.nsIURLQueryStringStripper,
+     ],
+   });
++  XPCOMUtils.defineLazyPreferenceGetter(
++    lazy,
++    "HARBOR_URLBAR_BEHAVIOR",
++    "harbor.urlbar.behavior",
++    'default'
++  );
+ }
+ 
+ const logger = () => UrlbarShared.getLogger({ prefix: "Input" });
+@@ -917,7 +923,16 @@ ${
+     // See _on_select().  HTMLInputElement.select() dispatches a "select"
+     // event but does not set the primary selection.
+     this._suppressPrimaryAdjustment = true;
++    const harborToolbox = this.document.getElementById("navigator-toolbox");
++    this.window.document.documentElement.setAttribute("supress-primary-adjustment", !(
++      harborToolbox.hasAttribute("harbor-has-hover") ||
++      harborToolbox.hasAttribute("harbor-has-empty-tab") ||
++      harborToolbox.hasAttribute("harbor-user-show")
++    ));
+     this.inputField.select();
++    this.document.documentGlobal.setTimeout(() => {
++      this.window.document.documentElement.removeAttribute("supress-primary-adjustment");
++    }, 0);
+     this._suppressPrimaryAdjustment = false;
+   }
+ 
+@@ -992,6 +1007,10 @@ ${
+     hideSearchTerms = false,
+     isSameDocument = false,
+   } = {}) {
++    if (this.hasAttribute("harbor-newtab")) {
++      return;
++    }
++
+     if (!this.#isAddressbar) {
+       throw new Error(
+         "Cannot set URI for UrlbarInput that is not an address bar"
+@@ -1289,7 +1308,16 @@ ${
+       this.searchModeSwitcher?.updateSearchIcon();
+     }
+ 
++    const harborToolbox = this.document.getElementById("navigator-toolbox");
++    this.window.document.documentElement.setAttribute("supress-primary-adjustment", !(
++      harborToolbox.hasAttribute("harbor-has-hover") ||
++      harborToolbox.hasAttribute("harbor-has-empty-tab") ||
++      harborToolbox.hasAttribute("harbor-user-show")
++    ));
+     this.handleNavigation({ event });
++    this.document.documentGlobal.setTimeout(() => {
++      this.window.document.documentElement.removeAttribute("supress-primary-adjustment");
++    }, 100);
+   }
+ 
+   /**
+@@ -1401,6 +1429,9 @@ ${
+       where,
+       query: searchString,
+     });
++    if (where != "current" && this.sapName != "searchbar") {
++      this.handleRevert();
++    }
+     this.controller.openSERP(
+       engine.id,
+       searchString,
+@@ -1884,7 +1915,11 @@ ${
+     openParams.avoidBrowserFocus = keepViewOpen;
+ 
+     if (!this.#providesSearchMode(result) && !keepViewOpen) {
+-      this.view.close({ elementPicked: true });
++      if (this._harborHandleUrlbarClose) {
++        this._harborHandleUrlbarClose(true, true);
++      } else {
++        this.window.setTimeout(() => this.view.close({ elementPicked: true }), 0);
++      }
+     }
+ 
+     if (isCanonized) {
+@@ -3181,6 +3216,42 @@ ${
+     await this.#updateLayoutBreakoutDimensions();
+   }
+ 
++  harborFormatURLValue() {
++    return this.#getValueFormatter().update();
++  }
++
++  get harborUrlbarBehavior() {
++    if (this.document.documentElement.hasAttribute("inDOMFullscreen")) {
++      return "float";
++    }
++    return lazy.HARBOR_URLBAR_BEHAVIOR;
++  }
++
++  get harborStrippedURI() {
++    let strippedURI = null;
++    let activeBrowser = this.window.gBrowser?.selectedBrowser;
++    let uriString = activeBrowser.userTypedValue ||
++                    (activeBrowser.currentURI ? activeBrowser.currentURI.spec : "");
++
++    let uri;
++    try {
++      uri = Services.io.newURI(uriString);
++    } catch (e) {
++      // Fallback if the provisional string isn't a valid URI yet
++      uri = activeBrowser.currentURI;
++    }
++
++    // Error check occurs during isClipboardURIValid
++    try {
++      strippedURI = lazy.QueryStringStripper.stripForCopyOrShare(uri);
++    } catch (e) {
++      console.warn(`stripForCopyOrShare: ${e.message}`);
++      return [uri, lazy.ClipboardHelper];
++    }
++
++    return [strippedURI ? this.makeURIReadable(strippedURI) : uri, lazy.ClipboardHelper];
++  }
++
+   startLayoutExtend() {
+     if (!this.#allowBreakout || this.hasAttribute("breakout-extend")) {
+       // Do not expand if the Urlbar does not support being expanded or it is
+@@ -3193,8 +3264,16 @@ ${
+     }
+ 
+     this.toggleAttribute("breakout-extend", true);
++    this.#showBreakoutPopover();
+     this.#updateTextboxPosition();
+ 
++    this.window.gHarborUIManager.onUrlbarOpen();
++    if (this.harborUrlbarBehavior == 'float' || (this.harborUrlbarBehavior == 'floating-on-type' && !this.focusedViaMousedown)) {
++      this.setAttribute("harbor-floating-urlbar", "true");
++      this.window.gHarborUIManager.onFloatingURLBarOpen();
++    } else {
++      this.removeAttribute("harbor-floating-urlbar");
++    }
+     // Enable the animation only after the first extend call to ensure it
+     // doesn't run when opening a new window.
+     if (!this.hasAttribute("breakout-extend-animate")) {
+@@ -3218,7 +3297,33 @@ ${
+       return;
+     }
+ 
++    if (this._harborHandleUrlbarClose) {
++      this._harborHandleUrlbarClose();
++    } else if (!this._untrimmedValue || (this.#isAddressbar && (this.searchMode || this.window.gHarborVerticalTabsManager._hasSetSingleToolbar))) {
++      // Restore the current page URL when the urlbar is empty on blur
++      this.window.requestAnimationFrame(() => {
++        this.handleRevert();
++      });
++    }
++
++    // Arc like URLbar: Blur the input on exit
++    const harborToolbox = this.document.getElementById("navigator-toolbox");
++    this.window.document.documentElement.setAttribute("supress-primary-adjustment", !(
++      harborToolbox.hasAttribute("harbor-has-hover") ||
++      harborToolbox.hasAttribute("harbor-has-empty-tab") ||
++      harborToolbox.hasAttribute("harbor-user-show")
++    ));
++    this.window.gBrowser.selectedBrowser.focus();
++    this.document.documentGlobal.setTimeout(() => {
++      this.window.document.documentElement.removeAttribute("supress-primary-adjustment");
++    }, 100);
++    this.window.gHarborUIManager.onUrlbarClose();
++    this.removeAttribute("harbor-floating-urlbar");
++
+     this.toggleAttribute("breakout-extend", false);
++    if (this.#isAddressbar) {
++      this.#hideBreakoutPopover();
++    }
+     this.#updateTextboxPosition();
+   }
+ 
+@@ -3256,7 +3361,7 @@ ${
+     forceUnifiedSearchButtonAvailable = false
+   ) {
+     let prevState = this.getAttribute("pageproxystate");
+-
++    this.removeAttribute("had-proxystate");
+     this.setAttribute("pageproxystate", state);
+     this._inputContainer.setAttribute("pageproxystate", state);
+     this._identityBox?.setAttribute("pageproxystate", state);
+@@ -3533,7 +3638,11 @@ ${
+       return;
+     }
+ 
+-    this.style.top = px(getUntransformedTop(this.parentNode));
++    this.style.top = px(
++      this.window.gHarborVerticalTabsManager._hasSetSingleToolbar ?
++      getUntransformedTop(this.parentNode)
++      : (UrlbarContentUtils.getPlatform() == "macosx" ? -2 : -5)
++    );
+   }
+ 
+   #updateTextboxPositionNextFrame() {
+@@ -3553,12 +3662,29 @@ ${
+     this.removeAttribute("breakout");
+     this.parentNode.removeAttribute("breakout");
+     this.style.top = "";
++    this.#hideBreakoutPopover();
++    this._layoutBreakoutUpdateKey = {};
++  }
++
++  #showBreakoutPopover() {
++    if (this.#isAddressbar) {
++      this.setAttribute("popover", "manual");
++    }
++    if (!this.matches(":popover-open")) {
++      this.showPopover();
++    }
++    this.#fixAddressbarSearchbarOrder();
++  }
++
++  #hideBreakoutPopover() {
+     try {
+       this.hidePopover();
+     } catch (ex) {
+       // No big deal if not a popover already.
+     }
+-    this._layoutBreakoutUpdateKey = {};
++    if (this.#isAddressbar) {
++      this.removeAttribute("popover");
++    }
+   }
+ 
+   incrementBreakoutBlockerCount() {
+@@ -3591,9 +3717,10 @@ ${
+           return;
+         }
+ 
++        this.window.gHarborVerticalTabsManager.recalculateURLBarHeight();
+         this.parentNode.style.setProperty(
+           "--urlbar-container-height",
+-          px(getBoundsWithoutFlushing(this.parentNode).height)
++          px(getBoundsWithoutFlushing(this.parentNode).height + 8)
+         );
+ 
+         if (this.#breakoutBlockerCount) {
+@@ -3602,8 +3729,9 @@ ${
+ 
+         this.setAttribute("breakout", "true");
+         this.parentNode.setAttribute("breakout", "true");
+-        this.showPopover();
+-        this.#fixAddressbarSearchbarOrder();
++        if (!this.#isAddressbar || this.hasAttribute("breakout-extend")) {
++          this.#showBreakoutPopover();
++        }
+         this.#updateTextboxPosition();
+ 
+         resolve();
+@@ -4108,6 +4236,7 @@ ${
+   }
+ 
+   _toggleActionOverride(event) {
++    if (!Services.prefs.getBoolPref("harbor.urlbar.enable-overrides")) return;
+     if (
+       event.keyCode == KeyEvent.DOM_VK_SHIFT ||
+       event.keyCode == KeyEvent.DOM_VK_ALT ||
+@@ -4206,9 +4335,10 @@ ${
+     if (!this.#isAddressbar) {
+       return val;
+     }
+-    let trimmedValue = UrlbarPrefs.get("trimURLs")
+-      ? lazy.BrowserUIUtils.trimURL(val)
+-      : val;
++    let trimmedValue =
++      UrlbarPrefs.get("trimURLs") && this._harborTrimURL
++        ? this._harborTrimURL(val)
++        : val;
+     // Only trim value if the directionality doesn't change to RTL and we're not
+     // showing a strikeout https protocol.
+     return UrlbarContentUtils.isTextDirectionRTL(trimmedValue, window) ||
+@@ -4410,6 +4540,11 @@ ${
+     keepViewOpen = false,
+     browserId = null,
+   }) {
++    where = this.window.gHarborUIManager.getOpenUILinkWhere(
++      loadRequest.urlLoad?.url ?? "",
++      this.window.gBrowser.selectedBrowser,
++      where
++    );
+     let keyDownEnterDeferred;
+     if (
+       this._keyDownEnterDeferred &&
+@@ -4731,6 +4866,7 @@ ${
+           this.setResultForCurrentValue(null);
+           this.handleCommand();
+           this.controller.clearLastQueryContextCache();
++          this.view.close();
+ 
+           this._suppressStartQuery = false;
+         });
+@@ -4742,7 +4878,6 @@ ${
+         // Close the results pane, because paste and go doesn't want a result
+         // selection. This has to happen before the menu opens: ending
+         // breakout-extend once it's open keeps it from showing (bug 2037468).
+-        this.view.close();
+ 
+         let controller =
+           this.document.commandDispatcher.getControllerForCommand("cmd_paste");
+@@ -5025,7 +5160,11 @@ ${
+     if (!engineName && !source && !this.hasAttribute("searchmode")) {
+       return;
+     }
+-
++    this.window.dispatchEvent(
++      new CustomEvent("Harbor:UrlbarSearchModeChanged", {
++        detail: { searchMode },
++      })
++    );
+     if (this._searchModeIndicatorTitle) {
+       this._searchModeIndicatorTitle.textContent = "";
+       this._searchModeIndicatorTitle.removeAttribute("data-l10n-id");
+@@ -5335,6 +5474,7 @@ ${
+ 
+     this.document.l10n.setAttributes(
+       this.inputField,
++      this.window.gHarborVerticalTabsManager._hasSetSingleToolbar ? 'harbor-singletoolbar-urlbar-placeholder-with-name' :
+       l10nId,
+       l10nId == "urlbar-placeholder-with-name"
+         ? { name: engineName }
+@@ -5385,6 +5525,12 @@ ${
+     }
+ 
+     logger().debug("Blur Event");
++    if (
++      this.document.commandDispatcher.focusedElement == this.inputField &&
++      !UrlbarPrefs.get("closeOnWindowBlur")
++    ) {
++      return;
++    }
+     // We cannot count every blur events after a missed engagement as abandoment
+     // because the user may have clicked on some view element that executes
+     // a command causing a focus change. For example opening preferences from
+@@ -5464,6 +5610,11 @@ ${
+   }
+ 
+   _on_click(event) {
++    if (event.target == this.inputField) {
++      event.harborOriginalTarget = this;
++      this._on_mousedown(event);
++    }
++
+     switch (event.target) {
+       case this.inputField:
+       case this._inputContainer:
+@@ -5558,10 +5709,11 @@ ${
+       }
+       if (untrim) {
+         this.setValue(this._untrimmedValue);
++        this.setSelectionRange(0, this.value.length);
+       }
+     }
+ 
+-    if (this.focusedViaMousedown) {
++    if (this.focusedViaMousedown || this.hasAttribute("harbor-newtab")) {
+       this.view.autoOpen({ event });
+     } else {
+       if (this._untrimOnFocusAfterKeydown) {
+@@ -5605,9 +5757,16 @@ ${
+   }
+ 
+   _on_mousedown(event) {
+-    switch (event.currentTarget) {
++    switch (event.harborOriginalTarget || event.currentTarget) {
+       case this: {
+         this._mousedownOnUrlbarDescendant = true;
++        const isProbablyFloating =
++          (this.harborUrlbarBehavior == "floating-on-type" &&
++          this.hasAttribute("breakout-extend") && !this.focusedViaMousedown) ||
++          (this.harborUrlbarBehavior == "float") || this.window.gHarborVerticalTabsManager._hasSetSingleToolbar;
++        if (event.type != "click" && isProbablyFloating || event.type == "click" && !isProbablyFloating) {
++          return true;
++        }
+         if (
+           event.composedTarget != this.inputField &&
+           event.composedTarget != this._inputContainer
+@@ -5617,6 +5776,10 @@ ${
+ 
+         this.focusedViaMousedown = !this.focused;
+         this.#preventClickSelectsAll = this.focused;
++        if (isProbablyFloating) {
++          this.focusedViaMousedown = !this.hasAttribute("breakout-extend");
++          this.#preventClickSelectsAll = this.hasAttribute("breakout-extend");
++        }
+ 
+         // Keep the focus status, since the attribute may be changed
+         // upon calling this.focus().
+@@ -5654,7 +5817,7 @@ ${
+         // view open on tab switch, and the TabSelect event arrived earlier.
+         // Also ignore mousedown on the urlbarView context menu: opening/closing the
+         // view is already handled by the result opening flow.
+-        if (event.target.closest?.("tab, #urlbarView-context-menu")) {
++        if (event.target.closest?.("tab, #urlbarView-context-menu") || event.target.closest?.("menupopup") || event.target.closest?.("#tabs-newtab-button")) {
+           break;
+         }
+ 
+@@ -5948,7 +6111,7 @@ ${
+     // When we are in actions search mode we can show more results so
+     // increase the limit.
+     let maxResults =
+-      this.searchMode?.source != UrlbarShared.RESULT_SOURCE.ACTIONS
++      this.searchMode?.source != UrlbarShared.RESULT_SOURCE.HARBOR_ACTIONS
+         ? UrlbarPrefs.get("maxRichResults")
+         : UNLIMITED_MAX_RESULTS;
+     let options = {

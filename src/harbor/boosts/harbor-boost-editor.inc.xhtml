@@ -1,0 +1,151 @@
+#filter substitution
+<?xml version="1.0"?>
+# -*- Mode: HTML -*-
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+<!DOCTYPE window>
+
+<html
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns="http://www.w3.org/1999/xhtml"
+  id="harborBoostWindow"
+  windowtype="Harbor:BoostEditor"
+  alwaysontop="true"
+  customtitlebar="true"
+  sizemode="normal"
+  scrolling="false"
+  macanimationtype="document"
+  windowsmica="true"
+  data-l10n-sync="true">
+<head>
+  <link rel="stylesheet" href="chrome://browser/skin/" />
+  <link rel="stylesheet" href="chrome://global/skin/global.css" />
+
+  <link rel="stylesheet" href="chrome://browser/content/harbor-styles/harbor-boosts.css" />
+  <link rel="stylesheet" href="chrome://browser/content/harbor-styles/harbor-buttons.css" />
+  <link rel="stylesheet" href="chrome://browser/content/harbor-styles/harbor-theme.css" />
+  <link rel="stylesheet" href="chrome://browser/content/harbor-styles/harbor-animations.css" />
+  <link rel="stylesheet" href="chrome://browser/content/harbor-styles/harbor-panel-ui.css" />
+  <link rel="stylesheet" href="chrome://browser/skin/harbor-icons/icons.css" />
+  <link rel="stylesheet" href="chrome://browser/content/harbor-styles/harbor-advanced-color-options.css" />
+
+  <link rel="localization" href="browser/harbor-boosts.ftl"/>
+</head>
+<html:body xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <vbox flex="1" id="harbor-boost-editor-root">
+    <hbox id="harbor-boost-head-wrapper">
+      <button id="harbor-boost-close" class="subviewbutton mod-button title-button"></button>
+      <hbox id="harbor-boost-name" flex="1">
+        <hbox id="harbor-boost-name-container">
+          <html:p id="harbor-boost-name-text"></html:p>
+        </hbox>
+      </hbox>
+      <button data-l10n-id="harbor-boost-shuffle" id="harbor-boost-shuffle" class="subviewbutton mod-button title-button"></button>
+    </hbox>
+    <vbox flex="1" id="harbor-boost-filter-wrapper">
+      <hbox class="harbor-boost-color-picker-gradient harbor-boost-panel-disabled">
+        <button data-l10n-id="harbor-boost-magic-theme" id="harbor-boost-magic-theme" class="subviewbutton mod-button"></button>
+        <html:div id="harbor-boost-color-picker-dot-primary" class="harbor-boost-color-picker-dot no-squircles"></html:div>
+        <html:div id="harbor-boost-color-picker-dot-secondary" class="harbor-boost-color-picker-dot no-squircles"></html:div>
+        <html:div class="harbor-boost-color-picker-circle no-squircles"></html:div>
+      </hbox>
+
+      <hbox flex="1" id="harbor-boost-toolbar-wrapper-colors">
+        <button data-l10n-id="harbor-boost-invert" id="harbor-boost-invert" class="subviewbutton mod-button small"></button>
+        <button data-l10n-id="harbor-boost-controls" id="harbor-boost-controls" class="subviewbutton mod-button small"></button>
+        <button data-l10n-id="harbor-boost-disable" id="harbor-boost-disable" class="subviewbutton mod-button small"></button>
+      </hbox>
+
+      <html:div id="harbor-boost-font-wrapper">
+        <vbox id="harbor-boost-font-grid">
+# Font buttons will be injected here
+        </vbox>
+        <html:div class="visible-separator"></html:div>
+        <hbox flex="1" id="harbor-boost-font-toolbar">
+          <html:select name="font" id="harbor-boost-font-select" class="mod-button">
+# Additional font options will be injected here
+          </html:select>
+        </hbox>
+      </html:div>
+
+      <hbox flex="1" id="harbor-boost-toolbar-wrapper">
+        <button id="harbor-boost-size" class="subviewbutton mod-button big-button med">
+          <html:p data-l10n-id="harbor-boost-size" id="harbor-boost-size-text"></html:p>
+          <html:p id="harbor-boost-size-value"></html:p>
+        </button>
+        <button id="harbor-boost-case" class="subviewbutton mod-button big-button toggleable-button med">
+          <html:p data-l10n-id="harbor-boost-case" id="harbor-boost-case-text"></html:p>
+        </button>
+      </hbox>
+
+      <button id="harbor-boost-zap" class="subviewbutton mod-button big-button toggleable-button">
+        <html:p data-l10n-id="harbor-boost-zap" id="harbor-boost-zap-text"></html:p>
+        <html:p id="harbor-boost-zap-value"></html:p>
+      </button>
+
+      <button id="harbor-boost-code" class="subviewbutton mod-button big-button">
+        <html:p data-l10n-id="harbor-boost-code" id="harbor-boost-code-text"></html:p>
+      </button>
+
+    </vbox>
+  </vbox>
+  <vbox flex="1" id="harbor-boost-code-editor-root">
+    <hbox id="harbor-boost-code-top-bar">
+      <button id="harbor-boost-back" class="subviewbutton mod-button big-button">
+        <html:p data-l10n-id="harbor-boost-back" id="harbor-boost-back-text"></html:p>
+      </button>
+    </hbox>
+
+    <vbox flex="1" id="harbor-boost-code-editor">
+    </vbox>
+
+    <hbox id="harbor-boost-code-bottom-bar">
+      <button data-l10n-id="harbor-boost-css-picker" id="harbor-boost-css-picker" class="subviewbutton mod-button big-button toggleable-button"></button>
+      <button data-l10n-id="harbor-boost-css-inspector" id="harbor-boost-css-inspector" class="subviewbutton mod-button big-button"></button>
+    </hbox>
+  </vbox>
+
+  <popupset id="mainPopupSet">
+    <panel type="arrow" popupalign="topmiddle" id="harbor-boost-advanced-color-options-panel">
+      <vbox>
+        <p data-l10n-id="harbor-boost-color-contrast"></p>
+        <html:input id="harbor-boost-color-contrast" type="range" min="0.05" max="0.9" value="0.75" step="0.01"/>
+      </vbox>
+      <vbox>
+        <p data-l10n-id="harbor-boost-color-brightness"></p>
+        <html:input id="harbor-boost-color-brightness" type="range" min="0" max="1" value="0.5" step="0.01"/>
+      </vbox>
+      <vbox>
+        <p data-l10n-id="harbor-boost-color-original-saturation"></p>
+        <html:input id="harbor-boost-color-saturation" type="range" min="0" max="1" value="0.5" step="0.01"/>
+      </vbox>
+    </panel>
+
+    <menupopup id="harborBoostContextMenu">
+      <menuitem data-l10n-id="harbor-boost-edit-rename" id="harbor-boost-edit-rename" command="cmd_harborBoostEditName" />
+      <menuitem data-l10n-id="harbor-boost-edit-shuffle" id="harbor-boost-edit-shuffle" command="cmd_harborBoostShuffle" />
+      <menuitem data-l10n-id="harbor-boost-edit-reset" id="harbor-boost-edit-reset" command="cmd_harborBoostReset" />
+      <menuseparator/>
+      <menuitem data-l10n-id="harbor-boost-load" id="harbor-boost-load" command="cmd_harborBoostLoad" />
+      <menuitem data-l10n-id="harbor-boost-save" id="harbor-boost-save" command="cmd_harborBoostSave" />
+      <menuseparator/>
+      <menuitem data-l10n-id="harbor-boost-edit-delete" id="harbor-boost-edit-delete" command="cmd_harborBoostDelete" />
+    </menupopup>
+  </popupset>
+
+  <commandset id="harborBoostCommandSet">
+    <command id="cmd_harborBoostEditName" />
+    <command id="cmd_harborBoostShuffle" />
+    <command id="cmd_harborBoostReset" />
+    <command id="cmd_harborBoostLoad" />
+    <command id="cmd_harborBoostSave" />
+    <command id="cmd_harborBoostDelete" />
+  </commandset>
+
+  <script src="chrome://browser/content/harbor-components/windows/harbor-boost-editor.js"></script>
+</html:body>
+</html>

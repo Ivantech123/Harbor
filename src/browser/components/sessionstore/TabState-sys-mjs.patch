@@ -1,0 +1,52 @@
+diff --git a/browser/components/sessionstore/TabState.sys.mjs b/browser/components/sessionstore/TabState.sys.mjs
+index bb7bd8c7ca88f776188fce64e0c85beb5ceb27a5..bdec77ba26172fe1b41369b1d45d5a6f9d52ae25 100644
+--- a/browser/components/sessionstore/TabState.sys.mjs
++++ b/browser/components/sessionstore/TabState.sys.mjs
+@@ -10,6 +10,7 @@ const lazy = XPCOMUtils.declareLazy({
+     "moz-src:///browser/components/sessionstore/TabAttributes.sys.mjs",
+   TabStateCache:
+     "moz-src:///browser/components/sessionstore/TabStateCache.sys.mjs",
++  UrlbarShared: "chrome://browser/content/urlbar/UrlbarShared.mjs",
+   sessionStoreLogger:
+     "moz-src:///browser/components/sessionstore/SessionLogger.sys.mjs",
+ });
+@@ -106,10 +107,28 @@ class _TabState {
+       }
+     }
+ 
++    tabData.harborWorkspace = tab.getAttribute("harbor-workspace-id");
++    tabData.harborSyncId = tab.getAttribute("id");
++    tabData.harborEssential = tab.getAttribute("harbor-essential") === "true";
++    tabData.pinned = tabData.pinned || tabData.harborEssential;
++    tabData.harborDefaultUserContextId = tab.getAttribute("harborDefaultUserContextId");
++    tabData.harborPinnedIcon = tab.getAttribute("harbor-pinned-icon");
++    tabData.harborIsEmpty = tab.hasAttribute("harbor-empty-tab");
++    tabData.harborStaticLabel = tab.harborStaticLabel;
++    tabData.harborHasStaticIcon = !!tab.harborStaticIcon;
++    tabData.harborGlanceId = tab.getAttribute("glance-id");
++    tabData.harborIsGlance = tab.hasAttribute("harbor-glance-tab");
++    tabData._harborPinnedInitialState = tab._harborPinnedInitialState;
++    tabData._harborIsActiveTab = tab._harborContentsVisible;
++    tabData.harborLiveFolderItemId = tab.getAttribute("harbor-live-folder-item-id");
++
+     tabData.searchMode = tab.documentGlobal.gURLBar.getSearchMode(
+       browser,
+       true
+     );
++    if (tabData.searchMode?.source === lazy.UrlbarShared.RESULT_SOURCE.HARBOR_ACTIONS) {
++      delete tabData.searchMode;
++    }
+ 
+     tabData.userContextId = tab.userContextId || 0;
+ 
+@@ -135,6 +154,10 @@ class _TabState {
+       tabData.image = tabbrowser.getIcon(tab);
+     }
+ 
++    if (tab.harborStaticIcon) {
++      tabData.image = tab.harborStaticIcon;
++    }
++
+     // If there is a userTypedValue set, then either the user has typed something
+     // in the URL bar, or a new tab was opened with a URI to load.
+     // If so, we also track whether we were still in the process of loading something.

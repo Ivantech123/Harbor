@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Más munkakörnyezetek
+harbor-panel-ui-spaces-label = 
+    .label = Környezetek
+harbor-panel-ui-workspaces-create = 
+    .label = Környezet létrehozása
+harbor-panel-ui-folder-create = 
+    .label = Mappa létrehozása
+harbor-panel-ui-live-folder-create = 
+    .label = Élő mappa
+harbor-panel-ui-new-empty-split = 
+    .label = Új osztott nézet
+harbor-workspaces-panel-context-delete = 
+    .label = Környezet törlése
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Átnevezés
+harbor-workspaces-panel-change-icon = 
+    .label = Ikon módosítása
+harbor-workspaces-panel-context-default-profile = 
+    .label = Profil beállítása
+harbor-workspaces-panel-unload = 
+    .label = Környezet ürítése
+harbor-workspaces-panel-unload-others = 
+    .label = Minden egyéb környezet ürítése
+harbor-workspaces-how-to-reorder-title = Hogyan rendezhetők át a munkakörnyezetek
+harbor-workspaces-how-to-reorder-desc = Húzza az oldalsáv alján lévő ikonokat az átrendezéshez
+harbor-workspaces-change-theme = 
+    .label = Téma módosítása
+harbor-workspaces-panel-context-open = 
+    .label = Munkakörnyezet megnyitása
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Környezet módosítása
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Környezetek
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Komplementer
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Szétválasztás
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Analóg
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Triád
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Lebegő
+harbor-panel-ui-gradient-click-to-add = Kattintson egy szín hozzáadásához
+harbor-workspace-creation-name = 
+    .placeholder = Környezet neve
+harbor-move-tab-to-workspace-button = 
+    .label = Áthelyezés...
+    .tooltiptext = Az ablak összes lapjának áthelyezése egy környezetbe
+harbor-workspaces-panel-context-reorder = 
+    .label = Környezetek átrendezése
+harbor-workspace-creation-profile = Profil
+    .tooltiptext = A profilok arra szolgálnak, hogy a sütiket és a webhelyadatokat elkülönítsék a munkakörnyezetek között.
+harbor-workspace-creation-header = Környezet létrehozása
+harbor-workspace-creation-label = A munkakörnyezetek a lapok és munkamenetek rendszerezésére szolgálnak.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Munkakörnyezet törlése?
+harbor-workspaces-delete-workspace-body = Biztosan törölni szeretnéd ezt: { $name }? Ez a művelet visszafordíthatatlan.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Lapok bezárva! A visszavonáshoz használd a(z) <span>{ $shortcut }</span>.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Törlés
+    .tooltiptext = Összes rögzítetlen lap bezárása
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Következő környezet
+harbor-panel-ui-workspaces-change-back = 
+    .label = Előző környezet

@@ -1,0 +1,397 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+#harbor-media-controls-toolbar {
+  --progress-height: 4px;
+  --button-spacing: 2px;
+  --harbor-media-stack-peek: 8px;
+  --harbor-media-stack-gap: 6px;
+  --harbor-media-stack-easing: cubic-bezier(0.25, 1, 0.5, 1);
+
+  display: flex;
+  min-width: 0;
+  justify-content: space-between;
+  background: transparent;
+  container-type: inline-size;
+
+  .toolbarbutton-1 {
+    border-radius: 5px;
+  }
+
+  .harbor-media-buttons-hbox {
+    align-items: start;
+    margin-top: -4px;
+    --toolbarbutton-padding-outer: 2px;
+  }
+
+  .media-device-buttons {
+    gap: 2px;
+  }
+
+  image.toolbarbutton-icon {
+    padding: 5px;
+    width: 26px;
+    height: 26px;
+  }
+
+  .harbor-media-progress-bar {
+    appearance: none;
+    width: 100%;
+    height: var(--progress-height);
+    margin: 0 8px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: height 0.15s ease-out;
+
+    &::-moz-range-track {
+      background: var(--harbor-toolbar-element-bg);
+      border-radius: 999px;
+      height: var(--progress-height);
+    }
+
+    &::-moz-range-progress {
+      background: color-mix(in srgb, var(--harbor-primary-color) 70%, light-dark(black, white) 30%);
+      border-radius: 999px;
+      height: var(--progress-height);
+    }
+
+    &::-moz-range-thumb {
+      background: color-mix(in srgb, var(--harbor-primary-color) 70%, light-dark(black, white) 30%);
+      border: none;
+      width: calc(var(--progress-height) * 2);
+      height: calc(var(--progress-height) * 2);
+      border-radius: 50%;
+      cursor: pointer;
+      transform: scale(0);
+      transition: transform 0.15s ease-out;
+    }
+
+    &:hover::-moz-range-thumb {
+      transform: scale(1);
+    }
+  }
+
+  &:hover {
+    .show-on-hover {
+      max-height: 50px;
+      padding: 5px;
+      margin-bottom: 0;
+      opacity: 1;
+      transform: translateY(0) !important;
+      pointer-events: auto;
+    }
+
+    & .harbor-media-info-vbox label[overflow] {
+      animation: harbor-back-and-forth-text 10s infinite ease-in-out;
+    }
+
+    & .harbor-media-card:not([harbor-removing], [harbor-hiding]) {
+      transform: none;
+      opacity: 1;
+    }
+
+    & .harbor-media-focus-button::after {
+      display: none;
+    }
+
+    & .harbor-media-card::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: calc(var(--harbor-media-stack-gap) + var(--harbor-media-stack-peek));
+    }
+  }
+
+  .show-on-hover {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(1rem);
+    padding: 0 6px;
+    pointer-events: none;
+    transition:
+      max-height 0.3s var(--harbor-media-stack-easing),
+      opacity 0.3s var(--harbor-media-stack-easing),
+      transform 0.3s var(--harbor-media-stack-easing),
+      padding 0.3s var(--harbor-media-stack-easing);
+  }
+
+  .harbor-media-current-time,
+  .harbor-media-duration {
+    margin: 0 0 0 1px;
+    font-size: x-small;
+    opacity: 0.7;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.harbor-media-card {
+  position: relative;
+  flex-shrink: 0;
+  order: var(--harbor-media-card-index, 0);
+  width: 100%;
+  padding: 4px 6px;
+  border-radius: var(--border-radius-medium);
+  @media (-moz-platform: macos) {
+    border-radius: calc(var(--border-radius-medium) - 2px);
+  }
+  outline: var(--harbor-sidebar-notification-outline);
+  outline-offset: -1.5px;
+  box-shadow: var(--harbor-sidebar-notification-shadow);
+  background-color: var(--harbor-sidebar-notification-bg);
+  transform-origin: top center;
+  transform: translateY(
+      calc(
+        var(--harbor-media-card-index, 0) * (100% + var(--harbor-media-stack-gap)) -
+          var(--harbor-media-stack-peek) * var(--harbor-media-card-peek-level, 0)
+      )
+    )
+    scale(calc(1 - 0.04 * var(--harbor-media-card-peek-level, 0)));
+  opacity: calc(1 - 0.3 * var(--harbor-media-card-peek-level, 0));
+  filter: blur(0);
+  transition:
+    transform 0.35s var(--harbor-media-stack-easing),
+    opacity 0.3s var(--harbor-media-stack-easing),
+    filter 0.3s var(--harbor-media-stack-easing),
+    padding 0.3s ease-out;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(0.5rem);
+    filter: blur(4px);
+  }
+
+  &[harbor-reindexing] {
+    transition: none;
+  }
+
+  /* Removed and hiding cards sink down behind the stack while fading out */
+  &[harbor-removing],
+  &[harbor-hiding] {
+    translate: 0 0.5rem;
+    opacity: 0;
+    filter: blur(2px);
+    pointer-events: none;
+    transition:
+      translate 0.3s var(--harbor-media-stack-easing),
+      opacity 0.3s var(--harbor-media-stack-easing),
+      filter 0.3s var(--harbor-media-stack-easing);
+  }
+
+  /* Removed cards additionally leave the flex flow instantly (bottom is
+     set inline to where the card was), so only translate/opacity/filter
+     animate; hiding cards stay in flow until the animation finishes. */
+  &[harbor-removing] {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transform: none;
+  }
+
+  &[stack-overflow] {
+    display: none;
+  }
+
+  &:not([media-sharing]) .media-device-buttons {
+    display: none;
+  }
+
+  &[media-sharing] :is(.harbor-media-playback-buttons, .harbor-media-mute-button) {
+    display: none;
+  }
+
+  &:not([can-pip]) {
+    .harbor-media-info-vbox {
+      width: calc(100% - 26px);
+      flex-shrink: 0;
+    }
+
+    .harbor-media-pip-button {
+      display: none;
+    }
+  }
+
+  &[can-pip] {
+    .harbor-media-info-vbox {
+      flex-shrink: 1;
+    }
+
+    .harbor-media-pip-button {
+      display: flex;
+    }
+  }
+
+  & .harbor-media-focus-button::after {
+    content: "";
+    position: absolute;
+    background: url("chrome://browser/content/harbor-images/note-indicator.svg") no-repeat;
+    top: -70%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    opacity: 1;
+    will-change: opacity;
+  }
+
+  &:not(.playing:not([muted])) .harbor-media-focus-button::after {
+    opacity: 0;
+  }
+
+  /* Background cards never show the floating notes — only their top sliver
+     is visible and the notes would poke through it */
+  &[stacked-behind] .harbor-media-focus-button::after {
+    display: none;
+  }
+
+  .harbor-media-focus-button {
+    align-self: center;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+    position: relative;
+
+    & image {
+      &:-moz-broken {
+        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3C/svg%3E") !important;
+        background: color-mix(in srgb, var(--harbor-primary-color) 70%, transparent 30%);
+      }
+    }
+  }
+}
+
+#harbor-media-controls-toolbar {
+  display: none;
+  animation: none;
+  transition: none;
+
+  &:not([hidden]) {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--harbor-media-stack-gap);
+    /* The toolbar keeps its collapsed height even while expanded: the
+       cards' flow positions overflow above the box, so the expanded stack
+       floats over the sidebar instead of pushing it around. The collapsed
+       height includes the room for the peeking stacked cards. */
+    height: calc(
+      var(--harbor-media-collapsed-height, 2.5rem) + var(--harbor-media-stack-peek) *
+        var(--harbor-media-stack-behind, 0)
+    );
+    overflow: visible;
+    position: relative;
+    z-index: 2;
+    transition: height 0.3s var(--harbor-media-stack-easing);
+  }
+}
+
+.harbor-media-title,
+.harbor-media-artist {
+  align-self: start;
+}
+
+.harbor-media-artist {
+  opacity: 0.7;
+  font-size: smaller;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.harbor-media-title {
+  height: var(--size-item-small);
+  font-size: math;
+}
+
+.harbor-media-main-vbox,
+.harbor-media-info-vbox,
+.harbor-media-progress-hbox {
+  width: 100%;
+}
+
+.harbor-media-info-vbox {
+  .harbor-media-card:not([media-position-hidden]) & {
+    transition-delay: 0.01s !important;
+  }
+  overflow-x: hidden;
+  overflow-x: visible;
+  white-space: nowrap;
+  /* Overflow inner box shadow from the left to simulate overflow */
+  mask-image: linear-gradient(to left, transparent, var(--harbor-sidebar-notification-bg) 0.6em);
+  min-width: 1px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 0.6em;
+    background: linear-gradient(to right, var(--harbor-sidebar-notification-bg) 0%, transparent 100%);
+    pointer-events: none;
+    top: 6px;
+    left: 0;
+    height: calc(100% - 6px);
+    z-index: 1;
+  }
+
+  & label {
+    min-height: var(--size-item-small);
+    margin-left: 0;
+    font-weight: 500;
+    position: relative; /* For the animation */
+  }
+}
+
+.harbor-media-main-vbox {
+  height: 100%;
+  justify-content: space-between;
+}
+
+.harbor-media-progress-hbox {
+  flex-grow: 1;
+  height: var(--size-item-large);
+  align-items: center;
+  padding-top: 0 !important;
+
+  .harbor-media-card[media-position-hidden] & {
+    display: none;
+  }
+}
+
+.harbor-media-controls-hbox {
+  align-items: flex-end;
+  justify-content: space-between;
+  max-width: 100%;
+  --toolbarbutton-padding-outer: 0;
+  container: media-controls / inline-size;
+  gap: 0.7rem;
+}
+
+.harbor-media-playback-buttons {
+  justify-content: space-between;
+  max-width: 10em;
+  width: 100%;
+}
+
+/* Hide .harbor-media-focus-button if it doesn't fit in the toolbar */
+@container media-controls (max-width: 165px) {
+  .harbor-media-card:not([media-sharing]) .harbor-media-focus-button {
+    display: none;
+  }
+}
+
+.harbor-media-info-container {
+  padding-right: 0 !important;
+}
+
+:root:not([harbor-sidebar-expanded="true"]) {
+  #harbor-media-controls-toolbar {
+    display: none;
+  }
+}

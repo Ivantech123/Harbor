@@ -1,0 +1,80 @@
+{
+  "policies": {
+    "DisableAppUpdate": true,
+    "AppAutoUpdate": false,
+    "ManualAppUpdateOnly": true,
+    "BackgroundAppUpdate": false,
+    "DisableTelemetry": true,
+    "DisableFirefoxStudies": true,
+    "DisablePocket": true,
+    "DisableFeedbackCommands": true,
+    "DisableFormHistory": true,
+    "SearchSuggestEnabled": false,
+    "CaptivePortal": false,
+    "HTTPSOnlyMode": "enabled",
+    "EnableTrackingProtection": {
+      "Value": true,
+      "Locked": true,
+      "Cryptomining": true,
+      "Fingerprinting": true,
+      "EmailTracking": true
+    },
+    "FirefoxHome": {
+      "Search": true,
+      "TopSites": false,
+      "SponsoredTopSites": false,
+      "Highlights": false,
+      "Pocket": false,
+      "SponsoredPocket": false,
+      "Snippets": false,
+      "Locked": true
+    },
+    "UserMessaging": {
+      "WhatsNew": false,
+      "ExtensionRecommendations": false,
+      "FeatureRecommendations": false,
+      "UrlbarInterventions": false,
+      "MoreFromMozilla": false
+    },
+    "Permissions": {
+      "Location": {
+        "BlockNewRequests": true,
+        "Locked": true
+      }
+    },
+    "Preferences": {
+      "browser.contentblocking.category": {
+        "Value": "strict",
+        "Status": "locked"
+      },
+      "privacy.fingerprintingProtection": {
+        "Value": true,
+        "Status": "locked"
+      },
+      "privacy.query_stripping.enabled": {
+        "Value": true,
+        "Status": "locked"
+      },
+      "privacy.globalprivacycontrol.enabled": {
+        "Value": true,
+        "Status": "locked"
+      },
+      "geo.enabled": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "dom.private-attribution.submission.enabled": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "browser.safebrowsing.downloads.remote.enabled": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "browser.ml.enable": {
+        "Value": false,
+        "Status": "locked"
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+diff --git a/browser/components/preferences/preferences.xhtml b/browser/components/preferences/preferences.xhtml
+index 1b8c38159314b6edee9e6f455beb2b63db1ad3f0..1308345db640dba6b2848b49ef7c11819f9f5727 100644
+--- a/browser/components/preferences/preferences.xhtml
++++ b/browser/components/preferences/preferences.xhtml
+@@ -39,6 +39,8 @@
+   <link rel="stylesheet" href="chrome://browser/content/preferences/widgets/setting-pane.css" />
+   <link rel="stylesheet" href="chrome://browser/content/preferences/widgets/setting-control.css" />
+ 
++#include harbor-preferences-links.xhtml
++
+   <link rel="localization" href="branding/brand.ftl"/>
+   <link rel="localization" href="browser/browser.ftl"/>
+     <!-- Used by fontbuilder.js -->
+@@ -118,6 +120,26 @@
+         iconsrc="chrome://browser/skin/preferences/category-general.svg"
+         data-l10n-id="pane-general-title">
+       </html:moz-page-nav-button>
++      <html:moz-page-nav-button id="category-harbor-looks"
++        view="paneHarborLooks"
++        iconsrc="chrome://browser/skin/customize.svg"
++        data-l10n-id="pane-harbor-looks-title">
++      </html:moz-page-nav-button>
++      <html:moz-page-nav-button id="category-harbor-tabs-management"
++        view="paneHarborTabManagement"
++        iconsrc="chrome://browser/skin/window.svg"
++        data-l10n-id="pane-harbor-tabs-title">
++      </html:moz-page-nav-button>
++      <html:moz-page-nav-button id="category-harbor-CKS"
++        view="paneHarborCKS"
++        iconsrc="chrome://browser/skin/preferences/category-accessibility.svg"
++        data-l10n-id="pane-harbor-CKS-title">
++      </html:moz-page-nav-button>
++      <html:moz-page-nav-button id="category-harbor-marketplace"
++        view="paneHarborMarketplace"
++        iconsrc="chrome://mozapps/skin/extensions/category-themes.svg"
++        data-l10n-id="pane-harbor-marketplace-title">
++      </html:moz-page-nav-button>
+       <html:moz-page-nav-button id="category-sync"
+         hidden="true"
+         view="paneSync"
+@@ -248,6 +270,10 @@
+ #include privacy.inc.xhtml
+ #include sync.inc.xhtml
+ #include moreFromMozilla.inc.xhtml
++#include harborLooksAndFeel.inc.xhtml
++#include harborKeyboardShortcuts.inc.xhtml
++#include harborTabsManagement.inc.xhtml
++#include harborMarketplace.inc.xhtml
+         </vbox>
+       </vbox>
+     </vbox>

@@ -1,0 +1,37 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+XPIDL_SOURCES += [
+    "nsIHarborMouseTracker.idl",
+]
+
+EXPORTS.mozilla += [
+    "HarborMouseTracker.h",
+    "HarborMouseTrackerInternal.h",
+]
+
+SOURCES += [
+    "HarborMouseTracker.cpp",
+]
+
+XPCOM_MANIFESTS += [
+    "components.conf",
+]
+
+LOCAL_INCLUDES += [
+    "/widget",
+]
+
+if CONFIG["MOZ_WIDGET_TOOLKIT"] == "cocoa":
+    SOURCES += ["HarborMouseTrackerCocoa.mm"]
+    LOCAL_INCLUDES += [
+        "/widget/cocoa",
+        "/xpcom/base",
+    ]
+
+if CONFIG["MOZ_WIDGET_TOOLKIT"] == "windows":
+    SOURCES += ["HarborMouseTrackerWin.cpp"]
+
+FINAL_LIBRARY = "xul"
+XPIDL_MODULE = "harbor_compact_mode"

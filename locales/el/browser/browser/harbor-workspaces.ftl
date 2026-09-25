@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+harbor-panel-ui-workspaces-text = Χώροι Εργασίας
+harbor-panel-ui-spaces-label = 
+    .label = Χώροι Εργασίας
+harbor-panel-ui-workspaces-create = 
+    .label = Δημιουργία Χώρου
+harbor-panel-ui-folder-create = 
+    .label = Δημιουργία Φακέλου
+harbor-panel-ui-live-folder-create = 
+    .label = Ζωντανός Φάκελος
+harbor-panel-ui-new-empty-split = 
+    .label = Νέος Διαχωρισμός
+harbor-workspaces-panel-context-delete = 
+    .label = Διαγραφή Χώρου Εργασίας
+    .accesskey = D
+harbor-workspaces-panel-change-name = 
+    .label = Αλλαγή Ονόματος
+harbor-workspaces-panel-change-icon = 
+    .label = Αλλαγή Εικονιδίου
+harbor-workspaces-panel-context-default-profile = 
+    .label = Ορισμός Προφίλ
+harbor-workspaces-panel-unload = 
+    .label = Εκφόρτωση Χώρου Εργασίας
+harbor-workspaces-panel-unload-others = 
+    .label = Εκφόρτωση Όλων Των Άλλων Χώρων
+harbor-workspaces-how-to-reorder-title = Πώς να αναδιατάξετε τους χώρους
+harbor-workspaces-how-to-reorder-desc = Σύρετε τα εικονίδια χώρου στο κάτω μέρος της πλαϊνής μπάρας για να τα αναδιατάξετε
+harbor-workspaces-change-theme = 
+    .label = Επεξεργασία Θέματος
+harbor-workspaces-panel-context-open = 
+    .label = Άνοιγμα Χώρου Εργασίας
+    .accesskey = O
+harbor-workspaces-panel-context-edit = 
+    .label = Επεξεργασία Χώρου Εργασίας
+    .accesskey = E
+harbor-bookmark-edit-panel-workspace-selector = 
+    .value = Χώροι Εργασίας
+    .accesskey = W
+harbor-panel-ui-gradient-generator-algo-complementary = 
+    .label = Συμπληρωματικό
+harbor-panel-ui-gradient-generator-algo-splitComplementary = 
+    .label = Διάσπαση
+harbor-panel-ui-gradient-generator-algo-analogous = 
+    .label = Ανάλογο
+harbor-panel-ui-gradient-generator-algo-triadic = 
+    .label = Τριαδικό
+harbor-panel-ui-gradient-generator-algo-floating = 
+    .label = Αιωρούμενο
+harbor-panel-ui-gradient-click-to-add = Κλικ για προσθήκη χρώματος
+harbor-workspace-creation-name = 
+    .placeholder = Όνομα Χώρου
+harbor-move-tab-to-workspace-button = 
+    .label = Μετακίνησή προς...
+    .tooltiptext = Μετακίνηση όλων των καρτελών από αυτό το παράθυρο σε χώρο εργασίας
+harbor-workspaces-panel-context-reorder = 
+    .label = Αναδιάταξη Χώρων
+harbor-workspace-creation-profile = Προφίλ
+    .tooltiptext = Τα προφίλ χρησιμοποιούνται για να διαχωρίζουν τα cookies και τα δεδομένα του ιστότοπου μεταξύ των χώρων.
+harbor-workspace-creation-header = Δημιουργία Χώρου
+harbor-workspace-creation-label = Οι χώροι χρησιμοποιούνται για την οργάνωση των καρτελών και των συνεδριών σας.
+harbor-workspace-default-profile = Default
+harbor-workspaces-delete-workspace-title = Διαγραφή Χώρου Εργασίας;
+harbor-workspaces-delete-workspace-body = Είστε σίγουροι ότι Θέλετε να διαγράψετε το { $name }; Αυτή η πράξη δεν μπορεί να αναιρεθεί.
+# Note that the html tag MUST not be changed or removed, as it is used to better
+# display the shortcut in the toast notification.
+harbor-workspaces-close-all-unpinned-tabs-toast = Οι καρτέλες έκλεισαν! Χρησιμοποιήστε <span>{ $shortcut }</span> για αναίρεσή.
+harbor-workspaces-close-all-unpinned-tabs-title = 
+    .label = Εκκαθάρισή
+    .tooltiptext = Κλείσιμο όλων των μη καρφιτσωμένων καρτελών
+harbor-panel-ui-workspaces-change-forward = 
+    .label = Επόμενος Χώρος Εργασίας
+harbor-panel-ui-workspaces-change-back = 
+    .label = Προηγούμενος Χώρος Εργασίας
