@@ -57,3 +57,5 @@ harbor-site-data-boosts = Стили
 harbor-site-data-create-boost = 
     .tooltiptext = Создать новый стиль
 harbor-boost-rename-boost-prompt = Переименовать стиль?
+harbor-boost-magic-theme =
+    .tooltiptext = Подобрать цвета под страницу

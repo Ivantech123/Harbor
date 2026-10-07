@@ -57,3 +57,5 @@ harbor-site-data-boosts = Boosts
 harbor-site-data-create-boost =
     .tooltiptext = Create new boost
 harbor-boost-rename-boost-prompt = Rename Boost?
+harbor-boost-magic-theme =
+    .tooltiptext = Match the colors of the page

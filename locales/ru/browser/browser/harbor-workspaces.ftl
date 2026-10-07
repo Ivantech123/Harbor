@@ -80,3 +80,5 @@ harbor-panel-ui-workspaces-change-forward =
     .label = Следующее пространство
 harbor-panel-ui-workspaces-change-back = 
     .label = Предыдущее пространство
+harbor-workspaces-remote-delete-title = Удалить синхронизированное пространство?
+harbor-workspaces-remote-delete-body = { $name } удалено на другом устройстве. Удалить его и здесь? Если оставить, оно восстановится на остальных устройствах.

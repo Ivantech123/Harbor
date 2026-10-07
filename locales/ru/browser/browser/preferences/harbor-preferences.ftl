@@ -325,3 +325,10 @@ harbor-close-all-unpinned-tabs-shortcut = Закрыть все не закре�
 harbor-new-unsynced-window-shortcut = Новое пустое окно
 harbor-duplicate-tab-shortcut = Дублировать вкладку
 harbor-key-find-selection = Найти выбранное
+preferences-web-appearance-footer = Управляйте темами { -brand-short-name } в разделе <a data-l10n-name="themes-link">Расширения и темы</a>
+harbor-settings-workspaces-sync =
+    .label = Синхронизировать боковую панель между устройствами
+    .description = Пространства, закреплённые вкладки и папки будут одинаковыми на всех ваших устройствах через аккаунт Mozilla.
+harbor-settings-normal-tabs-sync =
+    .label = Включая незакреплённые вкладки
+    .description = Синхронизировать и обычные вкладки каждого пространства, а не только закреплённые вкладки и папки.

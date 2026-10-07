@@ -374,3 +374,4 @@ harbor-close-all-unpinned-tabs-shortcut = Close All Unpinned Tabs
 harbor-new-unsynced-window-shortcut = New Blank Window
 harbor-duplicate-tab-shortcut = Duplicate Tab
 harbor-key-find-selection = Find Selection
+preferences-web-appearance-footer = Manage { -brand-short-name } themes in <a data-l10n-name="themes-link">Extensions & Themes</a>
