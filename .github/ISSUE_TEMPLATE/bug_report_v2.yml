@@ -1,0 +1,132 @@
+name: Bug Report
+description: Report a bug or issue in Harbor Browser
+title: "[BUG] "
+labels: ["bug"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug! Please fill out the form below to help us reproduce and fix the issue.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Clear description of the bug
+      placeholder: |
+        When I [action], [unexpected behavior] happens instead of [expected behavior]
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: How to reproduce the bug
+      placeholder: |
+        1. Open Harbor
+        2. Go to...
+        3. Click on...
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen?
+      placeholder: |
+        The browser should...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happens?
+      placeholder: |
+        Instead, the browser...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Harbor Version
+      description: What version of Harbor are you using?
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: What OS are you using?
+      options:
+        - Windows 10
+        - Windows 11
+        - macOS (Intel)
+        - macOS (Apple Silicon)
+        - Linux (Ubuntu)
+        - Linux (Fedora)
+        - Linux (Other)
+    validations:
+      required: true
+
+  - type: input
+    id: os_version
+    attributes:
+      label: OS Version
+      description: Specific OS version (e.g., 22H2 for Windows, 14.1 for macOS)
+      placeholder: "e.g., 22H2"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs
+      description: If applicable, include error logs or console output
+      render: bash
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots showing the issue
+
+  - type: checkboxes
+    id: impact
+    attributes:
+      label: Impact
+      description: How does this bug affect you?
+      options:
+        - label: Crashes the browser
+        - label: Data loss or corruption
+        - label: Prevents feature from working
+        - label: Performance degradation
+        - label: Cosmetic/UI issue
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other relevant information
+      placeholder: |
+        - Does this happen in Firefox?
+        - Have you tried a clean profile?
+        - Any recent changes that triggered this?
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      description: Please confirm before submitting
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+        - label: I have provided enough information to reproduce the bug
+          required: true

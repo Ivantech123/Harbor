@@ -1,0 +1,77 @@
+name: Feature Request
+description: Suggest an idea for Harbor Browser
+title: "[FEATURE] "
+labels: ["enhancement"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature! Please provide as much detail as possible to help us understand your request.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Clear and concise description of the feature you want to request
+      placeholder: |
+        I'd like to see...
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Explain why this feature would be useful
+      placeholder: |
+        This would help because...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative
+    attributes:
+      label: Alternative Solutions
+      description: Describe alternative solutions or workarounds you've considered
+      placeholder: |
+        Other approaches could be...
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Nice to have
+        - Would be helpful
+        - Important for workflow
+        - Critical for my use
+
+  - type: checkboxes
+    id: related_features
+    attributes:
+      label: Related Features
+      description: Are there existing features this relates to?
+      options:
+        - label: Spaces
+        - label: Tabs
+        - label: Split View
+        - label: Live Folders
+        - label: Customization/Mods
+        - label: Settings/Preferences
+        - label: Share Feature
+        - label: Sessions
+        - label: Performance
+        - label: Accessibility
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context or examples
+      placeholder: |
+        - Screenshots or mockups would be helpful
+        - Related discussions or issues
+        - Similar features in other browsers
