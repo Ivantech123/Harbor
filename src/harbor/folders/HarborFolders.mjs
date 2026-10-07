@@ -1461,7 +1461,7 @@ class nsHarborFolders extends nsHarborDOMOperatedFeature {
     if (tab.multiselected || tab.selected) {
       return true;
     }
-    // See https://github.com/zen-browser/desktop/issues/12509.
+    // See upstream issue #12509.
     // We can't just blindly check for the tab's active state
     // because it would mean that all tabs in a collapsed group that
     // are active means they should be active for contextGroup as well,
@@ -1911,7 +1911,7 @@ class nsHarborFolders extends nsHarborDOMOperatedFeature {
         }
         groupStart.style.removeProperty("margin-top");
         this.styleCleanup(groupItems);
-        // Trigger the recalculation so that zen returns
+        // Trigger the recalculation so that harbor returns
         // the correct container size in the DOM
         tabsContainer.offsetHeight;
         tabsContainer.setAttribute("hidden", true);
@@ -1971,7 +1971,7 @@ class nsHarborFolders extends nsHarborDOMOperatedFeature {
             }
             groupStart.style.removeProperty("margin-top");
             this.styleCleanup(groupItems);
-            // Trigger the recalculation so that zen returns
+            // Trigger the recalculation so that harbor returns
             // the correct container size in the DOM
             tabsContainer.offsetHeight;
             tabsContainer.setAttribute("hidden", true);

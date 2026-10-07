@@ -7,11 +7,11 @@
   },
   "type": "module",
   "scripts": {
-    "build": "surfer build",
+    "build": "python scripts/update_en_US_packs.py && surfer build",
     "build:ui": "surfer build --ui",
     "start": "cd engine && python3 ./mach run --noprofile",
     "start:bloat": "XPCOM_MEM_BLOAT_LOG=1 npm start",
-    "import": "npm run ffprefs && npm run import:dumps && surfer import",
+    "import": "npm run ffprefs && npm run import:dumps && surfer import && python scripts/update_en_US_packs.py",
     "import:dumps": "python3 scripts/update_service_dumps.py",
     "export": "surfer export",
     "init": "npm run download && npm run import && npm run bootstrap",
@@ -22,6 +22,9 @@
     "sync:raw": "surfer update",
     "sync:rc": "python3 scripts/update_ff.py --rc",
     "sync:l10n": "python3 scripts/update_ff.py --just-l10n",
+    "translate": "python scripts/translate_locales.py",
+    "translate:all": "python scripts/translate_locales.py --all --force",
+
     "lint": "cd engine && ./mach lint harbor",
     "lint:fix": "npm run lint -- --fix",
     "reset-ff": "surfer reset",
@@ -37,15 +40,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zen-browser/desktop.git"
+    "url": "git+https://github.com/Ivantech123/Harbor.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ivan",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/zen-browser/desktop/issues"
+    "url": "https://github.com/Ivantech123/Harbor/issues"
   },
-  "homepage": "https://github.com/zen-browser/desktop#readme",
+  "homepage": "https://github.com/Ivantech123/Harbor#readme",
   "devDependencies": {
     "@babel/preset-typescript": "^7.27.0",
     "@zen-browser/prettier": "^3.9.3",

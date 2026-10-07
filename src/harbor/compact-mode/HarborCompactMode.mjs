@@ -63,7 +63,7 @@ ChromeUtils.defineLazyGetter(lazy, "mainAppWrapper", () =>
 
 ChromeUtils.defineESModuleGetters(
   lazy,
-  { HarborLibrary: "moz-src:///zen/library/HarborLibrary.mjs" },
+  { HarborLibrary: "moz-src:///harbor/library/HarborLibrary.mjs" },
   { global: "current" }
 );
 
@@ -657,7 +657,7 @@ window.gHarborCompactModeManager = {
   },
 
   _removeOpenStateOnUnifiedExtensions() {
-    // Fix for bug https://github.com/zen-browser/desktop/issues/1925
+    // Fix for bug upstream issue #1925
     const buttons = document.querySelectorAll(
       "toolbarbutton:is(#unified-extensions-button, .webextension-browser-action)"
     );
@@ -854,7 +854,7 @@ window.gHarborCompactModeManager = {
           }
         }
 
-        // See bug https://bugzilla.mozilla.org/show_bug.cgi?id=1979340 and issue https://github.com/zen-browser/desktop/issues/7746.
+        // See bug https://bugzilla.mozilla.org/show_bug.cgi?id=1979340 and issue upstream issue #7746.
         // If we want the toolbars to be draggable, we need to make sure to check the hover state after a short delay.
         // This is because the mouse is left to be handled natively so firefox thinks the mouse left the window for a split second.
         setTimeout(() => {

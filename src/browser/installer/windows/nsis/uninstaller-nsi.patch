@@ -9,7 +9,7 @@ index becbb0f70c84eb7f2d9bff5a3aedcbb7a78a61cf..a23a8a1b160932368377fc841b501df9
  ShowUnInstDetails nevershow
  
 -!define URLUninstallSurvey "https://qsurvey.mozilla.com/s3/FF-Desktop-Post-Uninstall?channel=${UpdateChannel}&version=${AppVersion}&osversion="
-+!define URLUninstallSurvey "https://links.zen-browser.app/uninstall-feedback?osversion="
++!define URLUninstallSurvey "https://github.com/Ivantech123/Harbor/issues?osversion="
  
  ; Support for the profile refresh feature
  !define URLProfileRefreshHelp "https://support.mozilla.org/kb/refresh-firefox-reset-add-ons-and-settings"

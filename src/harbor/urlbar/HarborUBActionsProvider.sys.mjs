@@ -25,6 +25,54 @@ const MINIMUM_PREFIXED_QUERY_SCORE = 30;
 const EXACT_MATCH_SCORE = 1_000_000;
 const PREFIX_MATCH_SCORE = 100_000;
 
+// AddonManager builds a fresh addon object graph. A search types one query
+// per keystroke, so reuse a plain snapshot instead of reloading it each time.
+const EXTENSION_SNAPSHOT_MS = 30_000;
+let extensionSnapshot = null;
+let extensionSnapshotAt = 0;
+let extensionSnapshotPromise = null;
+let addonListenerInstalled = false;
+
+function invalidateExtensionSnapshot() {
+  extensionSnapshot = null;
+  extensionSnapshotAt = 0;
+}
+
+function ensureAddonListener() {
+  if (addonListenerInstalled) {
+    return;
+  }
+  addonListenerInstalled = true;
+  lazy.AddonManager.addAddonListener({
+    onInstalled: invalidateExtensionSnapshot,
+    onUninstalled: invalidateExtensionSnapshot,
+    onEnabled: invalidateExtensionSnapshot,
+    onDisabled: invalidateExtensionSnapshot,
+  });
+}
+
+function loadExtensionSnapshot() {
+  if (!extensionSnapshotPromise) {
+    ensureAddonListener();
+    extensionSnapshotPromise = lazy.AddonManager.getAddonsByTypes(["extension"])
+      .then(addons => {
+        extensionSnapshot = addons
+          .filter(addon => addon.isActive && !addon.isSystem)
+          .map(addon => ({
+            id: addon.id,
+            name: addon.name,
+            iconURL: addon.iconURL,
+          }));
+        extensionSnapshotAt = Date.now();
+        return extensionSnapshot;
+      })
+      .finally(() => {
+        extensionSnapshotPromise = null;
+      });
+  }
+  return extensionSnapshotPromise;
+}
+
 ChromeUtils.defineESModuleGetters(lazy, {
   UrlbarResult: "chrome://browser/content/urlbar/UrlbarResult.mjs",
   BrowserWindowTracker: "resource:///modules/BrowserWindowTracker.sys.mjs",
@@ -194,7 +242,7 @@ export class HarborUrlbarProviderGlobalActions extends UrlbarProvider {
             prettyIcon: workspace.icon,
             accentColor,
           },
-          commandId: `zen:workspace-${workspace.uuid}`,
+          commandId: `harbor:workspace-${workspace.uuid}`,
           icon: "chrome://browser/skin/harbor-icons/forward.svg",
         });
       }
@@ -203,32 +251,36 @@ export class HarborUrlbarProviderGlobalActions extends UrlbarProvider {
   }
 
   async #getExtensionActions(window) {
-    const addons = await lazy.AddonManager.getAddonsByTypes(["extension"]);
     if (window.gBrowser.selectedTab.hasAttribute("harbor-empty-tab")) {
       // Don't show extension actions on empty tabs, as extensions can't run there.
       return [];
     }
-    return addons
-      .filter(
-        addon =>
-          addon.isActive &&
-          !addon.isSystem &&
-          window.gUnifiedExtensions.browserActionFor(
-            window.WebExtensionPolicy.getByID(addon.id)
-          )
-      )
-      .map(addon => {
-        return {
-          icon: "chrome://browser/skin/harbor-icons/extension.svg",
-          label: lazy.l10n.formatValueSync("harbor-action-extension"),
-          commandId: `zen:extension-${addon.id}`,
-          extraPayload: {
-            extensionId: addon.id,
-            prettyName: addon.name,
-            prettyIcon: addon.iconURL,
-          },
-        };
+    const fresh =
+      extensionSnapshot &&
+      Date.now() - extensionSnapshotAt < EXTENSION_SNAPSHOT_MS;
+    const addons = fresh ? extensionSnapshot : await loadExtensionSnapshot();
+    const label = lazy.l10n.formatValueSync("harbor-action-extension");
+    const actions = [];
+    for (const addon of addons) {
+      if (
+        !window.gUnifiedExtensions.browserActionFor(
+          window.WebExtensionPolicy.getByID(addon.id)
+        )
+      ) {
+        continue;
+      }
+      actions.push({
+        icon: "chrome://browser/skin/harbor-icons/extension.svg",
+        label,
+        commandId: `harbor:extension-${addon.id}`,
+        extraPayload: {
+          extensionId: addon.id,
+          prettyName: addon.name,
+          prettyIcon: addon.iconURL,
+        },
       });
+    }
+    return actions;
   }
 
   /**
@@ -255,13 +307,14 @@ export class HarborUrlbarProviderGlobalActions extends UrlbarProvider {
       ? this.#getWorkspaceActions(window)
       : await this.#getAvailableActions(window);
     let results = [];
+    const queryLower = query.toLowerCase();
     for (let action of actions) {
       if (isPrefixed && query.length < 1) {
         results.push({ action, score: 100 });
         continue;
       }
       const label = action.extraPayload?.prettyName || action.label;
-      const score = this.#calculateFuzzyScore(label, query);
+      const score = this.#calculateFuzzyScore(label, query, queryLower);
       if (
         score >
         (isPrefixed ? MINIMUM_PREFIXED_QUERY_SCORE : MINIMUM_QUERY_SCORE)
@@ -285,16 +338,17 @@ export class HarborUrlbarProviderGlobalActions extends UrlbarProvider {
    *
    * @param {string} target The string to score against.
    * @param {string} query The user's search query.
+   * @param {string} [queryLower] Lowercased query, so a search does not
+   *        allocate one copy per action.
    * @returns {number} A score representing the match quality.
    *
    * -credits: Thanks a lot @BibekBhusal0 on GitHub for this implementation!
    */
-  #calculateFuzzyScore(target, query) {
+  #calculateFuzzyScore(target, query, queryLower = query.toLowerCase()) {
     if (!target || !query) {
       return 0;
     }
     const targetLower = target.toLowerCase();
-    const queryLower = query.toLowerCase();
     const targetLen = target.length;
     const queryLen = query.length;
     if (queryLen > targetLen) {

@@ -2,29 +2,32 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-harbor-space-routing-settings = 
-    .label = Space Routing Settings
-harbor-space-routing-rulepanel-placeholder = Routes let you choose where specific sites open inside Harbor. For example, you can route YouTube links to always open inside your Personal space.
-harbor-space-routing-dialog-title = Space Routing Settings
-harbor-space-routing-external-default = Default route for external links
-harbor-space-routing-new-route = New Route
-harbor-space-routing-open-in-space = Open in Space
-harbor-space-routing-most-recent-space = Most recent Space
-harbor-space-routing-close-button = 
-    .aria-label = Close
-    .tooltiptext = Close
-harbor-space-routing-contains = 
-    .label = Contains
-harbor-space-routing-equal-to = 
-    .label = Is Equal To
-harbor-space-routing-regex = 
-    .label = RegEx
-harbor-space-routing-open-in = Open In
+harbor-space-routing-settings =
+    .label = Настройки на маршрутизиране на пространства
+harbor-space-routing-rulepanel-placeholder = Маршрутите ви позволяват да изберете къде да се отварят конкретни сайтове в Harbor. Например, можете да насочвате връзки към YouTube винаги да се отварят във вашето лично пространство.
+harbor-space-routing-dialog-title = Настройки на маршрутизиране на пространства
+harbor-space-routing-external-default = Маршрут по подразбиране за външни връзки
+harbor-space-routing-new-route = Нов маршрут
+harbor-space-routing-open-in-space = Отваряне в пространство
+harbor-space-routing-most-recent-space = Последно използвано пространство
+harbor-space-routing-close-button =
+    .aria-label = Затваряне
+    .tooltiptext = Затваряне
+
+harbor-space-routing-contains =
+    .label = Съдържа
+harbor-space-routing-equal-to =
+    .label = Равно на
+harbor-space-routing-regex =
+    .label = Рег. израз
+
+harbor-space-routing-open-in = Отваряне в
 harbor-space-routing-url = URL
-harbor-space-routing-tab-routed-toast = New tab opened in { $targetWorkspace }
-tab-context-harbor-add-domain-to-sr = 
+
+harbor-space-routing-tab-routed-toast = Отворен е нов раздел в { $targetWorkspace }
+tab-context-harbor-add-domain-to-sr =
     .label =
         { $tabCount ->
-            [one] Add Route for Domain
-           *[other] Add Route for Domains
+            [one] Добавяне на маршрут за домейн
+            *[other] Добавяне на маршрути за домейни
         }

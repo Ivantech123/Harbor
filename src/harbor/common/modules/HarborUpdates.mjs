@@ -22,33 +22,32 @@ export default function checkForHarborUpdates() {
   }
   const updateUrl = Services.prefs.getStringPref(
     "app.releaseNotesURL.prompt",
-    ""
+    Services.prefs.getStringPref(
+      "harbor.updates.github.latest",
+      "https://github.com/Ivantech123/Harbor/releases/latest"
+    )
   );
+  const links = [
+    {
+      url: Services.urlFormatter.formatURL(
+        updateUrl.replace("%VERSION%", version)
+      ),
+      l10nId: "harbor-sidebar-notification-updated",
+      special: true,
+      icon: "chrome://browser/skin/harbor-icons/sparkles.svg",
+    },
+    {
+      action: () => {
+        Services.obs.notifyObservers(window, "restart-in-safe-mode");
+      },
+      l10nId: "harbor-sidebar-notification-restart-safe-mode",
+      icon: "chrome://browser/skin/harbor-icons/security-broken.svg",
+    },
+  ];
   createSidebarNotification({
     headingL10nId: "harbor-sidebar-notification-updated-heading",
     autoHideMs: HARBOR_UPDATE_NOTIFICATION_TIMEOUT_MS,
-    links: [
-      {
-        url: Services.urlFormatter.formatURL(
-          updateUrl.replace("%VERSION%", version)
-        ),
-        l10nId: "harbor-sidebar-notification-updated",
-        special: true,
-        icon: "chrome://browser/skin/harbor-icons/sparkles.svg",
-      },
-      {
-        url: "https://www.zen-browser.app/donate",
-        l10nId: "harbor-sidebar-notification-donate",
-        icon: "chrome://browser/skin/harbor-icons/heart-circle-fill.svg",
-      },
-      {
-        action: () => {
-          Services.obs.notifyObservers(window, "restart-in-safe-mode");
-        },
-        l10nId: "harbor-sidebar-notification-restart-safe-mode",
-        icon: "chrome://browser/skin/harbor-icons/security-broken.svg",
-      },
-    ],
+    links,
   });
 }
 

@@ -18,7 +18,7 @@ mkdir windsign-temp -ErrorAction SilentlyContinue
 #Start-Job -Name "DownloadGitObjectsRepo" -ScriptBlock {
 #    param($PWD)
 #    echo "Downloading git objects repo to $PWD\windsign-temp\windows-binaries"
-#    git clone https://github.com/zen-browser/windows-binaries.git $PWD\windsign-temp\windows-binaries
+#    git clone https://github.com/Ivantech123/harbor-windows-binaries.git $PWD\windsign-temp\windows-binaries
 #    echo "Downloaded git objects repo to"
 #} -Verbose -ArgumentList $PWD -Debug
 
@@ -47,7 +47,7 @@ npm run import -- --verbose
 npm run build
 
 echo "Downloading artifacts info"
-$artifactsInfo=gh api repos/zen-browser/desktop/actions/runs/$GithubRunId/artifacts
+$artifactsInfo=gh api repos/Ivantech123/Harbor/actions/runs/$GithubRunId/artifacts
 
 function New-TemporaryDirectory {
     $tmp = [System.IO.Path]::GetTempPath() # Not $env:TEMP, see https://stackoverflow.com/a/946017
@@ -216,7 +216,7 @@ SignAndPackage x86_64
 $files = Get-ChildItem .\windsign-temp\windows-x64-signed-x86_64, .\windsign-temp\windows-x64-signed-arm64 -Recurse -Include *.exe
 signtool.exe sign /n "$SignIdentity" /t http://time.certum.pl/ /fd sha256 /v $files
 
-$binariesRepo = "zen-browser/windows-binaries"
+$binariesRepo = "Ivantech123/harbor-windows-binaries"
 $stagingTag = "windows-signed-$GithubRunId"
 echo "Ensuring staging release $stagingTag exists on $binariesRepo"
 gh release create $stagingTag --repo $binariesRepo --prerelease --title "Windows signed bundles ($GithubRunId)" --notes "Signed Windows bundles for run $GithubRunId, consumed by the release workflow. Safe to delete."

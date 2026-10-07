@@ -26,6 +26,12 @@ locales/firefox-l10n/
 !src/toolkit/themes/shared/design-system/dist/
 .DS_Store
 
+.env
+.env.local
+
+# Local-only OpenRouter key for Harbor AI (never commit)
+**/harbor-ai-local.js
+
 mozconfig
 
 build/signing/env/

@@ -24,7 +24,7 @@ add_task(async function test_onBeforeAddTab_resolves_container_for_match() {
   const win = makeFakeWindow({ ready: true, workspaces: [TARGET_WS] });
 
   const result = gHarborSpaceRoutingManager.onBeforeAddTab(
-    "https://github.com/zen",
+    "https://github.com/harbor",
     {},
     win
   );
@@ -104,7 +104,7 @@ add_task(async function test_onBeforeAddTab_skips_special_tab_options() {
 
   for (const skipOption of ["skipRoute", "pinned", "tabGroup"]) {
     const result = gHarborSpaceRoutingManager.onBeforeAddTab(
-      "https://github.com/zen",
+      "https://github.com/harbor",
       { [skipOption]: true },
       win
     );
@@ -132,7 +132,7 @@ add_task(async function test_onBeforeAddTab_skips_until_startup_ready() {
   const win = makeFakeWindow({ ready: false, workspaces: [TARGET_WS] });
 
   const result = gHarborSpaceRoutingManager.onBeforeAddTab(
-    "https://github.com/zen",
+    "https://github.com/harbor",
     {},
     win
   );
@@ -161,7 +161,7 @@ add_task(async function test_onAfterAddTab_moves_tab_on_non_origin_window() {
   const fakeTab = { parentNode: {} };
 
   gHarborSpaceRoutingManager.onAfterAddTab(
-    "https://github.com/zen",
+    "https://github.com/harbor",
     fakeTab,
     {},
     win,
@@ -221,7 +221,7 @@ add_task(async function test_onAfterAddTab_ignores_detached_tab() {
   const win = makeFakeWindow({ ready: true, workspaces: [TARGET_WS] });
 
   gHarborSpaceRoutingManager.onAfterAddTab(
-    "https://github.com/zen",
+    "https://github.com/harbor",
     { parentNode: null },
     {},
     win,
@@ -265,7 +265,7 @@ add_task(async function test_onAfterAddTab_does_nothing_when_skipped() {
   // onBeforeAddTab reports targetRoute null for skipped/unready tabs; without a
   // route there is nothing for onAfterAddTab to do.
   gHarborSpaceRoutingManager.onAfterAddTab(
-    "https://github.com/zen",
+    "https://github.com/harbor",
     { parentNode: {} },
     {},
     win,
@@ -285,7 +285,7 @@ add_task(async function test_onAfterAddTab_ignores_missing_before_result() {
   const win = makeFakeWindow({ ready: true, workspaces: [TARGET_WS] });
 
   gHarborSpaceRoutingManager.onAfterAddTab(
-    "https://github.com/zen",
+    "https://github.com/harbor",
     { parentNode: {} },
     {},
     win
@@ -334,7 +334,7 @@ add_task(async function test_onAfterAddTab_activates_workspace_on_origin() {
 
   try {
     gHarborSpaceRoutingManager.onAfterAddTab(
-      "https://github.com/zen",
+      "https://github.com/harbor",
       tab,
       {},
       window,

@@ -13,13 +13,13 @@ XPIDL_SOURCES += [
 ]
 
 EXPORTS.mozilla += [
-    "nsHarborModsBackend.h",
     "HarborStyleSheetCache.h",
+    "nsHarborModsBackend.h",
 ]
 
 SOURCES += [
-    "nsHarborModsBackend.cpp",
     "HarborStyleSheetCache.cpp",
+    "nsHarborModsBackend.cpp",
 ]
 
 XPCOM_MANIFESTS += [

@@ -84,7 +84,7 @@ class HarborStartup {
       await SessionStore.promiseAllWindowsRestored;
       delete gHarborUIManager.promiseInitialized;
       gHarborCompactModeManager.init();
-      // Fix for https://github.com/zen-browser/desktop/issues/7605, specially in compact mode
+      // Fix for upstream issue #7605, specially in compact mode
       if (gURLBar.hasAttribute("breakout-extend")) {
         gURLBar.focus();
       }

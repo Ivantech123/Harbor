@@ -35,7 +35,7 @@
   }
 
   :root[inDOMFullscreen] & {
-    /* See issue https://github.com/zen-browser/desktop/issues/5229 */
+    /* See issue upstream issue #5229 */
     visibility: visible;
   }
 
@@ -742,7 +742,7 @@
 }
 
 /* These are buttons that we dont need to be
- * displayed anymore, since now zen displays
+ * displayed anymore, since now harbor displays
  * them into a single, unified button */
 #reader-mode-button,
 .urlbar-go-button,

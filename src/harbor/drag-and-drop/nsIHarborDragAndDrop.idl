@@ -14,7 +14,7 @@ webidl Node;
 interface nsIHarborDragAndDrop : nsISupports {
   /**
    * @brief Indicate that a drag operation has started. Note
-   * that this should only be called for zen's drag and drop
+   * that this should only be called for harbor's drag and drop
    * operations for the tabs.
    * @param opacity The opacity of the drag image.
    */

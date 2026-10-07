@@ -13,8 +13,8 @@ namespace harbor {
 void PrepareDropLanding(id<NSDraggingInfo> aInfo) {
   NS_OBJC_BEGIN_TRY_IGNORE_BLOCK;
 
-  auto zen = nsHarborDragAndDrop::GetHarborDragAndDropInstance();
-  aInfo.animatesToDestination = zen && harbor->DropLandingArmed();
+  auto dnd = nsHarborDragAndDrop::GetHarborDragAndDropInstance();
+  aInfo.animatesToDestination = dnd && dnd->DropLandingArmed();
 
   NS_OBJC_END_TRY_IGNORE_BLOCK;
 }
@@ -22,12 +22,12 @@ void PrepareDropLanding(id<NSDraggingInfo> aInfo) {
 void LandDrop(id<NSDraggingInfo> aInfo) {
   NS_OBJC_BEGIN_TRY_IGNORE_BLOCK;
 
-  auto zen = nsHarborDragAndDrop::GetHarborDragAndDropInstance();
-  if (!zen) {
+  auto dnd = nsHarborDragAndDrop::GetHarborDragAndDropInstance();
+  if (!dnd) {
     return;
   }
   NSMutableArray* targets = [NSMutableArray array];
-  for (const auto& landing : harbor->TakeDropLandingRects()) {
+  for (const auto& landing : dnd->TakeDropLandingRects()) {
     [targets
         addObject:[NSValue valueWithRect:nsCocoaUtils::GeckoRectToCocoaRect(
                                              landing)]];

@@ -8,7 +8,7 @@ import {
   styleMap,
 } from "chrome://global/content/vendor/lit.all.mjs";
 import { MozLitElement } from "chrome://global/content/lit-utils.mjs";
-import { HarborLibraryDragAndDrop } from "moz-src:///zen/library/HarborLibraryDragAndDrop.mjs";
+import { HarborLibraryDragAndDrop } from "moz-src:///harbor/library/HarborLibraryDragAndDrop.mjs";
 
 const GRADIENT_TOPIC = "harbor-space-gradient-update";
 const SIZING_FALLBACK_MS = 600;

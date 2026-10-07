@@ -3,7 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 - name: harbor.share.base-url
-  value: "https://share.zen-browser.app"
+  value: "https://share.harbor.local"
 
 - name: harbor.share.secret-key
   value: ""

@@ -16,7 +16,7 @@ index 319a9c9c37638d8114a94cde1c02e84d9aea916a..bd8301eacc5d37df2bef0850836f08dd
  
 +    originProfile = os.path.join(os.curdir, "embedded.provisionprofile")
 +    endProfile = os.path.join(app, "Contents", "embedded.provisionprofile")
-+    print(f"ZEN: Moving {originProfile} to {endProfile}")
++    print(f"HARBOR: Moving {originProfile} to {endProfile}")
 +    os.rename(originProfile, endProfile)
      if use_rcodesign_arg is True:
          sign_with_rcodesign(

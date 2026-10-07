@@ -3,8 +3,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 EXTRA_JS_MODULES.harbor += [
-    "providers/GithubLiveFolder.sys.mjs",
-    "providers/RssLiveFolder.sys.mjs",
     "HarborLiveFolder.sys.mjs",
     "HarborLiveFoldersManager.sys.mjs",
+    "providers/GithubLiveFolder.sys.mjs",
+    "providers/RssLiveFolder.sys.mjs",
 ]

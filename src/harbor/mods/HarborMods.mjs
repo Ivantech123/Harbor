@@ -10,6 +10,14 @@ import {
 const DOT_RE = /\./g;
 const WHITESPACE_RE = /\s/g;
 const NON_NAME_RE = /[^A-Za-z_-]+/g;
+const MOD_ID_RE = /^[A-Za-z0-9][A-Za-z0-9_-]*$/;
+
+// The mod store shipped with the browser. "harbor.mods.store-url" can point
+// at a remote store with the same layout instead:
+//   {store}/index.json            - { "mods": [{ id, name, description, ... }] }
+//   {store}/mods/{id}/theme.json  - the mod manifest
+const BUNDLED_STORE_URL = "chrome://browser/content/harbor-mods-store";
+const MOD_ASSET_KEYS = ["style", "readme", "preferences", "image"];
 
 /**
  * Harbor Mods Manager, handles downloading, updating and applying Harbor Mods.
@@ -319,22 +327,32 @@ class nsHarborMods extends nsHarborPreloadedFeature {
   }
 
   #composeModApiUrl(modId) {
-    // keeping theme here as it would require changes to CI to change the name
-    return `https://zen-browser.github.io/theme-store/themes/${modId}/theme.json`;
+    // The id ends up in a URL and in a profile path, keep it to a plain slug.
+    if (!MOD_ID_RE.test(modId ?? "")) {
+      throw new Error(`[HarborMods]: Invalid mod id: ${modId}`);
+    }
+    return `${this.storeBaseUrl}/mods/${modId}/theme.json`;
   }
 
-  async #downloadUrlToFile(url, path, maxRetries = 3, retryDelayMs = 500) {
-    // Mod assets must come over HTTPS. Without a signing/hash scheme this
-    // is the minimum guard against MITM or a store-hosted HTTP redirect
-    // serving attacker-controlled CSS/JSON into the chrome profile.
+  #isAllowedStoreUrl(url) {
     let parsed;
     try {
       parsed = new URL(url);
     } catch {
-      throw new Error(`[HarborMods]: Invalid mod asset URL: ${url}`);
+      return false;
     }
-    if (parsed.protocol !== "https:") {
-      throw new Error(`[HarborMods]: Refusing non-HTTPS mod asset URL: ${url}`);
+    // Either the store shipped inside the browser, or a remote one over
+    // HTTPS. Without a signing/hash scheme this is the minimum guard against
+    // MITM or a store-hosted HTTP redirect serving attacker-controlled
+    // CSS/JSON into the chrome profile.
+    return (
+      parsed.protocol === "https:" || url.startsWith(`${BUNDLED_STORE_URL}/`)
+    );
+  }
+
+  async #downloadUrlToFile(url, path, maxRetries = 3, retryDelayMs = 500) {
+    if (!this.#isAllowedStoreUrl(url)) {
+      throw new Error(`[HarborMods]: Refusing mod asset URL: ${url}`);
     }
 
     let attempt = 0;
@@ -731,18 +749,82 @@ class nsHarborMods extends nsHarborPreloadedFeature {
     this.triggerModsUpdate();
   }
 
+  get storeBaseUrl() {
+    const url = Services.prefs
+      .getStringPref("harbor.mods.store-url", "")
+      .trim()
+      .replace(/\/+$/, "");
+    return url || BUNDLED_STORE_URL;
+  }
+
+  /**
+   * Lists the mods the store offers.
+   *
+   * @returns {Promise<object[]>} Entries of { id, name, description, author,
+   *   version, tags }.
+   */
+  async getStoreCatalog() {
+    const url = `${this.storeBaseUrl}/index.json`;
+    if (!this.#isAllowedStoreUrl(url)) {
+      throw new Error(`[HarborMods]: Refusing mod store URL: ${url}`);
+    }
+    const response = await fetch(url, { credentials: "omit" });
+    if (!response.ok) {
+      throw new Error(`[HarborMods]: Mod store answered ${response.status}`);
+    }
+    const catalog = await response.json();
+    if (!Array.isArray(catalog?.mods)) {
+      throw new Error("[HarborMods]: Mod store catalog is invalid");
+    }
+    return catalog.mods.filter(
+      mod => MOD_ID_RE.test(mod?.id ?? "") && typeof mod.name === "string"
+    );
+  }
+
+  async installModFromStore(modId) {
+    const mod = await this.requestMod(modId);
+    if (!mod) {
+      throw new Error(`[HarborMods]: Mod ${modId} is not in the store`);
+    }
+    mod.enabled = true;
+
+    const mods = await this.getMods();
+    mods[mod.id] = mod;
+    await this.updateMods(mods);
+    return mod;
+  }
+
+  async uninstallMod(modId) {
+    await this.removeMod(modId, false);
+    await this.updateMods();
+  }
+
   async requestMod(modId) {
     const url = this.#composeModApiUrl(modId);
+    if (!this.#isAllowedStoreUrl(url)) {
+      throw new Error(`[HarborMods]: Refusing mod store URL: ${url}`);
+    }
 
     console.warn(`[HarborMods]: Fetching mod ${modId} info from ${url}`);
 
-    const data = await fetch(url, {
-      mode: "no-cors",
-    });
+    const data = await fetch(url, { credentials: "omit" });
 
     if (data.ok) {
       try {
         const obj = await data.json();
+        if (typeof obj?.style !== "string" || typeof obj.name !== "string") {
+          throw new Error("manifest has no name or style");
+        }
+
+        // The folder on disk and the entry in the mods file are keyed by
+        // the id we asked for, whatever the manifest claims.
+        obj.id = modId;
+        // Manifests may point at their assets relatively.
+        for (const key of MOD_ASSET_KEYS) {
+          if (typeof obj[key] === "string" && obj[key]) {
+            obj[key] = new URL(obj[key], url).href;
+          }
+        }
 
         return obj;
       } catch (e) {

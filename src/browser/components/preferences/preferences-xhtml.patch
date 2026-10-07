@@ -17,22 +17,22 @@ index 1b8c38159314b6edee9e6f455beb2b63db1ad3f0..1308345db640dba6b2848b49ef7c1181
        </html:moz-page-nav-button>
 +      <html:moz-page-nav-button id="category-harbor-looks"
 +        view="paneHarborLooks"
-+        iconsrc="chrome://browser/skin/customize.svg"
++        iconsrc="chrome://browser/skin/harbor-icons/customize.svg"
 +        data-l10n-id="pane-harbor-looks-title">
 +      </html:moz-page-nav-button>
 +      <html:moz-page-nav-button id="category-harbor-tabs-management"
 +        view="paneHarborTabManagement"
-+        iconsrc="chrome://browser/skin/window.svg"
++        iconsrc="chrome://browser/skin/harbor-icons/window.svg"
 +        data-l10n-id="pane-harbor-tabs-title">
 +      </html:moz-page-nav-button>
 +      <html:moz-page-nav-button id="category-harbor-CKS"
 +        view="paneHarborCKS"
-+        iconsrc="chrome://browser/skin/preferences/category-accessibility.svg"
++        iconsrc="chrome://browser/skin/harbor-icons/sliders.svg"
 +        data-l10n-id="pane-harbor-CKS-title">
 +      </html:moz-page-nav-button>
 +      <html:moz-page-nav-button id="category-harbor-marketplace"
 +        view="paneHarborMarketplace"
-+        iconsrc="chrome://mozapps/skin/extensions/category-themes.svg"
++        iconsrc="chrome://browser/skin/harbor-icons/edit-theme.svg"
 +        data-l10n-id="pane-harbor-marketplace-title">
 +      </html:moz-page-nav-button>
        <html:moz-page-nav-button id="category-sync"

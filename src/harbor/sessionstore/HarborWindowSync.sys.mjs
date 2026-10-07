@@ -224,7 +224,7 @@ class nsHarborWindowSync {
     // to avoid confusing the old private window behavior.
     let forcedSync = !aWindow.gHarborWorkspaces?.privateWindowOrDisabled;
     let hasUnsyncedArg = false;
-    // See issue https://github.com/zen-browser/desktop/issues/12211
+    // See issue upstream issue #12211
     if (lazy.PrivateBrowsingUtils.isWindowPrivate(aWindow)) {
       aWindow._harborStartupSyncFlag = "synced";
     }

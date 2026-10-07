@@ -14,7 +14,7 @@ ChromeUtils.defineLazyGetter(lazy, "toolbarBackgroundElement", () => {
 
 ChromeUtils.defineESModuleGetters(
   lazy,
-  { HarborLibrary: "moz-src:///zen/library/HarborLibrary.mjs" },
+  { HarborLibrary: "moz-src:///harbor/library/HarborLibrary.mjs" },
   { global: "current" }
 );
 

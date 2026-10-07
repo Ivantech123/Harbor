@@ -394,6 +394,8 @@
       await animate(`#browser > *:not(${elementsToIgnore})`, {
         opacity: [0, 1],
       });
+      // After onboarding, open Harbor home, never a blank tab.
+      gHarborUIManager.openAndChangeToTab("about:home");
       _adBlocker = undefined;
       _startedInstalls.clear();
     }

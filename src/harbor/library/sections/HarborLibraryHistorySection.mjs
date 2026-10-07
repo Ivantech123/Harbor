@@ -8,7 +8,7 @@ import {
   PAGE_SIZE,
   HarborLibrarySearchSection,
   whenFilterGroup,
-} from "moz-src:///zen/library/sections/HarborLibrarySearchSection.mjs";
+} from "moz-src:///harbor/library/sections/HarborLibrarySearchSection.mjs";
 
 let lazy = {};
 

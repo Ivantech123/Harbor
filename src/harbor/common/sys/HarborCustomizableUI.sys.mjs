@@ -6,7 +6,7 @@ import { AppConstants } from "resource://gre/modules/AppConstants.sys.mjs";
 
 const lazy = {};
 ChromeUtils.defineESModuleGetters(lazy, {
-  HarborLibraryWidget: "moz-src:///zen/library/HarborLibraryWidget.sys.mjs",
+  HarborLibraryWidget: "moz-src:///harbor/library/HarborLibraryWidget.sys.mjs",
 });
 
 export const HarborCustomizableUI = new (class {

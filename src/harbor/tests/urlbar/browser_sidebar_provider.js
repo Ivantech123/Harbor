@@ -53,22 +53,22 @@ async function removeFolder(folder) {
 }
 
 add_task(async function test_custom_label_is_searchable() {
-  const tab = await addLabelledTab("Quarterly zeninvoices");
+  const tab = await addLabelledTab("Quarterly harborinvoices");
   await collectSidebarData();
 
-  const rows = await searchSidebarRows("zeninvoices quarterly");
+  const rows = await searchSidebarRows("harborinvoices quarterly");
   Assert.equal(rows.length, 1, "The renamed tab is the only match");
   const { result } = rows[0];
   Assert.equal(result.type, UrlbarShared.RESULT_TYPE.TAB_SWITCH);
   Assert.equal(result.payload.url, TAB_URL);
   Assert.equal(
     result.payload.title,
-    "Quarterly zeninvoices",
+    "Quarterly harborinvoices",
     "The custom label is shown instead of the page title"
   );
 
   Assert.deepEqual(
-    await searchSidebarRows("zeninvoices yearly"),
+    await searchSidebarRows("harborinvoices yearly"),
     [],
     "Every token needs to be part of the label"
   );
@@ -78,12 +78,12 @@ add_task(async function test_custom_label_is_searchable() {
 });
 
 add_task(async function test_current_tab_is_not_suggested() {
-  const tab = await addLabelledTab("zencurrenttab");
+  const tab = await addLabelledTab("harborcurrenttab");
   gBrowser.selectedTab = tab;
   await collectSidebarData();
 
   Assert.deepEqual(
-    await searchSidebarRows("zencurrenttab"),
+    await searchSidebarRows("harborcurrenttab"),
     [],
     "There is no point in switching to the tab we are already in"
   );
@@ -93,7 +93,7 @@ add_task(async function test_current_tab_is_not_suggested() {
 });
 
 add_task(async function test_stale_sidebar_url_is_not_suggested() {
-  const tab = await addLabelledTab("zenstaletab");
+  const tab = await addLabelledTab("harborstaletab");
   await collectSidebarData();
 
   BrowserTestUtils.startLoadingURIString(
@@ -103,7 +103,7 @@ add_task(async function test_stale_sidebar_url_is_not_suggested() {
   await BrowserTestUtils.browserLoaded(tab.linkedBrowser);
 
   Assert.deepEqual(
-    await searchSidebarRows("zenstaletab"),
+    await searchSidebarRows("harborstaletab"),
     [],
     "A url that is not open anymore must not be offered as switch to tab"
   );
@@ -114,7 +114,7 @@ add_task(async function test_stale_sidebar_url_is_not_suggested() {
 
 add_task(async function test_only_active_space_tabs() {
   const originalSpace = gHarborWorkspaces.activeWorkspace;
-  const tab = await addLabelledTab("zenotherspace");
+  const tab = await addLabelledTab("harborotherspace");
   await gHarborWorkspaces.createAndSaveWorkspace("Sidebar Provider Space");
   Assert.notEqual(
     gHarborWorkspaces.activeWorkspace,
@@ -124,7 +124,7 @@ add_task(async function test_only_active_space_tabs() {
   await collectSidebarData();
 
   Assert.deepEqual(
-    await searchSidebarRows("zenotherspace"),
+    await searchSidebarRows("harborotherspace"),
     [],
     "Tabs from other spaces are not matched"
   );
@@ -134,7 +134,7 @@ add_task(async function test_only_active_space_tabs() {
   Assert.equal(gHarborWorkspaces.activeWorkspace, originalSpace);
   await collectSidebarData();
 
-  const rows = await searchSidebarRows("zenotherspace");
+  const rows = await searchSidebarRows("harborotherspace");
   Assert.equal(rows.length, 1, "The tab is matched again in its own space");
 
   await UrlbarTestUtils.promisePopupClose(window);
@@ -146,16 +146,16 @@ add_task(async function test_folders_path_and_ranking() {
   const tab2 = BrowserTestUtils.addTab(gBrowser, "data:text/html,tab2");
   const subfolder = await gHarborFolders.createFolder([tab], {
     renameFolder: false,
-    label: "zenfold archive notes",
+    label: "harborfold archive notes",
   });
   const parent = await gHarborFolders.createFolder([tab2], {
     renameFolder: false,
-    label: "zenfold",
+    label: "harborfold",
   });
   parent.tabs[0].after(subfolder);
   await collectSidebarData();
 
-  const rows = await searchSidebarRows("zenfold");
+  const rows = await searchSidebarRows("harborfold");
   Assert.equal(rows.length, 2, "Both folders are matched");
   for (const { result } of rows) {
     Assert.equal(result.type, UrlbarShared.RESULT_TYPE.DYNAMIC);
@@ -167,14 +167,14 @@ add_task(async function test_folders_path_and_ranking() {
   Assert.equal(best.result.payload.harborFolderId, parent.id);
   Assert.equal(
     best.result.payload.path,
-    [space.name, "zenfold"].join(" / "),
+    [space.name, "harborfold"].join(" / "),
     "A root folder only shows its space and name"
   );
   Assert.equal(best.index, 1, "A full match sits right below the heuristic");
   Assert.equal(worst.result.payload.harborFolderId, subfolder.id);
   Assert.equal(
     worst.result.payload.path,
-    [space.name, "zenfold", "zenfold archive notes"].join(" / "),
+    [space.name, "harborfold", "harborfold archive notes"].join(" / "),
     "A subfolder shows every parent folder"
   );
   Assert.greater(
@@ -193,7 +193,7 @@ add_task(async function test_picking_a_folder_reveals_it() {
   const tab2 = BrowserTestUtils.addTab(gBrowser, "data:text/html,tab2");
   const subfolder = await gHarborFolders.createFolder([tab], {
     renameFolder: false,
-    label: "zenreveal",
+    label: "harborreveal",
   });
   const parent = await gHarborFolders.createFolder([tab2], {
     renameFolder: false,
@@ -204,7 +204,7 @@ add_task(async function test_picking_a_folder_reveals_it() {
   parent.collapsed = true;
   await collectSidebarData();
 
-  const rows = await searchSidebarRows("zenreveal");
+  const rows = await searchSidebarRows("harborreveal");
   Assert.equal(rows.length, 1, "The subfolder is matched");
   UrlbarTestUtils.setSelectedRowIndex(window, rows[0].index);
   await UrlbarTestUtils.promisePopupClose(window, () =>

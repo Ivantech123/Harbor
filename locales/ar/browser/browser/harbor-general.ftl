@@ -3,140 +3,165 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 harbor-panel-ui-current-profile-text = الملف الشخصي الحالي
-unified-extensions-description = تستخدم الإضافات لجلب المزيد من الوظائف الإضافية إلى { -brand-short-name }.
-tab-context-harbor-reset-pinned-tab = 
+
+unified-extensions-description = تُستخدم الإضافات لإضافة المزيد من الوظائف إلى { -brand-short-name }.
+tab-context-harbor-reset-pinned-tab =
     .label =
         { $isEssential ->
-            [true] إعادة تعيين علامة التبويب الأساسية
-           *[false] إعادة تعيين التبويب المثبت
+            [true] إعادة تعيين التبويب الأساسي
+           *[false] إعادة تعيين التبويب المثبّت
         }
-    .accesskey = ر
-tab-context-harbor-add-essential = 
-    .label = أضف إلى الأساسيات
-    .accesskey = E
-tab-context-harbor-add-essential-badge = { $num } / { $max } مملؤة
-tab-context-harbor-remove-essential = 
+    .accesskey = ع
+tab-context-harbor-add-essential =
+    .label = إضافة إلى الأساسيات
+    .accesskey = ض
+tab-context-harbor-add-essential-badge = { $num } / { $max }
+tab-context-harbor-remove-essential =
     .label = إزالة من الأساسيات
-    .accesskey = R
-tab-context-harbor-edit-pinned-page = 
+    .accesskey = ز
+tab-context-harbor-edit-pinned-page =
     .label =
         { $isEssential ->
-            [true] Edit Essential URL
-           *[false] Edit Pinned URL
+            [true] تحرير الرابط الأساسي
+           *[false] تحرير الرابط المثبّت
         }
-    .accesskey = P
-tab-context-harbor-replace-pinned-url-with-current = 
-    .label = Replace with Current URL
-    .accesskey = C
-tab-context-harbor-edit-pinned-url = 
-    .label = Edit…
-    .accesskey = E
-tab-context-harbor-edit-title = 
-    .label = تغيير الاسم...
-tab-context-harbor-edit-icon = 
-    .label = تغيير الأيقونة...
-harbor-themes-corrupted = ملف التعديل { -brand-short-name } الخاص بك تالف. تم إعادة تعيينه إلى السمة الافتراضية.
-harbor-shortcuts-corrupted = ملف الاختصارات { -brand-short-name } الخاص بك تالف. تم إعادة تعيينه إلى الاختصارات الافتراضية.
+    .accesskey = ت
+tab-context-harbor-replace-pinned-url-with-current =
+    .label = استبدال بالرابط الحالي
+    .accesskey = ب
+tab-context-harbor-edit-pinned-url =
+    .label = تحرير…
+    .accesskey = ر
+tab-context-harbor-edit-title =
+    .label = تغيير التسمية…
+tab-context-harbor-edit-icon =
+    .label = تغيير الأيقونة…
+
+harbor-themes-corrupted = ملف mods الخاص بـ { -brand-short-name } تالف. تمت إعادة ضبطه على المظهر الافتراضي.
+harbor-shortcuts-corrupted = ملف الاختصارات الخاص بـ { -brand-short-name } تالف. تمت إعادة ضبطه على الاختصارات الافتراضية.
+
 # note: Do not translate the "<br/>" tags in the following string
-harbor-new-urlbar-notification =
-    تم تمكين شريط URL الجديد، بإزالة الحاجة إلى صفحات علامة تبويب جديدة.<br/><br/>
-    حاول فتح علامة تبويب جديدة لمشاهدة شريط URL الجديد قيد العمل!
+harbor-new-urlbar-notification = تم تفعيل شريط العناوين الجديد، ولم تعد صفحات التبويب الجديدة ضرورية.<br/><br/>
+    جرّب فتح تبويب جديد لتجربة شريط العناوين الجديد!
+
 harbor-disable = تعطيل
-pictureinpicture-minimize-btn = 
-    .aria-label = تقليص
-    .tooltip = تقليص
+
+pictureinpicture-minimize-btn =
+  .aria-label = تصغير
+  .tooltip = تصغير
+
 harbor-panel-ui-gradient-generator-custom-color = لون مخصص
+
 harbor-copy-current-url-confirmation = تم نسخ الرابط الحالي!
-harbor-copy-current-url-as-markdown-confirmation = نسخ الرابط الحالي كـ Markdown!
-harbor-general-cancel-label = 
+harbor-copy-current-url-as-markdown-confirmation = تم نسخ الرابط الحالي بصيغة Markdown!
+
+harbor-general-cancel-label =
     .label = إلغاء
-harbor-general-confirm = 
+harbor-general-confirm =
     .label = تأكيد
-harbor-pinned-tab-replaced = Pinned tab URL has been replaced with the current URL.
-harbor-pinned-tab-url-edited = Pinned tab URL has been updated!
-harbor-pinned-tab-url-invalid = That doesn't look like a valid URL.
-harbor-pinned-tab-edit-url-title = Edit Pinned URL
-harbor-pinned-tab-edit-url-label = Enter the URL this pinned tab should point to:
-harbor-tabs-renamed = تم تغيير اسم التبويب بنجاح!
-harbor-background-tab-opened-toast = تم فتح علامة تبويب خلفية جديدة!
-harbor-workspace-renamed-toast = تم تغيير اسم مساحة العمل بنجاح!
-harbor-split-view-limit-toast = Can't add more panels to the split view!
-harbor-toggle-compact-mode-button = 
-    .label = الوضع المدمج
-    .tooltiptext = تبديل الوضع المدمج
+
+harbor-pinned-tab-replaced = تم استبدال رابط التبويب المثبّت بالرابط الحالي!
+harbor-pinned-tab-url-edited = تم تحديث رابط التبويب المثبّت!
+harbor-pinned-tab-url-invalid = لا يبدو هذا رابطًا صالحًا.
+harbor-pinned-tab-edit-url-title = تحرير رابط التبويب المثبّت
+harbor-pinned-tab-edit-url-label = أدخل الرابط الذي يجب أن يفتحه هذا التبويب المثبّت:
+harbor-tabs-renamed = تمت إعادة تسمية التبويب بنجاح!
+harbor-background-tab-opened-toast = تم فتح تبويب جديد في الخلفية!
+harbor-workspace-renamed-toast = تمت إعادة تسمية مساحة العمل بنجاح!
+harbor-split-view-limit-toast = لا يمكن إضافة المزيد من اللوحات إلى العرض المقسّم!
+
+harbor-toggle-compact-mode-button =
+    .label = الوضع المضغوط
+    .tooltiptext = تبديل الوضع المضغوط
 
 # note: Do not translate the "<br/>" tags in the following string
 
-harbor-learn-more-text = إلى المزيد تعرف
-harbor-close-label = أغلق
-harbor-singletoolbar-urlbar-placeholder-with-name = 
-    .placeholder = ابحث...
-harbor-icons-picker-emoji = 
-    .label = ايموجي
-harbor-icons-picker-svg = 
-    .label = الأيقونات
-harbor-emojis-picker-search = 
-    .placeholder = Search emojis
+harbor-learn-more-text = معرفة المزيد
+
+harbor-close-label = إغلاق
+
+harbor-singletoolbar-urlbar-placeholder-with-name =
+  .placeholder = البحث...
+
+harbor-icons-picker-emoji =
+  .label = الرموز التعبيرية
+harbor-icons-picker-svg =
+  .label = الأيقونات
+harbor-emojis-picker-search =
+  .placeholder = البحث عن الرموز التعبيرية
+
 urlbar-search-mode-zen_actions = الإجراءات
-harbor-site-data-settings = الاعدادات
+harbor-site-data-settings = الإعدادات
+
 harbor-generic-manage = إدارة
 harbor-generic-more = المزيد
 harbor-generic-next = التالي
-harbor-essentials-promo-label = أضف إلى الأساسيات
-harbor-essentials-promo-sublabel = إبقاء علامات التبويب المفضلة لديك فقط بنقرة
+
+harbor-essentials-promo-label = إضافة إلى الأساسيات
+harbor-essentials-promo-sublabel = تبقي تبويباتك المفضلة في متناول يدك بنقرة واحدة
+
 # These labels will be used for the site data panel settings
-harbor-site-data-setting-allow = مسموح
+harbor-site-data-setting-allow = مسموح به
 harbor-site-data-setting-block = محظور
 harbor-site-data-protections-enabled = مفعّل
-harbor-site-data-protections-disabled = معطَّل
-harbor-site-data-setting-cross-site = ملف تعريف الارتباط عبر المواقع
-harbor-site-data-security-info-extension = 
-    .label = ملحق
-harbor-site-data-security-info-secure = 
+harbor-site-data-protections-disabled = معطّل
+harbor-site-data-setting-cross-site = ملف تعريف ارتباط عبر المواقع
+harbor-site-data-security-info-extension =
+    .label = إضافة
+harbor-site-data-security-info-secure =
     .label = آمن
-harbor-site-data-security-info-not-secure = 
+harbor-site-data-security-info-not-secure =
     .label = غير آمن
-harbor-site-data-manage-addons = 
-    .label = إدارة الملحقات
-harbor-site-data-get-addons = 
-    .label = إضافة ملحق
-harbor-site-data-site-settings = 
-    .label = جميع إعدادات الموقع
-harbor-site-data-header-share = 
-    .tooltiptext = شارك هذه الصفحة
-harbor-site-data-header-reader-mode = 
-    .tooltiptext = أدخل وضع القارئ
-harbor-site-data-header-screenshot = 
-    .tooltiptext = التقاط الشاشة
-harbor-site-data-header-bookmark = 
-    .tooltiptext = ضع إشارة مرجعية على هذه الصفحة
-harbor-urlbar-copy-url-button = 
-    .tooltiptext = نسخ الرابط
-harbor-site-data-setting-site-protection = حماية التتبع
+
+harbor-site-data-manage-addons =
+    .label = إدارة الإضافات
+harbor-site-data-get-addons =
+    .label = إضافة إضافات
+harbor-site-data-site-settings =
+    .label = جميع إعدادات المواقع
+
+
+harbor-site-data-header-share =
+    .tooltiptext = مشاركة هذه الصفحة
+harbor-site-data-header-reader-mode =
+    .tooltiptext = تفعيل وضع القارئ
+harbor-site-data-header-screenshot =
+    .tooltiptext = التقاط لقطة شاشة
+harbor-site-data-header-bookmark =
+    .tooltiptext = إضافة علامة مرجعية إلى هذه الصفحة
+
+harbor-urlbar-copy-url-button =
+  .tooltiptext = نسخ الرابط
+
+harbor-site-data-setting-site-protection = الحماية من التتبّع
 
 # Section: Feature callouts
 
-harbor-site-data-panel-feature-callout-title = منزل جديد للإضافات والأذونات والمزيد
-harbor-site-data-panel-feature-callout-subtitle = انقر على أيقونة لإدارة إعدادات الموقع، وعرض معلومات الأمان، والوصول إلى الملحقات، وتنفيذ الإجراءات الشائعة.
-harbor-open-link-in-glance = 
-    .label = فتح الرابط بلمحة
+harbor-site-data-panel-feature-callout-title = مركز جديد للإضافات والأذونات والمزيد
+harbor-site-data-panel-feature-callout-subtitle = انقر على الأيقونة لإدارة إعدادات الموقع، وعرض معلومات الأمان، والوصول إلى الإضافات، وتنفيذ الإجراءات الشائعة.
+
+harbor-open-link-in-glance =
+    .label = فتح الرابط في Glance
     .accesskey = G
+
 harbor-sidebar-notification-updated-heading = اكتمل التحديث!
 
 # See HarborSidebarNotification.mjs to see how these would be used
 
 harbor-sidebar-notification-updated-label = ما الجديد في { -brand-short-name }
-harbor-sidebar-notification-updated-tooltip = 
+harbor-sidebar-notification-updated-tooltip =
     .title = عرض ملاحظات الإصدار
-harbor-sidebar-notification-donate-label = Support { -brand-short-name }
-harbor-sidebar-notification-donate-tooltip = 
-    .title = Donate to the project
-harbor-sidebar-notification-restart-safe-mode-label = شيء معطل؟
-harbor-sidebar-notification-restart-safe-mode-tooltip = 
+harbor-sidebar-notification-donate-label = ادعم { -brand-short-name }
+harbor-sidebar-notification-donate-tooltip =
+    .title = التبرع للمشروع
+harbor-sidebar-notification-restart-safe-mode-label = هل حدث خلل؟
+harbor-sidebar-notification-restart-safe-mode-tooltip =
     .title = إعادة التشغيل في الوضع الآمن
-harbor-window-sync-migration-dialog-title = حافظ على تزامن نوافذك
-harbor-window-sync-migration-dialog-message = يقوم Harbor الآن بمزامنة النوافذ على نفس الجهاز، لذا فإن التغييرات في نافذة واحدة تنعكس في النوافذ الأخرى على الفور.
-harbor-window-sync-migration-dialog-learn-more = تعرف على المزيد
+
+harbor-window-sync-migration-dialog-title = حافظ على مزامنة نوافذك
+harbor-window-sync-migration-dialog-message = يقوم Harbor الآن بمزامنة النوافذ على الجهاز نفسه، لذا تنعكس التغييرات في إحدى النوافذ فورًا على النوافذ الأخرى.
+harbor-window-sync-migration-dialog-learn-more = معرفة المزيد
 harbor-window-sync-migration-dialog-accept = فهمت
-harbor-appmenu-new-blank-window = 
-    .label = نافذة فارغة جديدة
+
+harbor-appmenu-new-blank-window =
+    .label = نافذة جديدة فارغة

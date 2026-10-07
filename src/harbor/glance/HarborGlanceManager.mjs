@@ -1662,7 +1662,7 @@ class nsHarborGlanceManager extends nsHarborDOMOperatedFeature {
       }
 
       // Only glance up links that are http(s) or file
-      // https://github.com/zen-browser/desktop/issues/7173
+      // upstream issue #7173
       const url2Spec = url2.spec;
       if (!this.#isValidGlanceUrl(url2Spec)) {
         return false;

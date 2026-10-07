@@ -2,22 +2,31 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-harbor-folders-search-placeholder = 
-    .placeholder = Търсене в { $folder-name }...
-harbor-folders-panel-rename-folder = 
-    .label = Преименуване на папка
-harbor-folders-panel-unpack-folder = 
-    .label = Разопаковане на папка
-harbor-folders-new-subfolder = 
-    .label = Нова подпапка
-harbor-folders-panel-delete-folder = 
-    .label = Изтриване на папка
-harbor-folders-panel-convert-folder-to-space = 
-    .label = Преобразуване на папка в пространство
-harbor-folders-panel-change-folder-space = 
-    .label = Смяна на пространството...
-harbor-folders-unload-all-tooltip = 
-    .tooltiptext = Разтовари активните раздели
-harbor-folders-unload-folder = 
-    .label = Разтоварване на всички раздели
-harbor-folders-search-no-results = Няма раздели, отговарящи на търсенето 🤔
+harbor-folders-search-placeholder =
+    .placeholder = Търсене в { $folder-name }…
+
+harbor-folders-panel-rename-folder =
+    .label = Преименуване на папката…
+
+harbor-folders-panel-unpack-folder =
+    .label = Разпакване на папката
+
+harbor-folders-new-subfolder =
+    .label = Нова подпапка…
+
+harbor-folders-panel-delete-folder =
+    .label = Изтриване на папката
+
+harbor-folders-panel-convert-folder-to-space =
+    .label = Преобразуване на папката в пространство
+
+harbor-folders-panel-change-folder-space =
+    .label = Промяна на пространството
+
+harbor-folders-unload-all-tooltip =
+    .tooltiptext = Разтоварване на активните разделители в тази папка
+
+harbor-folders-unload-folder =
+    .label = Разтоварване на всички разделители
+
+harbor-folders-search-no-results = Няма разделители, отговарящи на търсенето 🤔

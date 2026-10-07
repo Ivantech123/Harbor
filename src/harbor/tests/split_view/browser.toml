@@ -5,7 +5,7 @@
 [DEFAULT]
 support-files = [
   "head.js",
-  "!/zen/tests/glance/head.js",
+  "!/harbor/tests/glance/head.js",
 ]
 
 ["browser_basic_split_view.js"]

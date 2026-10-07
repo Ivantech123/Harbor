@@ -513,7 +513,7 @@ class nsHarborShareManager extends nsHarborDOMOperatedFeature {
     badgeTitle.textContent = first.name;
     this.#renderPreviewRows(items, first.items);
     if (type === "folder") {
-      // The real zen folder icon, with the shared custom icon when set.
+      // The real harbor folder icon, with the shared custom icon when set.
       const folderIcon = this.#buildFolderIcon(first.icon);
       folderIcon.classList.add("harbor-share-overlay-badge-icon");
       folderIcon.setAttribute("state", "open");

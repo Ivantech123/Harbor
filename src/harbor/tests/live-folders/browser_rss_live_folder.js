@@ -46,7 +46,7 @@ add_task(async function test_rss_parsing() {
         <title>Tech News</title>
         <item>
           <title>Mozilla Releases Harbor</title>
-          <link>https://mozilla.org/zen</link>
+          <link>https://mozilla.org/harbor</link>
           <guid>guid-123</guid>
           <pubDate>${new Date().toUTCString()}</pubDate>
         </item>
@@ -68,7 +68,7 @@ add_task(async function test_rss_parsing() {
 
   // Check mapping
   Assert.equal(items[0].title, "Mozilla Releases Harbor");
-  Assert.equal(items[0].url, "https://mozilla.org/zen");
+  Assert.equal(items[0].url, "https://mozilla.org/harbor");
   Assert.equal(items[0].id, "guid-123");
 
   // Check fallback for ID

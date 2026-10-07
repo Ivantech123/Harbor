@@ -25,7 +25,7 @@ The `stable` branch may have hotfixes directly from the `stable` branch, and the
 
 # Local Development Setup
 
-Before you set up your local development environment, **read our [Building Guidelines](https://docs.zen-browser.app/guides/building)**. Skipping them can lead to avoidable build errors.
+Before you set up your local development environment, **read our [Building Guidelines](https://firefox-source-docs.mozilla.org/setup/)**. Skipping them can lead to avoidable build errors.
 
 # Code Of Conduct
 

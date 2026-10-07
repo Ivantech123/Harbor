@@ -4,7 +4,7 @@
 
 const lazy = {};
 ChromeUtils.defineESModuleGetters(lazy, {
-  canDrawThumbnail: "moz-src:///zen/library/HarborLibraryFileTypes.sys.mjs",
+  canDrawThumbnail: "moz-src:///harbor/library/HarborLibraryFileTypes.sys.mjs",
   DownloadsCommon:
     "moz-src:///browser/components/downloads/DownloadsCommon.sys.mjs",
   BrowserUtils: "resource://gre/modules/BrowserUtils.sys.mjs",

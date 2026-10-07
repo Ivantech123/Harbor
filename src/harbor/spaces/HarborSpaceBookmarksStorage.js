@@ -22,7 +22,7 @@ window.HarborWorkspaceBookmarksStorage = {
       async db => {
         // Create table using GUIDs instead of IDs
         await db.execute(`
-        CREATE TABLE IF NOT EXISTS zen_bookmarks_workspaces (
+        CREATE TABLE IF NOT EXISTS harbor_bookmarks_workspaces (
           id INTEGER PRIMARY KEY,
           bookmark_guid TEXT NOT NULL,
           workspace_uuid TEXT NOT NULL,
@@ -36,12 +36,12 @@ window.HarborWorkspaceBookmarksStorage = {
         // Create index for fast lookups
         await db.execute(`
         CREATE INDEX IF NOT EXISTS idx_bookmarks_workspaces_lookup
-          ON zen_bookmarks_workspaces(workspace_uuid, bookmark_guid)
+          ON harbor_bookmarks_workspaces(workspace_uuid, bookmark_guid)
       `);
 
         // Add changes tracking table
         await db.execute(`
-        CREATE TABLE IF NOT EXISTS zen_bookmarks_workspaces_changes (
+        CREATE TABLE IF NOT EXISTS harbor_bookmarks_workspaces_changes (
           id INTEGER PRIMARY KEY,
           bookmark_guid TEXT NOT NULL,
           workspace_uuid TEXT NOT NULL,
@@ -55,7 +55,7 @@ window.HarborWorkspaceBookmarksStorage = {
         // Create index for changes tracking
         await db.execute(`
           CREATE INDEX IF NOT EXISTS idx_bookmarks_workspaces_changes
-            ON zen_bookmarks_workspaces_changes(bookmark_guid, workspace_uuid)
+            ON harbor_bookmarks_workspaces_changes(bookmark_guid, workspace_uuid)
         `);
 
         this._resolveInitialized();
@@ -103,7 +103,7 @@ window.HarborWorkspaceBookmarksStorage = {
       rows = await db.execute(
         `
       SELECT workspace_uuid
-      FROM zen_bookmarks_workspaces
+      FROM harbor_bookmarks_workspaces
       WHERE bookmark_guid = :bookmark_guid
     `,
         { bookmark_guid: bookmarkGuid }
@@ -131,7 +131,7 @@ window.HarborWorkspaceBookmarksStorage = {
     const db = await this.lazy.PlacesUtils.promiseDBConnection();
     const rows = await db.execute(`
       SELECT workspace_uuid, GROUP_CONCAT(bookmark_guid) as bookmark_guids
-      FROM zen_bookmarks_workspaces
+      FROM harbor_bookmarks_workspaces
       GROUP BY workspace_uuid
     `);
 
@@ -155,7 +155,7 @@ window.HarborWorkspaceBookmarksStorage = {
     const db = await this.lazy.PlacesUtils.promiseDBConnection();
     const rows = await db.execute(`
       SELECT bookmark_guid, workspace_uuid, change_type, timestamp
-      FROM zen_bookmarks_workspaces_changes
+      FROM harbor_bookmarks_workspaces_changes
     `);
 
     const changes = {};
@@ -177,7 +177,7 @@ window.HarborWorkspaceBookmarksStorage = {
     await this.lazy.PlacesUtils.withConnectionWrapper(
       "HarborWorkspaceBookmarksStorage.clearChangedIDs",
       async db => {
-        await db.execute(`DELETE FROM zen_bookmarks_workspaces_changes`);
+        await db.execute(`DELETE FROM harbor_bookmarks_workspaces_changes`);
       }
     );
   },

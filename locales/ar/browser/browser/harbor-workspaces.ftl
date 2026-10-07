@@ -2,75 +2,111 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-harbor-panel-ui-workspaces-text = مساحات العمل
-harbor-panel-ui-spaces-label = 
+harbor-panel-ui-workspaces-text = المساحات
+
+harbor-panel-ui-spaces-label =
     .label = المساحات
-harbor-panel-ui-workspaces-create = 
-    .label = إنشاء مساحة عمل
-harbor-panel-ui-folder-create = 
-    .label = إنشاء مِلف
-harbor-panel-ui-live-folder-create = 
-    .label = مجلد ديناميكي
-harbor-panel-ui-new-empty-split = 
+
+harbor-panel-ui-workspaces-create =
+    .label = إنشاء مساحة
+
+harbor-panel-ui-folder-create =
+    .label = إنشاء مجلد
+
+harbor-panel-ui-live-folder-create =
+    .label = مجلد حي
+
+harbor-panel-ui-new-empty-split =
     .label = تقسيم جديد
-harbor-workspaces-panel-context-delete = 
-    .label = حذف مساحة العمل
-    .accesskey = د
-harbor-workspaces-panel-change-name = 
-    .label = تغيير الاسم
-harbor-workspaces-panel-change-icon = 
-    .label = تغيير الأيقونة
-harbor-workspaces-panel-context-default-profile = 
-    .label = تعيين المِلَفّ الشخصي
-harbor-workspaces-panel-unload = 
+
+harbor-workspaces-panel-context-delete =
+    .label = حذف المساحة
+    .accesskey = ح
+
+harbor-workspaces-panel-change-name =
+    .label = تغيير الاسم…
+
+harbor-workspaces-panel-change-icon =
+    .label = تغيير الأيقونة…
+
+harbor-workspaces-panel-context-default-profile =
+    .label = تعيين ملف التعريف
+
+harbor-workspaces-panel-unload =
     .label = إلغاء تحميل المساحة
-harbor-workspaces-panel-unload-others = 
+
+harbor-workspaces-panel-unload-others =
     .label = إلغاء تحميل جميع المساحات الأخرى
+
 harbor-workspaces-how-to-reorder-title = كيفية إعادة ترتيب المساحات
-harbor-workspaces-how-to-reorder-desc = اسحب أيقونات المساحة في أسفل الشريط الجانبي لإعادة ترتيبها
-harbor-workspaces-change-theme = 
-    .label = تعديل السمة
-harbor-workspaces-panel-context-open = 
-    .label = فتح فضاء العمل
-    .accesskey = ع
-harbor-workspaces-panel-context-edit = 
-    .label = تعديل فضاء العمل
-    .accesskey = ه
-harbor-bookmark-edit-panel-workspace-selector = 
+harbor-workspaces-how-to-reorder-desc = اسحب أيقونات المساحات في أسفل الشريط الجانبي لإعادة ترتيبها
+
+harbor-workspaces-change-theme =
+    .label = تعديل المظهر…
+
+harbor-dock-layout-save =
+    .label = تذكّر التخطيط
+
+harbor-dock-layout-restore =
+    .label = استعادة التخطيط
+
+harbor-dock-layout-clear =
+    .label = نسيان التخطيط
+
+harbor-workspaces-panel-context-open =
+    .label = فتح مساحة العمل
+    .accesskey = ف
+
+harbor-workspaces-panel-context-edit =
+    .label = تعديل المساحة
+    .accesskey = ت
+
+harbor-bookmark-edit-panel-workspace-selector =
     .value = المساحات
-    .accesskey = W
-harbor-panel-ui-gradient-generator-algo-complementary = 
-    .label = تكميلي
-harbor-panel-ui-gradient-generator-algo-splitComplementary = 
-    .label = تقسيم
-harbor-panel-ui-gradient-generator-algo-analogous = 
+    .accesskey = س
+
+harbor-panel-ui-gradient-generator-algo-complementary =
+    .label = تكاملية
+harbor-panel-ui-gradient-generator-algo-splitComplementary =
+    .label = مجزأة
+harbor-panel-ui-gradient-generator-algo-analogous =
     .label = متشابهة
-harbor-panel-ui-gradient-generator-algo-triadic = 
-    .label = ثلاثي
-harbor-panel-ui-gradient-generator-algo-floating = 
-    .label = عائم
+harbor-panel-ui-gradient-generator-algo-triadic =
+    .label = ثلاثية
+harbor-panel-ui-gradient-generator-algo-floating =
+    .label = عائمة
 harbor-panel-ui-gradient-click-to-add = انقر لإضافة لون
-harbor-workspace-creation-name = 
+
+harbor-workspace-creation-name =
     .placeholder = اسم المساحة
-harbor-move-tab-to-workspace-button = 
-    .label = نقل إلى...
+
+harbor-move-tab-to-workspace-button =
+    .label = نقل إلى
     .tooltiptext = نقل جميع علامات التبويب في هذه النافذة إلى مساحة
-harbor-workspaces-panel-context-reorder = 
+
+harbor-workspaces-panel-context-reorder =
     .label = إعادة ترتيب المساحات
-harbor-workspace-creation-profile = الملف الشخصي
-    .tooltiptext = تستخدم الملفات الشخصية لفصل ملفات تعريف الارتباط وبيانات الموقع بين المساحات.
+
+harbor-workspace-creation-profile = ملف التعريف
+    .tooltiptext = تُستخدم ملفات التعريف لعزل ملفات تعريف الارتباط وبيانات المواقع بين المساحات.
 harbor-workspace-creation-header = إنشاء مساحة
-harbor-workspace-creation-label = يتم استخدام المساحات لتنظيم علامات التبويب والجلسات الخاصة بك.
-harbor-workspace-default-profile = Default
+harbor-workspace-creation-label = تُستخدم المساحات لتنظيم علامات التبويب والجلسات.
+harbor-workspace-default-profile = الافتراضي
+
 harbor-workspaces-delete-workspace-title = حذف المساحة؟
 harbor-workspaces-delete-workspace-body = هل أنت متأكد من رغبتك في حذف { $name }؟ لا يمكن التراجع عن هذا الإجراء.
-# Note that the html tag MUST not be changed or removed, as it is used to better
-# display the shortcut in the toast notification.
+harbor-workspaces-remote-delete-title = حذف المساحة المتزامنة؟
+harbor-workspaces-remote-delete-body = تم حذف { $name } على جهاز آخر. هل تريد حذفها هنا أيضًا؟ ستؤدي الإبقاء عليها إلى استعادتها على أجهزتك الأخرى.
+
+# ملاحظة: يجب ألا يتغير وسم HTML ولا أن يُحذف، إذ يُستخدم
+# لعرض الاختصار بشكل أفضل في إشعار التنبيه.
 harbor-workspaces-close-all-unpinned-tabs-toast = تم إغلاق علامات التبويب! استخدم <span>{ $shortcut }</span> للتراجع.
-harbor-workspaces-close-all-unpinned-tabs-title = 
-    .label = إمسح
-    .tooltiptext = إغلاق جميع علامات التبويب الغير مثبتة
-harbor-panel-ui-workspaces-change-forward = 
+harbor-workspaces-close-all-unpinned-tabs-title =
+    .label = مسح
+    .tooltiptext = إغلاق جميع علامات التبويب غير المثبتة
+
+harbor-panel-ui-workspaces-change-forward =
     .label = المساحة التالية
-harbor-panel-ui-workspaces-change-back = 
+
+harbor-panel-ui-workspaces-change-back =
     .label = المساحة السابقة

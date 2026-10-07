@@ -7,4 +7,4 @@ index 33b90b64e2773efdb0376779907b6ef7125c0fff..8446118edb56260a59115b048dde087a
  
  JAR_MANIFESTS += ["jar.mn"]
 +
-+DIRS += ["../../zen"]
++DIRS += ["../../harbor"]

@@ -300,7 +300,7 @@ fn write_preferences(prefs: &[Preference]) {
     fs::write(&dynamic_prefs_path, dynamic_content).expect("Failed to write dynamic prefs");
 }
 
-fn prepare_zen_prefs() {
+fn prepare_harbor_prefs() {
     // Add `#include harbor.js` to the bottom of the firefox.js file if it doesn't exist
     let line = "#include harbor.js";
     let firefox_prefs_path = get_config_path().join(FIREFOX_PREFS);
@@ -369,7 +369,7 @@ fn main() {
     };
     env::set_current_dir(&root_path).expect("Failed to change directory");
 
-    prepare_zen_prefs();
+    prepare_harbor_prefs();
     let mut preferences = load_preferences();
     expand_pref_values(&mut preferences);
     write_preferences(&preferences);

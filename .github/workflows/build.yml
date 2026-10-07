@@ -439,21 +439,21 @@ jobs:
         run: |
           set -eux
           export ARCH=${{ matrix.arch }}
-          UPINFO="gh-releases-zsync|$GITHUB_REPOSITORY_OWNER|desktop|latest|harbor-$ARCH.AppImage.zsync"
+          UPINFO="gh-releases-zsync|$GITHUB_REPOSITORY_OWNER|Harbor|latest|harbor-$ARCH.AppImage.zsync"
           rm build/AppDir/.DirIcon || true
           cp configs/branding/${{ inputs.update_branch }}/logo128.png build/AppDir/usr/share/icons/hicolor/128x128/apps/harbor.png
           cp configs/branding/${{ inputs.update_branch }}/logo128.png build/AppDir/harbor.png && ln -s harbor.png build/AppDir/.DirIcon
 
           if [ "${{ inputs.update_branch }}" = "twilight" ]; then
             sed -i -e 's/Name=Harbor Browser/Name=Harbor Twilight/g' build/AppDir/harbor.desktop
-            sed -i -e 's/StartupWMClass=zen/StartupWMClass=harbor-twilight/g' build/AppDir/harbor.desktop
+            sed -i -e 's/StartupWMClass=harbor/StartupWMClass=harbor-twilight/g' build/AppDir/harbor.desktop
           fi
 
           sed -i -e 's/\$VERSION/${{ needs.build-data.outputs.version }}/g' build/AppDir/harbor.desktop
 
           APPDIR=build/AppDir
           tar -xvf *.tar.* && rm -rf *.tar.*
-          mv zen/* $APPDIR/
+          mv harbor/* $APPDIR/
           wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
           wget "https://github.com/VHSgunzo/uruntime/releases/latest/download/uruntime-appimage-squashfs-lite-$ARCH"
           chmod +x *.AppImage
@@ -469,7 +469,7 @@ jobs:
           ls -al "$APPDIR"
           ./appimagetool-x86_64.AppImage -u "$UPINFO" "$APPDIR" harbor-"$ARCH".AppImage --runtime-file ./uruntime-appimage-squashfs-lite-"$ARCH"
           mkdir dist
-          mv zen*AppImage* dist/.
+          mv harbor*AppImage* dist/.
           unset ARCH
 
       - name: Upload artifact
@@ -543,7 +543,7 @@ jobs:
       - name: Checkout updates repository
         uses: actions/checkout@v4
         with:
-          repository: zen-browser/updates-server
+          repository: Ivantech123/harbor-updates-server
           path: updates-server
           token: ${{ secrets.DEPLOY_KEY }}
 
@@ -554,7 +554,7 @@ jobs:
         run: |
           mkdir -p .github/workflows/object
           gh release download "windows-signed-${{ github.run_id }}" \
-            --repo zen-browser/windows-binaries \
+            --repo Ivantech123/harbor-windows-binaries \
             --pattern 'windows-x64-signed-*.tar.gz' \
             --dir .github/workflows/object
 
@@ -700,7 +700,7 @@ jobs:
           # now that the signed bundles are published in the real release. Never fail
           # the release over this cleanup.
           gh release delete "windows-signed-${{ github.run_id }}" \
-            --repo zen-browser/windows-binaries --cleanup-tag --yes || true
+            --repo Ivantech123/harbor-windows-binaries --cleanup-tag --yes || true
 
   prepare-flatpak:
     if: ${{ inputs.create_release && inputs.update_branch == 'release' }}
@@ -713,7 +713,7 @@ jobs:
       - name: Checkout Flatpak repository
         uses: actions/checkout@v4
         with:
-          repository: zen-browser/release-utils
+          repository: Ivantech123/harbor-release-utils
           token: ${{ secrets.DEPLOY_KEY }}
 
       - name: Install dependencies
@@ -737,7 +737,7 @@ jobs:
       - name: Checkout Flatpak repository
         uses: actions/checkout@v4
         with:
-          repository: zen-browser/flatpak
+          repository: Ivantech123/harbor-flatpak
           token: ${{ secrets.DEPLOY_KEY }}
           path: flatpak
 
@@ -746,7 +746,7 @@ jobs:
           pwd
           ls .
           ls ..
-          mv releases.xml ./flatpak/app.zen_browser.harbor.metainfo.xml
+          mv releases.xml ./flatpak/app.harbor.browser.metainfo.xml
           # output the version to the file
           echo -n ${{ needs.build-data.outputs.version }} > ./flatpak/version
 
@@ -772,7 +772,7 @@ jobs:
       - name: Checkout Flatpak repository
         uses: actions/checkout@v4
         with:
-          repository: flathub/app.zen_browser.zen
+          repository: flathub/app.harbor.browser
           token: ${{ secrets.DEPLOY_KEY }}
 
       - name: Download Linux x86_64 build
@@ -788,12 +788,12 @@ jobs:
       - name: Update repository
         uses: actions/checkout@v4
         with:
-          path: zen-browser
+          path: harbor-browser
           token: ${{ secrets.DEPLOY_KEY }}
 
       - name: Download Flatpak archive
         run: |
-          wget https://github.com/zen-browser/flatpak/releases/latest/download/archive.tar -O archive.tar
+          wget https://github.com/Ivantech123/harbor-flatpak/releases/latest/download/archive.tar -O archive.tar
 
       - name: Setup Git
         run: |
@@ -802,22 +802,22 @@ jobs:
 
       - name: Prepare Flatpak manifest
         run: |
-          python3 ./zen-browser/scripts/prepare-flatpak-release.py \
+          python3 ./harbor-browser/scripts/prepare-flatpak-release.py \
             --flatpak-archive archive.tar \
             --version ${{ needs.build-data.outputs.version }} \
             --linux-archive harbor.linux-x86_64.tar.xz \
             --linux-aarch64-archive harbor.linux-aarch64.tar.xz \
-            --output app.zen_browser.harbor.yml \
-            --template-root ./zen-browser/build/flatpak
+            --output app.harbor.browser.yml \
+            --template-root ./harbor-browser/build/flatpak
 
       - name: Commit changes
         run: |
-          git add app.zen_browser.harbor.yml
+          git add app.harbor.browser.yml
           git commit -m "Update to version ${{ needs.build-data.outputs.version }}"
 
       - name: Clean up
         run: |
-          rm -rf zen-browser
+          rm -rf harbor-browser
           rm -rf archive.tar
           rm -rf harbor.linux-x86_64.tar.xz
           rm -rf harbor.linux-aarch64.tar.xz
@@ -826,8 +826,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           retention-days: 5
-          name: app.zen_browser.harbor.yml
-          path: ./app.zen_browser.harbor.yml
+          name: app.harbor.browser.yml
+          path: ./app.harbor.browser.yml
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7

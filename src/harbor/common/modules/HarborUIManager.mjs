@@ -220,7 +220,7 @@ window.gHarborUIManager = {
     }
     const contextMenusToClean = [
       // Remove the 'new tab below' context menu.
-      // reason: It doesn't properly work with zen and it's philosophy of not having
+      // reason: It doesn't properly work with harbor and its philosophy of not having
       //   new tabs. It's also semi-not working as it doesn't create a new tab below
       //   the current one.
       "context_openANewTab",

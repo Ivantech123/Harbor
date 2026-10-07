@@ -22,7 +22,7 @@
       "release": {
         "displayVersion": "1.0.0",
         "github": {
-          "repo": "zen-browser/desktop"
+          "repo": "Ivantech123/Harbor"
         },
         "archives": {
           "windows": "harbor-windows.mar",
@@ -42,7 +42,7 @@
       "release": {
         "displayVersion": "1.23t",
         "github": {
-          "repo": "zen-browser/desktop"
+          "repo": "Ivantech123/Harbor"
         }
       }
     }
@@ -53,5 +53,5 @@
     ],
     "licenseType": "MPL-2.0"
   },
-  "updateHostname": "updates.zen-browser.app"
+  "updateHostname": ""
 }

@@ -29,7 +29,7 @@ add_task(async function test_first_matching_route_wins() {
   addRoute({ reference: "github", matchType: "contains", openIn: "ws-second" });
 
   Assert.equal(
-    gHarborSpaceRoutingManager.routeUri("https://github.com/zen", {}),
+    gHarborSpaceRoutingManager.routeUri("https://github.com/harbor", {}),
     "ws-first",
     "The openIn of the first matching route is returned, later matches ignored"
   );

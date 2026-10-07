@@ -2,29 +2,32 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-harbor-space-routing-settings = 
-    .label = Space Routing Settings
-harbor-space-routing-rulepanel-placeholder = Routes let you choose where specific sites open inside Harbor. For example, you can route YouTube links to always open inside your Personal space.
-harbor-space-routing-dialog-title = Space Routing Settings
-harbor-space-routing-external-default = Default route for external links
-harbor-space-routing-new-route = New Route
-harbor-space-routing-open-in-space = Open in Space
-harbor-space-routing-most-recent-space = Most recent Space
-harbor-space-routing-close-button = 
-    .aria-label = Close
-    .tooltiptext = Close
-harbor-space-routing-contains = 
-    .label = Contains
-harbor-space-routing-equal-to = 
-    .label = Is Equal To
-harbor-space-routing-regex = 
-    .label = RegEx
-harbor-space-routing-open-in = Open In
+harbor-space-routing-settings =
+    .label = إعدادات توجيه المساحات
+harbor-space-routing-rulepanel-placeholder = تتيح لك المسارات تحديد مكان فتح مواقع بعينها داخل Harbor. على سبيل المثال، يمكنك توجيه روابط YouTube لتفتح دائمًا في مساحتك الشخصية.
+harbor-space-routing-dialog-title = إعدادات توجيه المساحات
+harbor-space-routing-external-default = المسار الافتراضي للروابط الخارجية
+harbor-space-routing-new-route = مسار جديد
+harbor-space-routing-open-in-space = فتح في المساحة
+harbor-space-routing-most-recent-space = أحدث مساحة
+harbor-space-routing-close-button =
+    .aria-label = إغلاق
+    .tooltiptext = إغلاق
+
+harbor-space-routing-contains =
+    .label = يحتوي على
+harbor-space-routing-equal-to =
+    .label = يساوي
+harbor-space-routing-regex =
+    .label = تعبير نمطي
+
+harbor-space-routing-open-in = فتح في
 harbor-space-routing-url = URL
-harbor-space-routing-tab-routed-toast = New tab opened in { $targetWorkspace }
-tab-context-harbor-add-domain-to-sr = 
+
+harbor-space-routing-tab-routed-toast = تم فتح علامة تبويب جديدة في { $targetWorkspace }
+tab-context-harbor-add-domain-to-sr =
     .label =
         { $tabCount ->
-            [one] Add Route for Domain
-           *[other] Add Route for Domains
+            [one] إضافة مسار للنطاق
+            *[other] إضافة مسار للنطاقات
         }

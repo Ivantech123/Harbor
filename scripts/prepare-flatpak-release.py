@@ -7,7 +7,7 @@ import argparse
 import sys
 import os
 
-FLATID = "app.zen_browser.zen"
+FLATID = "app.harbor.browser"
 
 
 def get_sha256sum(filename):

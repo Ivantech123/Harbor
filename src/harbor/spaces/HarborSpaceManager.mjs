@@ -1887,7 +1887,7 @@ class nsHarborWorkspaces {
   }
 
   #fixTabPositions() {
-    // See issue https://github.com/zen-browser/desktop/issues/10157
+    // See issue upstream issue #10157
     if (this.tabContainer) {
       this.tabContainer._invalidateCachedTabs();
     }
@@ -2325,7 +2325,7 @@ class nsHarborWorkspaces {
       setTimeout(resolve, kGlobalAnimationDuration * 1000 + 50)
     );
     this.#currentSpaceSwitchContext.animations = animations;
-    // See issue https://github.com/zen-browser/desktop/issues/9334, we need to add
+    // See issue upstream issue #9334, we need to add
     // some sort of timeout to the animation promise, just in case it gets stuck.
     // We are doing a race between the timeout and the animations finishing.
     await Promise.race([Promise.all(animations), promiseTimeout]).catch(
@@ -2395,7 +2395,7 @@ class nsHarborWorkspaces {
       return true; // Always show glance tabs
     }
 
-    // See https://github.com/zen-browser/desktop/issues/10666, we should never
+    // See upstream issue #10666, we should never
     // show closing tabs and consider them as not part of any workspace. This will
     // invalidate the `lastSelectedTab[previousWorkspaceId]` logic in `_handleTabSelection`
     if (tab.closing) {

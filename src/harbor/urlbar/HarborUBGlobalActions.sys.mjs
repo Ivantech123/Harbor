@@ -302,8 +302,23 @@ const globalActionsTemplate = [
   },
 ];
 
+const labelCache = new Map();
+let localesObserved = false;
+
 export function formatValueSync(l10nId) {
-  return lazy.l10n.formatValueSync(l10nId);
+  const cached = labelCache.get(l10nId);
+  if (cached !== undefined) {
+    return cached;
+  }
+  if (!localesObserved) {
+    localesObserved = true;
+    Services.obs.addObserver(() => {
+      labelCache.clear();
+    }, "intl:app-locales-changed");
+  }
+  const value = lazy.l10n.formatValueSync(l10nId);
+  labelCache.set(l10nId, value);
+  return value;
 }
 
 export const globalActions = globalActionsTemplate.map(action => ({
@@ -317,7 +332,7 @@ export const globalActions = globalActionsTemplate.map(action => ({
   commandId:
     typeof action.command === "string"
       ? action.command
-      : `zen:global-action-${action.l10nId.replace("harbor-action-", "")}`,
+      : `harbor:global-action-${action.l10nId.replace("harbor-action-", "")}`,
   extraPayload: {},
   ...action,
   get label() {

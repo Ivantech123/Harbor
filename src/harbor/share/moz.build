@@ -3,7 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 EXTRA_JS_MODULES.harbor.share += [
-  "share.schema.json",
   "HarborShareClient.sys.mjs",
   "HarborShareManager.mjs",
+  "share.schema.json",
 ]

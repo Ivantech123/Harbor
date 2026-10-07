@@ -95,7 +95,7 @@ add_task(async function test_match_type_updates_placeholder_and_store() {
 
     Assert.equal(
       input.placeholder,
-      "zen-browser.app",
+      "example.com",
       "The 'contains' placeholder is the plain domain"
     );
 
@@ -104,7 +104,7 @@ add_task(async function test_match_type_updates_placeholder_and_store() {
 
     Assert.equal(
       input.placeholder,
-      "zen-browser\\.app",
+      "example\\.com",
       "Switching to 'regex' updates the placeholder to an escaped pattern"
     );
     Assert.equal(

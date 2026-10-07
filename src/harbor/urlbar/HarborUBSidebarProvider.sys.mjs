@@ -49,12 +49,21 @@ export class HarborUrlbarProviderSidebar extends UrlbarProvider {
       return;
     }
     const tokens = queryContext.tokens.map(t => t.lowerCaseValue);
+    let tokenWeight = 0;
+    for (const token of tokens) {
+      tokenWeight += token.length;
+    }
     const score = text => {
-      text = text.toLowerCase();
-      if (!tokens.every(token => text.includes(token))) {
+      if (!text) {
         return 0;
       }
-      return tokens.reduce((sum, token) => sum + token.length, 0) / text.length;
+      const lower = text.toLowerCase();
+      for (const token of tokens) {
+        if (!lower.includes(token)) {
+          return 0;
+        }
+      }
+      return tokenWeight / lower.length;
     };
     this.#addFolders(sidebar, score, queryContext, addCallback);
     this.#addTabs(sidebar, score, queryContext, addCallback);
@@ -84,9 +93,16 @@ export class HarborUrlbarProviderSidebar extends UrlbarProvider {
       const userContextId = tabData.userContextId || 0;
       // The sidebar data can lag behind a navigation, only offer tabs that
       // are still registered as open with this url.
-      const openTab = [...(openTabUrls.get(url) || [])].find(
-        ([contextId]) => contextId == userContextId
-      );
+      let openTab;
+      const openTabs = openTabUrls.get(url);
+      if (openTabs) {
+        for (const candidate of openTabs) {
+          if (candidate[0] == userContextId) {
+            openTab = candidate;
+            break;
+          }
+        }
+      }
       if (!openTab) {
         continue;
       }
@@ -121,14 +137,27 @@ export class HarborUrlbarProviderSidebar extends UrlbarProvider {
     const folders = new Map(
       (sidebar.folders || []).map(folder => [folder.id, folder])
     );
-    const matched = [...folders.values()]
-      .filter(folder => !folder.splitViewGroup && folder.name)
-      .map(folder => ({ folder, score: score(folder.name) }))
-      .filter(match => match.score)
-      .sort((a, b) => b.score - a.score);
+    const spaceNames = new Map(
+      (sidebar.spaces || []).map(space => [space.uuid, space.name])
+    );
+    const matched = [];
+    for (const folder of folders.values()) {
+      if (folder.splitViewGroup || !folder.name) {
+        continue;
+      }
+      const folderScore = score(folder.name);
+      if (folderScore) {
+        matched.push({ folder, score: folderScore });
+      }
+    }
+    matched.sort((a, b) => b.score - a.score);
+    let resultsAdded = 0;
     for (const match of matched) {
+      if (resultsAdded == queryContext.maxResults) {
+        return;
+      }
       const { folder } = match;
-      const space = sidebar.spaces?.find(s => s.uuid == folder.workspaceId);
+      const spaceName = spaceNames.get(folder.workspaceId);
       const path = [folder.name];
       for (
         let parent = folders.get(folder.parentId);
@@ -137,8 +166,8 @@ export class HarborUrlbarProviderSidebar extends UrlbarProvider {
       ) {
         path.unshift(parent.name);
       }
-      if (space?.name) {
-        path.unshift(space.name);
+      if (spaceName) {
+        path.unshift(spaceName);
       }
       addCallback(
         this,
@@ -160,6 +189,7 @@ export class HarborUrlbarProviderSidebar extends UrlbarProvider {
             ),
         })
       );
+      resultsAdded++;
     }
   }
 

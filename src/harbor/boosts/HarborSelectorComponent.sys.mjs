@@ -492,7 +492,7 @@ export class SelectorComponent {
    * Handles the mouse move event
    *
    * @param {Event} event Mouse move event params
-   * @param {boolean} isHarborContent Flag if the target element is a zen related element
+   * @param {boolean} isHarborContent Flag if the target element is a harbor related element
    */
   #handleMouseMove(event, isHarborContent) {
     if (this.#lastOverElement === event.target) {
@@ -529,7 +529,7 @@ export class SelectorComponent {
    * Handles the mouse click event
    *
    * @param {Event} event Mouse move event params
-   * @param {boolean} isHarborContent Flag if the target element is a zen related element
+   * @param {boolean} isHarborContent Flag if the target element is a harbor related element
    */
   #handleClick(event, isHarborContent) {
     // Safeguards for protecting anonymous content from being zapped

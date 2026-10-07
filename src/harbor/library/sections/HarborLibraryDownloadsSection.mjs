@@ -8,14 +8,14 @@ import {
   PAGE_SIZE,
   HarborLibrarySearchSection,
   whenFilterGroup,
-} from "moz-src:///zen/library/sections/HarborLibrarySearchSection.mjs";
+} from "moz-src:///harbor/library/sections/HarborLibrarySearchSection.mjs";
 
 let lazy = {};
 
 ChromeUtils.defineESModuleGetters(lazy, {
-  FILE_GROUPS: "moz-src:///zen/library/HarborLibraryFileTypes.sys.mjs",
-  canDrawThumbnail: "moz-src:///zen/library/HarborLibraryFileTypes.sys.mjs",
-  fileGroupOf: "moz-src:///zen/library/HarborLibraryFileTypes.sys.mjs",
+  FILE_GROUPS: "moz-src:///harbor/library/HarborLibraryFileTypes.sys.mjs",
+  canDrawThumbnail: "moz-src:///harbor/library/HarborLibraryFileTypes.sys.mjs",
+  fileGroupOf: "moz-src:///harbor/library/HarborLibraryFileTypes.sys.mjs",
   BrowserUtils: "resource://gre/modules/BrowserUtils.sys.mjs",
   DownloadUtils: "resource://gre/modules/DownloadUtils.sys.mjs",
   DownloadsCommon:

@@ -7,7 +7,7 @@ add_task(async function test_contains_is_case_insensitive_substring() {
   const route = { reference: "GitHub", matchType: "contains" };
 
   ok(
-    gHarborSpaceRoutingManager.isRouteMatching("https://github.com/zen", route),
+    gHarborSpaceRoutingManager.isRouteMatching("https://github.com/harbor", route),
     "'contains' matches a substring regardless of case"
   );
   ok(
@@ -15,7 +15,7 @@ add_task(async function test_contains_is_case_insensitive_substring() {
     "'contains' matches when the URL casing differs from the reference"
   );
   ok(
-    !gHarborSpaceRoutingManager.isRouteMatching("https://gitlab.com/zen", route),
+    !gHarborSpaceRoutingManager.isRouteMatching("https://gitlab.com/harbor", route),
     "'contains' rejects a URL that does not include the reference"
   );
 });
@@ -32,7 +32,7 @@ add_task(async function test_equal_to_normalizes_protocol_and_www() {
     "'equal-to' is case-insensitive and strips http://"
   );
   ok(
-    !gHarborSpaceRoutingManager.isRouteMatching("https://github.com/zen", route),
+    !gHarborSpaceRoutingManager.isRouteMatching("https://github.com/harbor", route),
     "'equal-to' does not match when a path is present (not an exact host)"
   );
   ok(
@@ -43,7 +43,7 @@ add_task(async function test_equal_to_normalizes_protocol_and_www() {
 
 add_task(async function test_regex_match_is_case_sensitive_on_raw_uri() {
   ok(
-    gHarborSpaceRoutingManager.isRouteMatching("https://zen-browser.app", {
+    gHarborSpaceRoutingManager.isRouteMatching("https://example.app", {
       reference: "^https://.*\\.app$",
       matchType: "regex",
     }),
@@ -64,7 +64,7 @@ add_task(async function test_invalid_regex_is_swallowed() {
   let result;
   try {
     result = gHarborSpaceRoutingManager.isRouteMatching(
-      "https://zen-browser.app",
+      "https://example.app",
       {
         reference: "([",
         matchType: "regex",

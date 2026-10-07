@@ -56,6 +56,10 @@ const BROWSER_STARTUP_RESUME_SESSION = 3;
 // debouncer to kick off a regeneration.
 const REGENERATION_DEBOUNCE_RATE_MS = 10 * 60 * 1000; // 10 minutes
 
+// The clean snapshot is a copy of the whole session file. Once a minute is
+// enough; saving the session itself still happens on its own timer.
+const CLEAN_BACKUP_INTERVAL_MS = 60 * 1000;
+
 /**
  * Class representing the sidebar object stored in the session file.
  * This object holds all the data related to tabs, groups, folders
@@ -97,6 +101,7 @@ export class nsHarborSessionManager {
    * A deferred task to create backups of the session file.
    */
   #deferredBackupTask = null;
+  #lastCleanCopy = 0;
 
   init() {
     this.log("Initializing session manager");
@@ -152,70 +157,12 @@ export class nsHarborSessionManager {
   }
 
   /**
-   * Gets the spaces data from the Places database for migration.
-   * This is only called once during the first run after updating
-   * to a version that uses the new session manager.
+   * Gets the recovery data from the session store backups. This is
+   * only called when the session file has no spaces data.
    */
   async #getDataFromDBForMigration() {
     try {
-      const { PlacesUtils } = ChromeUtils.importESModule(
-        "resource://gre/modules/PlacesUtils.sys.mjs"
-      );
-      const db = await PlacesUtils.promiseDBConnection();
       let data = {};
-      let rows = [];
-      try {
-        rows = await db.execute(
-          "SELECT * FROM zen_workspaces ORDER BY created_at ASC"
-        );
-        data.spaces = rows.map(row => ({
-          uuid: row.getResultByName("uuid"),
-          name: row.getResultByName("name"),
-          icon: row.getResultByName("icon"),
-          containerTabId: row.getResultByName("container_id") ?? 0,
-          position: row.getResultByName("position"),
-          theme: row.getResultByName("theme_type")
-            ? {
-                type: row.getResultByName("theme_type"),
-                gradientColors: JSON.parse(row.getResultByName("theme_colors")),
-                opacity: row.getResultByName("theme_opacity"),
-                rotation: row.getResultByName("theme_rotation"),
-                texture: row.getResultByName("theme_texture"),
-              }
-            : null,
-        }));
-      } catch (e) {
-        /* ignore errors reading spaces data, as it is not critical and we want to migrate even if we fail to read it */
-        console.error(
-          "Failed to read spaces data from database during migration",
-          e
-        );
-      }
-      try {
-        rows = await db.execute("SELECT * FROM zen_pins ORDER BY position ASC");
-        data.pins = rows.map(row => ({
-          uuid: row.getResultByName("uuid"),
-          title: row.getResultByName("title"),
-          url: row.getResultByName("url"),
-          containerTabId: row.getResultByName("container_id"),
-          workspaceUuid: row.getResultByName("workspace_uuid"),
-          position: row.getResultByName("position"),
-          isEssential: Boolean(row.getResultByName("is_essential")),
-          isGroup: Boolean(row.getResultByName("is_group")),
-          parentUuid: row.getResultByName("folder_parent_uuid"),
-          editedTitle: Boolean(row.getResultByName("edited_title")),
-          folderIcon: row.getResultByName("folder_icon"),
-          isFolderCollapsed: Boolean(
-            row.getResultByName("is_folder_collapsed")
-          ),
-        }));
-      } catch (e) {
-        /* ignore errors reading pins data, as it is not critical and we want to migrate even if we fail to read it */
-        console.error(
-          "Failed to read pins data from database during migration",
-          e
-        );
-      }
       try {
         data.recoveryData = await IOUtils.readJSON(
           PathUtils.join(
@@ -560,7 +507,7 @@ export class nsHarborSessionManager {
 
   onRestoringClosedWindow(aWinData) {
     // We only want to save all pinned tabs if the user preference allows it.
-    // See https://github.com/zen-browser/desktop/issues/12307
+    // See upstream issue #12307
     if (this.#shouldRestoreOnlyPinned && aWinData?.tabs?.length) {
       this.log("Restoring only pinned tabs for closed window");
       this.#filterUnpinnedTabs(aWinData);
@@ -590,6 +537,28 @@ export class nsHarborSessionManager {
   }
 
   /**
+   * Copies the last saved session aside. Skipped when backups are off and
+   * when a copy was already made in the last minute.
+   */
+  #copyCleanBackup() {
+    if (!SHOULD_BACKUP_FILE) {
+      return;
+    }
+    const now = Date.now();
+    if (now - this.#lastCleanCopy < CLEAN_BACKUP_INTERVAL_MS) {
+      return;
+    }
+    this.#lastCleanCopy = now;
+    const cleanPath = PathUtils.join(this.#backupFolderPath, "clean.jsonlz4");
+    IOUtils.copy(this.#storeFilePath, cleanPath, { recursive: true }).catch(
+      () => {
+        /* ignore errors creating clean backup, as it is not critical and
+         * we want to save the session even if we fail to create it */
+      }
+    );
+  }
+
+  /**
    * Saves the current session state. Collects data and writes to disk.
    *
    * @param {object} state The current session state.
@@ -605,13 +574,7 @@ export class nsHarborSessionManager {
       // browsing mode. We also don't want to save if there are no windows.
       return;
     }
-    const cleanPath = PathUtils.join(this.#backupFolderPath, "clean.jsonlz4");
-    IOUtils.copy(this.#storeFilePath, cleanPath, { recursive: true }).catch(
-      () => {
-        /* ignore errors creating clean backup, as it is not critical and
-         * we want to save the session even if we fail to create it */
-      }
-    );
+    this.#copyCleanBackup();
     this.#collectWindowData(windows);
     // Let interested consumers (e.g. Firefox Sync) know fresh sidebar data
     // is available, without this module knowing anything about them.

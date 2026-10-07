@@ -2,25 +2,37 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-harbor-welcome-title-line1 = مرحبا بك في
-harbor-welcome-title-line2 = إنترنت أكثر هدوء
-harbor-welcome-import-title = بداية جديدة، نفس المفضّلات
-harbor-welcome-import-description-1 = المفضّلات، سجل التصفح، وكلمات السر هي أثر خطواتك على الإنترنت…خليها معاك!
-harbor-welcome-import-description-2 = أحضرهم بسهولة من متصفح آخر وكمل من حيث انتهيت.
-harbor-welcome-import-button = "استردهم الآن
-harbor-welcome-set-default-browser = اجعل { -brand-short-name } المتصفح الافتراضي لديك
-harbor-welcome-dont-set-default-browser = لا تجعل { -brand-short-name } المتصفح الافتراضي لديك
-harbor-welcome-initial-essentials-title = تبويباتك، دائمًا في متناول يدك
-harbor-welcome-initial-essentials-description-1 = احرص على أن تظل تبويباتك الأهم سهلة الوصول وفي متناول يدك دائمًا، مهما كان عددها.
-harbor-welcome-initial-essentials-description-2 = التبويبات الأساسية تبقى مرئية دائمًا، مهما كانت المساحة التي تعمل فيها.
-harbor-welcome-workspace-colors-title = مساحات عملك، ألوانك
-harbor-welcome-workspace-colors-description = خصص متصفحك بمنح كل مساحة عمل هُوِيَّة.
-harbor-welcome-start-browsing-title =
-    كل شيء تمام؟<br/>
-    يلا نبدأ!
-harbor-welcome-start-browsing-description-1 = كل حاجة جاهزة، دوس على الزر تحت وابدأ التصفح بـ { -brand-short-name }.
-harbor-welcome-start-browsing = انطلق!
-harbor-welcome-default-search-title = محرك البحث الافتراضي
+harbor-welcome-title-line1 = مرحبًا بك في
+harbor-welcome-title-line2 = Harbor
+
+harbor-welcome-start = ابدأ
+harbor-welcome-back = رجوع
+harbor-welcome-skip = تخطَّ الآن
+
+harbor-welcome-import-title = خذ بياناتك معك.
+harbor-welcome-import-description = استورد مفضلاتك وسجل التصفح وكلمات المرور من متصفح آخر وتابع من حيث توقفت.
+harbor-welcome-import-yes = <strong>نعم</strong>، استورد من متصفح آخر.
+harbor-welcome-import-no = <strong>لا</strong>، ابدأ من الصفر.
+
+harbor-welcome-default-browser-title = هل تجعل { -brand-short-name } متصفحك الافتراضي؟
+harbor-welcome-default-browser-description = ستُفتح الروابط من التطبيقات الأخرى في { -brand-short-name }. يمكنك تغيير هذا لاحقًا.
+harbor-welcome-set-default-browser = <strong>نعم</strong>، اجعل { -brand-short-name } المتصفح الافتراضي.
+harbor-welcome-dont-set-default-browser = <strong>لا</strong>، ما زلت أستكشف خياراتي.
+
+harbor-welcome-default-search-title = اختر محرك البحث.
 harbor-welcome-default-search-description = اختر محرك البحث الافتراضي. يمكنك تغييره لاحقًا!
-harbor-welcome-skip-button = تخطي
-harbor-welcome-finished = تم إعداد نسختك بشكل صحيح!
+
+harbor-welcome-essentials-title = اختر التطبيقات التي تستخدمها أكثر.
+harbor-welcome-essentials-description = حدد تطبيقاتك المفضلة لإبقائها في متناول يدك في الشريط الجانبي.
+
+harbor-welcome-block-ads-title = تحظر الإعلانات وأدوات التتبع؟
+harbor-welcome-block-ads-description = يمكن لـ { -brand-short-name } تثبيت uBlock Origin نيابةً عنك، لتُحمَّل الصفحات بصورة أنظف وأسرع. يمكنك إزالته في أي وقت.
+harbor-welcome-block-ads-yes = <strong>نعم</strong>، احظر الإعلانات نيابةً عني.
+harbor-welcome-block-ads-no = <strong>لا</strong>، أرِني كل شيء.
+
+harbor-welcome-workspace-colors-title = مساحتك، ألوانك.
+harbor-welcome-workspace-colors-description = خصّص متصفحك بمنح كل مساحة هوية لونية فريدة من نوعها.
+
+harbor-welcome-start-browsing-title = كل شيء جاهز؟ لنبدأ!
+harbor-welcome-start-browsing-description-1 = تم إعداد كل شيء وأصبحت جاهزًا للانطلاق. انقر على الزر أدناه لبدء التصفح باستخدام { -brand-short-name }.
+harbor-welcome-start-browsing = انطلق!

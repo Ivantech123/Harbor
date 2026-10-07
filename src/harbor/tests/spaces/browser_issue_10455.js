@@ -55,7 +55,7 @@ add_task(async function test_Issue_10455_Dont_Close() {
   );
   ok(
     newWindow.gBrowser.selectedTab.hasAttribute("harbor-empty-tab"),
-    "Tab should be a zen empty tab"
+    "Tab should be a harbor empty tab"
   );
   ok(!newWindow.closing, "Window should be closing");
 

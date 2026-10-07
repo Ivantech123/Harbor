@@ -177,7 +177,7 @@ document.addEventListener(
           }
           case "cmd_harborToggleLibrary": {
             const { HarborLibrary } = ChromeUtils.importESModule(
-              "moz-src:///zen/library/HarborLibrary.mjs",
+              "moz-src:///harbor/library/HarborLibrary.mjs",
               { global: "current" }
             );
             HarborLibrary.toggle();

@@ -186,8 +186,8 @@ add_task(async function test_Welcome_Steps() {
   );
   Assert.equal(
     group.label,
-    "zen basics",
-    'The first tab group should be labeled "zen basics" after the welcome process'
+    "Основное",
+    'The first tab group should be labeled "Основное" after the welcome process'
   );
   for (const tab of gBrowser.tabs) {
     if (tab.hasAttribute("harbor-empty-tab")) {

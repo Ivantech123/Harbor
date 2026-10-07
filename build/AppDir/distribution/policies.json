@@ -72,8 +72,8 @@
         "Status": "locked"
       },
       "browser.ml.enable": {
-        "Value": false,
-        "Status": "locked"
+        "Value": true,
+        "Status": "default"
       }
     }
   }

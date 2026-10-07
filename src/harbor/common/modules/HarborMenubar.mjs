@@ -104,7 +104,7 @@ export class nsHarborMenuBar {
         if (AppConstants.platform === "linux") {
           // On linux, there seems to be a bug where the menu freezes up and makes the browser
           // suppiciously unresponsive if we try to update the menu while it's opening.
-          // See https://github.com/zen-browser/desktop/issues/12024
+          // See upstream issue #12024
           return;
         }
         gHarborWorkspaces.updateWorkspacesChangeContextMenu();
@@ -124,7 +124,7 @@ export class nsHarborMenuBar {
     );
     document.getElementById("menu_newNavigator").after(
       window.MozXULElement.parseXULToFragment(`
-        <menuitem id="menu_new_zen_unsynced_window"
+        <menuitem id="menu_new_harbor_unsynced_window"
                 class="subviewbutton"
                 data-l10n-id="harbor-menubar-new-blank-window"
                 key="harbor-new-unsynced-window"

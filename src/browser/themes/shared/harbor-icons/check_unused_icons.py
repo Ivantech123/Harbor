@@ -42,7 +42,7 @@ def find_icon_usage(icon_files):
 
 
 def main(args):
-  parser = argparse.ArgumentParser(description='Check for unused zen icons.')
+  parser = argparse.ArgumentParser(description='Check for unused harbor icons.')
   parser.add_argument('--remove', action='store_true', help='Remove unused icons')
   parsed_args = parser.parse_args(args)
 

@@ -10,7 +10,7 @@ import {
 import { MozLitElement } from "chrome://global/content/lit-utils.mjs";
 
 const { HarborLibraryWidget } = ChromeUtils.importESModule(
-  "moz-src:///zen/library/HarborLibraryWidget.sys.mjs"
+  "moz-src:///harbor/library/HarborLibraryWidget.sys.mjs"
 );
 
 let lazy = {};
@@ -19,15 +19,15 @@ ChromeUtils.defineESModuleGetters(
   lazy,
   {
     HarborLibraryHistorySection:
-      "moz-src:///zen/library/sections/HarborLibraryHistorySection.mjs",
+      "moz-src:///harbor/library/sections/HarborLibraryHistorySection.mjs",
     HarborLibraryDownloadsSection:
-      "moz-src:///zen/library/sections/HarborLibraryDownloadsSection.mjs",
+      "moz-src:///harbor/library/sections/HarborLibraryDownloadsSection.mjs",
     HarborLibraryBoostsSection:
-      "moz-src:///zen/library/sections/HarborLibraryBoostsSection.mjs",
+      "moz-src:///harbor/library/sections/HarborLibraryBoostsSection.mjs",
     HarborLibraryMediaSection:
-      "moz-src:///zen/library/sections/HarborLibraryMediaSection.mjs",
+      "moz-src:///harbor/library/sections/HarborLibraryMediaSection.mjs",
     HarborLibrarySpacesSection:
-      "moz-src:///zen/library/sections/HarborLibrarySpacesSection.mjs",
+      "moz-src:///harbor/library/sections/HarborLibrarySpacesSection.mjs",
   },
   { global: "current" }
 );
@@ -594,14 +594,6 @@ export class HarborLibrary extends MozLitElement {
         image: "chrome://browser/skin/harbor-icons/back.svg",
         l10nId: "library-footer-close-button",
         command: () => HarborLibrary.animateProgress(0),
-      },
-      {
-        image: "chrome://browser/skin/harbor-icons/heart-circle-fill.svg",
-        l10nId: "library-footer-donate-button",
-        command: () => {
-          window.openTrustedLinkIn("https://www.zen-browser.app/donate", "tab");
-          HarborLibrary.animateProgress(0);
-        },
       },
     ];
 

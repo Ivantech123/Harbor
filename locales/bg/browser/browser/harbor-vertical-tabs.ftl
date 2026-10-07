@@ -2,46 +2,54 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-harbor-toolbar-context-tabs-right = 
-    .label = Tabs on the right
-    .accesskey = R
-harbor-toolbar-context-compact-mode = 
-    .label = Compact Mode
-harbor-toolbar-context-compact-mode-enable = 
-    .label = Enable compact mode
-    .accesskey = D
-harbor-toolbar-context-compact-mode-just-tabs = 
-    .label = Hide sidebar
-harbor-toolbar-context-compact-mode-just-toolbar = 
-    .label = Hide toolbar
-harbor-toolbar-context-compact-mode-hide-both = 
-    .label = Hide both
-    .accesskey = H
-harbor-toolbar-context-move-to-folder = 
-    .label = Move to Folder...
-    .accesskey = M
-harbor-toolbar-context-new-folder = 
-    .label = New Folder
-    .accesskey = N
-sidebar-harbor-expand = 
-    .label = Expand Sidebar
-sidebar-harbor-create-new = 
-    .label = Create New...
-tabbrowser-unload-tab-button = 
+harbor-toolbar-context-tabs-right =
+    .label = Подпрозорци вдясно
+    .accesskey = Д
+
+harbor-toolbar-context-compact-mode =
+    .label = Компактен режим
+harbor-toolbar-context-compact-mode-enable =
+    .label = Включване на компактния режим
+    .accesskey = В
+harbor-toolbar-context-compact-mode-just-tabs =
+    .label = Скриване на страничната лента
+harbor-toolbar-context-compact-mode-just-toolbar =
+    .label = Скриване на лентата с инструменти
+harbor-toolbar-context-compact-mode-hide-both =
+    .label = Скриване и на двете
+    .accesskey = И
+
+harbor-toolbar-context-move-to-folder =
+    .label = Преместване в папка
+    .accesskey = П
+
+harbor-toolbar-context-new-folder =
+    .label = Нова папка
+    .accesskey = Н
+
+sidebar-harbor-expand =
+    .label = Разширяване на страничната лента
+
+sidebar-harbor-create-new =
+    .label = Създаване на нов подпрозорец
+
+tabbrowser-unload-tab-button =
     .tooltiptext =
         { $tabCount ->
-            [one] Unload and switch to tab
-           *[other] Unload { $tabCount } tabs and switch to the first
+            [one] Разтоварване и превключване към подпрозореца
+            *[other] Разтоварване на { $tabCount } подпрозорци и превключване към първия
         }
-tabbrowser-reset-pin-button = 
+
+tabbrowser-reset-pin-button =
     .tooltiptext =
         { $tabCount ->
-            [one] Reset and pin tab
-           *[other] Reset and pin { $tabCount } tabs
+            [one] Нулиране и закрепване на подпрозореца
+            *[other] Нулиране и закрепване на { $tabCount } подпрозорци
         }
+
 harbor-tab-sublabel =
     { $tabSubtitle ->
-        [harbor-default-pinned] Back to pinned url
-        [harbor-default-pinned-cmd] Separate from pinned tab
-       *[other] { $tabSubtitle }
+        [harbor-default-pinned] Обратно към закрепения адрес
+        [harbor-default-pinned-cmd] Отделяне от закрепения подпрозорец
+        *[other] { $tabSubtitle }
     }

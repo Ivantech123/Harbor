@@ -8,7 +8,7 @@ ChromeUtils.defineESModuleGetters(this, {
 });
 
 const PAGE_URL = "https://example.com/";
-const TYPED_VALUE = "zen blur revert test";
+const TYPED_VALUE = "harbor blur revert test";
 
 async function typeIntoUrlbar() {
   await UrlbarTestUtils.promiseAutocompleteResultPopup({

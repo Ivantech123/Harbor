@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import { html, repeat } from "chrome://global/content/vendor/lit.all.mjs";
-import { HarborLibrarySearchSection } from "moz-src:///zen/library/sections/HarborLibrarySearchSection.mjs";
+import { HarborLibrarySearchSection } from "moz-src:///harbor/library/sections/HarborLibrarySearchSection.mjs";
 
 let lazy = {};
 

@@ -3,15 +3,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import { html } from "chrome://global/content/vendor/lit.all.mjs";
-import { HarborLibrarySearchSection } from "moz-src:///zen/library/sections/HarborLibrarySearchSection.mjs";
-import { HarborLibraryMediaPreview } from "moz-src:///zen/library/HarborLibraryMediaPreview.mjs";
+import { HarborLibrarySearchSection } from "moz-src:///harbor/library/sections/HarborLibrarySearchSection.mjs";
+import { HarborLibraryMediaPreview } from "moz-src:///harbor/library/HarborLibraryMediaPreview.mjs";
 
 let lazy = {};
 
 ChromeUtils.defineESModuleGetters(lazy, {
   FileUtils: "resource://gre/modules/FileUtils.sys.mjs",
-  canDrawThumbnail: "moz-src:///zen/library/HarborLibraryFileTypes.sys.mjs",
-  mediaKindOf: "moz-src:///zen/library/HarborLibraryFileTypes.sys.mjs",
+  canDrawThumbnail: "moz-src:///harbor/library/HarborLibraryFileTypes.sys.mjs",
+  mediaKindOf: "moz-src:///harbor/library/HarborLibraryFileTypes.sys.mjs",
 });
 
 const FILE_MIME = "application/x-moz-file";

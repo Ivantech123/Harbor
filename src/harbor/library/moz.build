@@ -3,16 +3,15 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 MOZ_SRC_FILES += [
+  "HarborLibrary.mjs",
+  "HarborLibraryDragAndDrop.mjs",
+  "HarborLibraryFileTypes.sys.mjs",
+  "HarborLibraryMediaPreview.mjs",
+  "HarborLibraryWidget.sys.mjs",
   "sections/HarborLibraryBoostsSection.mjs",
   "sections/HarborLibraryDownloadsSection.mjs",
   "sections/HarborLibraryHistorySection.mjs",
   "sections/HarborLibraryMediaSection.mjs",
   "sections/HarborLibrarySearchSection.mjs",
   "sections/HarborLibrarySpacesSection.mjs",
-
-  "HarborLibrary.mjs",
-  "HarborLibraryDragAndDrop.mjs",
-  "HarborLibraryFileTypes.sys.mjs",
-  "HarborLibraryMediaPreview.mjs",
-  "HarborLibraryWidget.sys.mjs",
 ]

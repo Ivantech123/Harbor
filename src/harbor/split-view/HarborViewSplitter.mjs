@@ -1352,7 +1352,7 @@ class nsHarborViewSplitter extends nsHarborDOMOperatedFeature {
       this.updateSplitView(tab);
       tab.linkedBrowser.docShellIsActive = true;
       if (isGlanceTab) {
-        // See issues https://github.com/zen-browser/desktop/issues/11641
+        // See issues upstream issue #11641
         this.removeSplitters();
       }
     }

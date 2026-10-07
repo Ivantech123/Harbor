@@ -18,7 +18,7 @@ add_task(async function test_Private_Mode() {
 
   Assert.ok(
     privateWindow.gBrowser.selectedTab.hasAttribute("harbor-empty-tab"),
-    "Private window should start with a zen empty tab"
+    "Private window should start with a harbor empty tab"
   );
 
   await BrowserTestUtils.closeWindow(privateWindow);

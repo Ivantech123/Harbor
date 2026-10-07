@@ -19747,7 +19747,7 @@ declare global {
     getInstallHash(): string;
   }
 
-  // https://searchfox.org/firefox-main/source/zen/toolkit/common/nsIHarborCommonUtils.idl
+  // https://searchfox.org/firefox-main/source/harbor/toolkit/common/nsIHarborCommonUtils.idl
 
   interface nsIHarborCommonUtils extends nsISupports {
     share(
@@ -19763,14 +19763,14 @@ declare global {
     playHapticFeedback(): void;
   }
 
-  // https://searchfox.org/firefox-main/source/zen/drag-and-drop/nsIHarborDragAndDrop.idl
+  // https://searchfox.org/firefox-main/source/harbor/drag-and-drop/nsIHarborDragAndDrop.idl
 
   interface nsIHarborDragAndDrop extends nsISupports {
     onDragStart(opacity: float): void;
     onDragEnd(): void;
   }
 
-  // https://searchfox.org/firefox-main/source/zen/mods/nsIHarborModsBackend.idl
+  // https://searchfox.org/firefox-main/source/harbor/mods/nsIHarborModsBackend.idl
 
   interface nsIHarborModsBackend extends nsISupports {
     rebuildModsStyles(aContents: string): void;

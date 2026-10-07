@@ -25,7 +25,7 @@ add_task(async function test_redirect_when_route_targets_other_space() {
 
   ok(
     gHarborSpaceRoutingManager.shouldRedirectNavigation(
-      "https://github.com/zen",
+      "https://github.com/harbor",
       "ws-current",
       win
     ),
@@ -44,7 +44,7 @@ add_task(async function test_no_redirect_when_already_in_target_space() {
 
   ok(
     !gHarborSpaceRoutingManager.shouldRedirectNavigation(
-      "https://github.com/zen",
+      "https://github.com/harbor",
       TARGET_WS.uuid,
       win
     ),

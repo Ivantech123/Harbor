@@ -1,12 +1,11 @@
 diff --git a/modules/libpref/init/StaticPrefList.yaml b/modules/libpref/init/StaticPrefList.yaml
-index b96e9d02beda72c92c295a2799c851b94945ada6..db79081c6d1bbdf78a38a6cc13494476827bf0d1 100644
 --- a/modules/libpref/init/StaticPrefList.yaml
 +++ b/modules/libpref/init/StaticPrefList.yaml
-@@ -20580,6 +20580,7 @@
+@@ -8868,6 +8868,7 @@
+   value: 0
    mirror: always
- #endif
  
 +#include harbor-static-prefs.inc
  #---------------------------------------------------------------------------
- # Prefs starting with "zoom."
+ # Prefs starting with "html5."
  #---------------------------------------------------------------------------

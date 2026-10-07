@@ -7,7 +7,7 @@ index a2fb4433c7044e7f5681d5762285314fa3e00a5c..dac1e79e86c534247a470ae062e59f7e
    let versionIdKey = "base";
    let versionAttributes = {
 -    version: AppConstants.MOZ_APP_VERSION_DISPLAY,
-+    version: `${AppConstants.MOZ_APP_VERSION_DISPLAY} (Firefox ${AppConstants.HARBOR_FIREFOX_VERSION})`,
++    version: AppConstants.MOZ_APP_VERSION_DISPLAY,
    };
  
    let arch = Services.sysinfo.get("arch");

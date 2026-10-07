@@ -46,7 +46,7 @@ def copy_browser_locales(lang_id: str):
     # Remove previously copied Harbor and Harbor locale files in en-US.
     for root, _, files in os.walk(lang_path):
       for file in files:
-        if file.startswith("zen") or file.startswith("harbor"):
+        if file.startswith("harbor"):
           os.remove(os.path.join(root, file))
 
     # Copy files from the source directory
@@ -60,6 +60,11 @@ def copy_browser_locales(lang_id: str):
 
   source_path = f"./locales/{lang_id}/"
   copy_files(source_path, lang_path)
+  # Harbor files live in locales/<lang>/browser/browser/. The browser loads
+  # them as browser/<file>.ftl, so also copy that folder up one level.
+  nested = os.path.join(source_path, "browser", "browser")
+  if os.path.isdir(nested):
+    copy_files(nested, os.path.join(lang_path, "browser"))
 
 
 def copy_files(source: str, destination: str):

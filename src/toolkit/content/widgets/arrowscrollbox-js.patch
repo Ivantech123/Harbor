@@ -6,7 +6,7 @@ index b80d1049bb6ae305f2ac9c4c35fe975fd508031c..574149bffa49329e927c8db9db0c080e
  
        let slot = this.shadowRoot.querySelector("slot");
        let overflowObserver = new ResizeObserver(_ => {
-+        if (this.id == 'tabbrowser-arrowscrollbox') return; // zen: do NOT underflow/overflow on tabbrowser-arrowscrollbox
++        if (this.id == 'tabbrowser-arrowscrollbox') return; // harbor: do NOT underflow/overflow on tabbrowser-arrowscrollbox
          let contentSize =
            slot.getBoundingClientRect()[this.#verticalMode ? "height" : "width"];
          // NOTE(emilio): This should be contentSize > scrollClientSize, but due

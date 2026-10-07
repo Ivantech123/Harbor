@@ -82,7 +82,7 @@ groupbox h2 {
 }
 
 #category-harbor-looks > .category-icon {
-  list-style-image: url("chrome://browser/skin/customize.svg");
+  list-style-image: url("chrome://browser/skin/harbor-icons/customize.svg");
 }
 
 #harborLooksAndFeelGroup > html|div:last-of-type {
@@ -135,7 +135,7 @@ groupbox h2 {
 /* Workspace */
 
 #category-harbor-tabs-management > .category-icon {
-  list-style-image: url("chrome://browser/skin/window.svg");
+  list-style-image: url("chrome://browser/skin/harbor-icons/window.svg");
 }
 
 #harborTabsUnloadDelayContainer {
@@ -150,7 +150,7 @@ groupbox h2 {
 /* CKS */
 
 #category-harbor-CKS > .category-icon {
-  list-style-image: url("chrome://browser/skin/quickactions.svg");
+  list-style-image: url("chrome://browser/skin/harbor-icons/sliders.svg");
 }
 
 .harborCKSOption-input {
@@ -284,7 +284,7 @@ groupbox h2 {
 /* THemes marketplace */
 
 #category-harbor-marketplace > .category-icon {
-  list-style-image: url("chrome://mozapps/skin/extensions/category-themes.svg");
+  list-style-image: url("chrome://browser/skin/harbor-icons/edit-theme.svg");
 }
 
 .harborThemeMarketplaceItem {

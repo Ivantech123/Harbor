@@ -11,7 +11,7 @@
   const isTab = element => gBrowser.isTab(element);
   const isTabGroupLabel = element => gBrowser.isTabGroupLabel(element);
   const isEssentialsPromo = element =>
-    element?.tagName.toUpperCase() == "ZEN-ESSENTIALS-PROMO";
+    element?.tagName.toUpperCase() == "HARBOR-ESSENTIALS-PROMO";
 
   /**
    * The elements in the tab strip from `this.ariaFocusableItems` that contain

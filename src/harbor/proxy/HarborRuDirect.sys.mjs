@@ -50,12 +50,18 @@ const VPN_PROCESS_MARKERS = [
   "cloudflare warp",
 ];
 
-const SCAN_INTERVAL_MS = 20000;
+// A process-list scan spawns tasklist/ps and holds its whole output. Do it
+// only when a non-loopback proxy is actually in front of a Russian host,
+// at most once a minute, and never start a second scan while one is running.
+const SCAN_TTL_MS = 60_000;
 
 let registered = false;
 let vpnProcessRunning = false;
 let localProxyEnabled = false;
-let scanTimer = 0;
+let localProxyCheckedAt = 0;
+let scannedAt = 0;
+let scanPromise = null;
+let scanGeneration = 0;
 
 function hostOf(channel) {
   try {
@@ -146,21 +152,46 @@ async function readProcessList() {
   return (await proc.stdout.readString()).toLowerCase();
 }
 
-async function refreshVpnProcess() {
-  localProxyEnabled = localSystemProxyEnabled();
-  try {
-    const listing = await readProcessList();
-    vpnProcessRunning = VPN_PROCESS_MARKERS.some(marker =>
-      listing.includes(marker)
-    );
-  } catch (error) {
-    console.error("Harbor: failed to scan VPN processes", error);
-    vpnProcessRunning = false;
+function localProxyFresh() {
+  const now = Date.now();
+  if (now - localProxyCheckedAt < SCAN_TTL_MS) {
+    return localProxyEnabled;
   }
+  localProxyEnabled = localSystemProxyEnabled();
+  localProxyCheckedAt = now;
+  return localProxyEnabled;
 }
 
-function tunnelIsActive(proxyInfo) {
-  return vpnProcessRunning || localProxyEnabled || isLoopbackProxy(proxyInfo);
+function refreshVpnProcess() {
+  if (scanPromise || Date.now() - scannedAt < SCAN_TTL_MS) {
+    return scanPromise;
+  }
+  const generation = ++scanGeneration;
+  scanPromise = (async () => {
+    let listing = "";
+    try {
+      listing = await readProcessList();
+      if (generation !== scanGeneration) {
+        return;
+      }
+      vpnProcessRunning = VPN_PROCESS_MARKERS.some(marker =>
+        listing.includes(marker)
+      );
+    } catch (error) {
+      if (generation !== scanGeneration) {
+        return;
+      }
+      console.error("Harbor: failed to scan VPN processes", error);
+      vpnProcessRunning = false;
+    } finally {
+      listing = "";
+      if (generation === scanGeneration) {
+        scannedAt = Date.now();
+        scanPromise = null;
+      }
+    }
+  })();
+  return scanPromise;
 }
 
 const filter = {
@@ -168,15 +199,21 @@ const filter = {
     if (
       !Services.prefs.getBoolPref(PREF, true) ||
       !proxyInfo ||
-      !tunnelIsActive(proxyInfo) ||
       !isRussianHost(hostOf(channel))
     ) {
       callback.onProxyFilterResult(proxyInfo);
       return;
     }
-    // null is a direct connection. A TUN-mode VPN still captures the
-    // socket below the browser; this bypass works for proxy-mode clients.
-    callback.onProxyFilterResult(null);
+    // null is a direct connection. A loopback or system proxy is enough to
+    // bypass; spawning a process list is reserved for the remaining case.
+    if (isLoopbackProxy(proxyInfo) || localProxyFresh()) {
+      callback.onProxyFilterResult(null);
+      return;
+    }
+    if (Date.now() - scannedAt >= SCAN_TTL_MS) {
+      refreshVpnProcess();
+    }
+    callback.onProxyFilterResult(vpnProcessRunning ? null : proxyInfo);
   },
 };
 
@@ -189,16 +226,14 @@ export function ensureRuDirect() {
     Ci.nsIProtocolProxyService
   );
   service.registerChannelFilter(filter, 0);
-  refreshVpnProcess();
-  scanTimer = setInterval(refreshVpnProcess, SCAN_INTERVAL_MS);
 }
 
 export function _testReset() {
   registered = false;
   vpnProcessRunning = false;
   localProxyEnabled = false;
-  if (scanTimer) {
-    clearInterval(scanTimer);
-    scanTimer = 0;
-  }
+  localProxyCheckedAt = 0;
+  scannedAt = 0;
+  scanPromise = null;
+  scanGeneration++;
 }

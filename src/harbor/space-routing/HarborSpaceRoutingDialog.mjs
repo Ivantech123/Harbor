@@ -308,10 +308,10 @@ export class nsHarborSpaceRoutingDialog {
   updateInputPlaceholder(matchType, input) {
     switch (matchType) {
       case "regex":
-        input.placeholder = "zen-browser\\.app";
+        input.placeholder = "example\\.com";
         break;
       default:
-        input.placeholder = "zen-browser.app";
+        input.placeholder = "example.com";
         break;
     }
   }
