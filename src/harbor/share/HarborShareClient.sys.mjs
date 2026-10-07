@@ -2,7 +2,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { AppConstants } from "resource://gre/modules/AppConstants.sys.mjs";
 import { XPCOMUtils } from "resource://gre/modules/XPCOMUtils.sys.mjs";
 
 const lazy = {};
@@ -20,6 +19,15 @@ XPCOMUtils.defineLazyPreferenceGetter(
   "",
   null,
   value => value.trim().replace(/\/+$/, "")
+);
+
+// The client key every build ships with. It only tells the server the
+// request comes from the browser, it is not a secret.
+XPCOMUtils.defineLazyPreferenceGetter(
+  lazy,
+  "gApiKey",
+  "harbor.share.api-key",
+  ""
 );
 
 XPCOMUtils.defineLazyPreferenceGetter(
@@ -63,13 +71,20 @@ class nsHarborShareClient {
     return lazy.gBaseUrl;
   }
 
+  /**
+   * Whether a share server is set up. Sharing stays off without one.
+   */
+  get configured() {
+    return !!lazy.gBaseUrl;
+  }
+
   #authHeaders() {
     // A secret key authorizes on its own and makes the share permanent. Never
     // send both keys.
     if (lazy.gSecretKey) {
       return { "x-secret-key": lazy.gSecretKey };
     }
-    return { "x-api-key": AppConstants.MOZ_MOZILLA_API_KEY };
+    return { "x-api-key": lazy.gApiKey };
   }
 
   #getValidator() {
@@ -191,6 +206,9 @@ class nsHarborShareClient {
     let uri;
     let baseUri;
     try {
+      if (!this.configured) {
+        return null;
+      }
       uri = Services.io.newURI(spec);
       baseUri = Services.io.newURI(this.#baseUrl);
     } catch (e) {

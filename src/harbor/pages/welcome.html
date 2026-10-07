@@ -1,0 +1,102 @@
+<!doctype html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; img-src chrome: data:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-l10n-id="harbor-page-welcome-title"></title>
+    <link rel="icon" href="chrome://branding/content/icon32.png" />
+    <link rel="localization" href="branding/brand.ftl" />
+    <link rel="localization" href="browser/harbor-pages.ftl" />
+    <link
+      rel="stylesheet"
+      href="chrome://browser/content/harbor-pages/harbor-pages.css"
+    />
+  </head>
+  <body>
+    <main>
+      <header class="harbor-page-hero">
+        <img src="chrome://branding/content/about-logo.png" alt="" />
+        <div>
+          <h1 data-l10n-id="harbor-page-welcome-heading"></h1>
+          <p data-l10n-id="harbor-page-welcome-subheading"></p>
+        </div>
+      </header>
+
+      <nav class="harbor-page-actions">
+        <a
+          class="harbor-page-button primary"
+          href="chrome://browser/content/harbor-pages/guide.html"
+          data-l10n-id="harbor-page-welcome-open-guide"
+        ></a>
+        <a
+          class="harbor-page-button"
+          href="chrome://browser/content/harbor-pages/mods.html"
+          data-l10n-id="harbor-page-welcome-open-mods"
+        ></a>
+        <a
+          class="harbor-page-button"
+          href="about:preferences"
+          data-l10n-id="harbor-page-welcome-open-settings"
+        ></a>
+      </nav>
+
+      <div class="harbor-page-grid">
+        <a
+          class="harbor-page-card"
+          href="chrome://browser/content/harbor-pages/guide.html#spaces"
+        >
+          <h2 data-l10n-id="harbor-page-feature-spaces"></h2>
+          <p data-l10n-id="harbor-page-feature-spaces-short"></p>
+        </a>
+        <a
+          class="harbor-page-card"
+          href="chrome://browser/content/harbor-pages/guide.html#essentials"
+        >
+          <h2 data-l10n-id="harbor-page-feature-essentials"></h2>
+          <p data-l10n-id="harbor-page-feature-essentials-short"></p>
+        </a>
+        <a
+          class="harbor-page-card"
+          href="chrome://browser/content/harbor-pages/guide.html#split-view"
+        >
+          <h2 data-l10n-id="harbor-page-feature-split-view"></h2>
+          <p data-l10n-id="harbor-page-feature-split-view-short"></p>
+        </a>
+        <a
+          class="harbor-page-card"
+          href="chrome://browser/content/harbor-pages/guide.html#glance"
+        >
+          <h2 data-l10n-id="harbor-page-feature-glance"></h2>
+          <p data-l10n-id="harbor-page-feature-glance-short"></p>
+        </a>
+        <a
+          class="harbor-page-card"
+          href="chrome://browser/content/harbor-pages/guide.html#compact-mode"
+        >
+          <h2 data-l10n-id="harbor-page-feature-compact-mode"></h2>
+          <p data-l10n-id="harbor-page-feature-compact-mode-short"></p>
+        </a>
+        <a
+          class="harbor-page-card"
+          href="chrome://browser/content/harbor-pages/guide.html#direct"
+        >
+          <h2 data-l10n-id="harbor-page-feature-direct"></h2>
+          <p data-l10n-id="harbor-page-feature-direct-short"></p>
+        </a>
+      </div>
+
+      <p
+        class="harbor-page-footer"
+        data-l10n-id="harbor-page-welcome-footer"
+      ></p>
+    </main>
+  </body>
+</html>

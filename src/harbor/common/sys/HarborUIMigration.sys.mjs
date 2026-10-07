@@ -182,7 +182,7 @@ class nsHarborUIMigration {
         // User has clicked on "Learn More"
         if (buttonPressed === 0) {
           win.openTrustedLinkIn(
-            "https://github.com/Ivantech123/Harbor#readme",
+            "chrome://browser/content/harbor-pages/guide.html#window-sync",
             "tab"
           );
         }

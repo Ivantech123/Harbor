@@ -1,0 +1,13 @@
+{
+  "id": "square-corners",
+  "name": "Square Corners",
+  "description": "Tightens the rounded corners across the browser window.",
+  "author": "Harbor",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Ivantech123/Harbor",
+  "style": "chrome.css",
+  "readme": "readme.md",
+  "tags": [
+    "look"
+  ]
+}

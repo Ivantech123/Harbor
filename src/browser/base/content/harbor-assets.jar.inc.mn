@@ -23,4 +23,5 @@
 #include ../../../harbor/space-routing/jar.inc.mn
 #include ../../../harbor/share/jar.inc.mn
 #include ../../../harbor/library/jar.inc.mn
+#include ../../../harbor/pages/jar.inc.mn
 #include ../../../harbor/jar.inc.mn

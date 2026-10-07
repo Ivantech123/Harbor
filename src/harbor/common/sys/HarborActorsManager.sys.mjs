@@ -31,7 +31,10 @@ let JSWINDOWACTORS = {
     },
     safeForUntrustedWebProcess: true,
     matches: [
-      ...Services.prefs.getStringPref("harbor.injections.match-urls").split(","),
+      ...Services.prefs
+        .getStringPref("harbor.injections.match-urls", "")
+        .split(",")
+        .filter(Boolean),
       "about:preferences",
     ],
   },

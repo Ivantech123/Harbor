@@ -3,3 +3,20 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
         content/browser/harbor-components/HarborMods.mjs                              (../../harbor/mods/HarborMods.mjs)
+
+        content/browser/harbor-mods-store/index.json                                  (../../harbor/mods/store/index.json)
+        content/browser/harbor-mods-store/mods/accent-selected-tab/theme.json  (../../harbor/mods/store/mods/accent-selected-tab/theme.json)
+        content/browser/harbor-mods-store/mods/accent-selected-tab/chrome.css  (../../harbor/mods/store/mods/accent-selected-tab/chrome.css)
+        content/browser/harbor-mods-store/mods/accent-selected-tab/readme.md  (../../harbor/mods/store/mods/accent-selected-tab/readme.md)
+        content/browser/harbor-mods-store/mods/quiet-close-buttons/theme.json  (../../harbor/mods/store/mods/quiet-close-buttons/theme.json)
+        content/browser/harbor-mods-store/mods/quiet-close-buttons/chrome.css  (../../harbor/mods/store/mods/quiet-close-buttons/chrome.css)
+        content/browser/harbor-mods-store/mods/quiet-close-buttons/readme.md  (../../harbor/mods/store/mods/quiet-close-buttons/readme.md)
+        content/browser/harbor-mods-store/mods/dim-unloaded-tabs/theme.json  (../../harbor/mods/store/mods/dim-unloaded-tabs/theme.json)
+        content/browser/harbor-mods-store/mods/dim-unloaded-tabs/chrome.css  (../../harbor/mods/store/mods/dim-unloaded-tabs/chrome.css)
+        content/browser/harbor-mods-store/mods/dim-unloaded-tabs/readme.md  (../../harbor/mods/store/mods/dim-unloaded-tabs/readme.md)
+        content/browser/harbor-mods-store/mods/square-corners/theme.json  (../../harbor/mods/store/mods/square-corners/theme.json)
+        content/browser/harbor-mods-store/mods/square-corners/chrome.css  (../../harbor/mods/store/mods/square-corners/chrome.css)
+        content/browser/harbor-mods-store/mods/square-corners/readme.md  (../../harbor/mods/store/mods/square-corners/readme.md)
+        content/browser/harbor-mods-store/mods/soft-corners/theme.json  (../../harbor/mods/store/mods/soft-corners/theme.json)
+        content/browser/harbor-mods-store/mods/soft-corners/chrome.css  (../../harbor/mods/store/mods/soft-corners/chrome.css)
+        content/browser/harbor-mods-store/mods/soft-corners/readme.md  (../../harbor/mods/store/mods/soft-corners/readme.md)

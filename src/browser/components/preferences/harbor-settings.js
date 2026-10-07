@@ -34,6 +34,12 @@ var gHarborMarketplaceManager = {
 
     header.appendChild(this._initDisableAll());
 
+    // The store is a built-in page, open it in a tab of the browser window.
+    document.getElementById("harborThemeMarketplaceLink")?.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.browsingContext.topChromeWindow.openTrustedLinkIn(event.currentTarget.href, "tab");
+    });
+
     this._initImportExport();
 
     this.__hasInitializedEvents = true;

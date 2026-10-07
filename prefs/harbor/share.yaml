@@ -2,8 +2,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+# The share server, see services/share-server. Sharing is off while this
+# is empty.
 - name: harbor.share.base-url
-  value: "https://share.harbor.local"
+  value: ""
+
+# Has to be one of the server's API_KEYS.
+- name: harbor.share.api-key
+  value: "harbor-desktop"
 
 - name: harbor.share.secret-key
   value: ""
@@ -11,7 +17,7 @@
 - name: harbor.share.display-name
   value: ""
 
-# Allow harbor.share.display-name to be synced across devices.
+# Allow harbor.share.display-name to be synced across devices.
 - name: services.sync.prefs.sync.harbor.share.display-name
   value: true
 

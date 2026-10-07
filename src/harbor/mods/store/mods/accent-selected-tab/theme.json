@@ -1,0 +1,13 @@
+{
+  "id": "accent-selected-tab",
+  "name": "Accent Selected Tab",
+  "description": "Outlines the selected tab with the accent color of the current space.",
+  "author": "Harbor",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Ivantech123/Harbor",
+  "style": "chrome.css",
+  "readme": "readme.md",
+  "tags": [
+    "tabs"
+  ]
+}

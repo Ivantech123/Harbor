@@ -1,0 +1,176 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@import url("chrome://global/skin/in-content/common.css");
+
+:root {
+  --harbor-page-accent: #14988e;
+  --harbor-page-width: 880px;
+  --harbor-page-card: color-mix(in srgb, currentColor 5%, transparent);
+  --harbor-page-border: color-mix(in srgb, currentColor 14%, transparent);
+  --harbor-page-muted: color-mix(in srgb, currentColor 68%, transparent);
+}
+
+body {
+  margin: 0;
+  padding: 48px 16px 64px;
+  line-height: 1.5;
+}
+
+main {
+  max-width: var(--harbor-page-width);
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2.2em;
+  font-weight: 600;
+  margin: 0 0 8px;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+.harbor-page-hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+
+  & img {
+    width: 84px;
+    height: 84px;
+    flex-shrink: 0;
+  }
+
+  & p {
+    color: var(--harbor-page-muted);
+    font-size: 1.1em;
+    margin: 0;
+  }
+}
+
+.harbor-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 36px;
+}
+
+.harbor-page-button {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid var(--harbor-page-border);
+  border-radius: 8px;
+  background: var(--harbor-page-card);
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover:not([disabled]) {
+    background: color-mix(in srgb, currentColor 10%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--harbor-page-accent);
+    outline-offset: 2px;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  &.primary {
+    background: var(--harbor-page-accent);
+    border-color: var(--harbor-page-accent);
+    color: #fff;
+
+    &:hover:not([disabled]) {
+      background: color-mix(in srgb, var(--harbor-page-accent) 86%, #000);
+    }
+  }
+}
+
+.harbor-page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.harbor-page-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid var(--harbor-page-border);
+  border-radius: 12px;
+  background: var(--harbor-page-card);
+  color: inherit;
+  text-decoration: none;
+
+  & p {
+    color: var(--harbor-page-muted);
+    margin: 0;
+  }
+
+  & .harbor-page-card-meta {
+    font-size: 0.85em;
+    margin-top: 8px;
+  }
+
+  & .harbor-page-button {
+    align-self: flex-start;
+    margin-top: 14px;
+  }
+}
+
+a.harbor-page-card:hover {
+  border-color: var(--harbor-page-accent);
+}
+
+.harbor-page-section {
+  padding: 20px 0;
+  border-top: 1px solid var(--harbor-page-border);
+  scroll-margin-top: 16px;
+
+  & p {
+    color: var(--harbor-page-muted);
+    max-width: 68ch;
+  }
+
+  &:target h2 {
+    color: var(--harbor-page-accent);
+  }
+}
+
+.harbor-page-status {
+  color: var(--harbor-page-muted);
+  padding: 24px 0;
+}
+
+.harbor-page-footer {
+  margin-top: 36px;
+  color: var(--harbor-page-muted);
+  font-size: 0.9em;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 520px) {
+  .harbor-page-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

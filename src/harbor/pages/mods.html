@@ -1,0 +1,70 @@
+<!doctype html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; img-src chrome: data:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-l10n-id="harbor-page-mods-title"></title>
+    <link rel="icon" href="chrome://branding/content/icon32.png" />
+    <link rel="localization" href="branding/brand.ftl" />
+    <link rel="localization" href="browser/harbor-pages.ftl" />
+    <link
+      rel="stylesheet"
+      href="chrome://browser/content/harbor-pages/harbor-pages.css"
+    />
+  </head>
+  <body>
+    <main>
+      <header class="harbor-page-hero">
+        <img src="chrome://branding/content/about-logo.png" alt="" />
+        <div>
+          <h1 data-l10n-id="harbor-page-mods-heading"></h1>
+          <p data-l10n-id="harbor-page-mods-subheading"></p>
+        </div>
+      </header>
+
+      <nav class="harbor-page-actions">
+        <a
+          class="harbor-page-button"
+          href="about:preferences#harborMarketplace"
+          data-l10n-id="harbor-page-mods-manage"
+        ></a>
+      </nav>
+
+      <p
+        id="mods-status"
+        class="harbor-page-status"
+        role="status"
+        data-l10n-id="harbor-page-mods-loading"
+      ></p>
+      <div id="mods-list" class="harbor-page-grid"></div>
+
+      <template id="mod-card">
+        <article class="harbor-page-card">
+          <h2 class="mod-name"></h2>
+          <p class="mod-description"></p>
+          <p class="harbor-page-card-meta mod-meta"></p>
+          <button class="harbor-page-button mod-action"></button>
+        </article>
+      </template>
+
+      <nav class="harbor-page-footer">
+        <a
+          href="chrome://browser/content/harbor-pages/welcome.html"
+          data-l10n-id="harbor-page-back-to-welcome"
+        ></a>
+      </nav>
+    </main>
+    <script
+      type="module"
+      src="chrome://browser/content/harbor-pages/mods.mjs"
+    ></script>
+  </body>
+</html>

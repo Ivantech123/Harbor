@@ -1,0 +1,13 @@
+{
+  "id": "soft-corners",
+  "name": "Soft Corners",
+  "description": "Makes the rounded corners across the browser window larger.",
+  "author": "Harbor",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Ivantech123/Harbor",
+  "style": "chrome.css",
+  "readme": "readme.md",
+  "tags": [
+    "look"
+  ]
+}

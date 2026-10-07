@@ -44,7 +44,10 @@ class nsHarborShareManager extends nsHarborDOMOperatedFeature {
   }
 
   get enabled() {
-    return !gHarborWorkspaces.privateWindowOrDisabled;
+    return (
+      !gHarborWorkspaces.privateWindowOrDisabled &&
+      lazy.HarborShareClient.configured
+    );
   }
 
   // Mark: sharing

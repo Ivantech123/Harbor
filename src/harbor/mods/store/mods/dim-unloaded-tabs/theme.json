@@ -1,0 +1,13 @@
+{
+  "id": "dim-unloaded-tabs",
+  "name": "Dim Unloaded Tabs",
+  "description": "Fades tabs that are not loaded yet, so the ones in memory stand out.",
+  "author": "Harbor",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Ivantech123/Harbor",
+  "style": "chrome.css",
+  "readme": "readme.md",
+  "tags": [
+    "tabs"
+  ]
+}

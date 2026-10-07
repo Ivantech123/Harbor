@@ -12,13 +12,17 @@
   value: "@cond"
   condition: "defined(MOZILLA_OFFICIAL)"
 
+# === Mark: Mod store ===
+
+# Empty means the store shipped inside the browser. Set it to an HTTPS
+# URL to use a remote store with the same layout (see src/harbor/mods/store).
+- name: harbor.mods.store-url
+  value: ""
+
 # === Mark: Site Injection ===
 
+# Sites that get the mod install API injected, comma separated. The store
+# is a built-in page, so no site needs it.
 - name: harbor.injections.match-urls
-  value: "https://zen-browser.app/*"
+  value: ""
   locked: true
-  condition: "defined(MOZILLA_OFFICIAL)"
-
-- name: harbor.injections.match-urls
-  value: "http://localhost/*"
-  condition: "!defined(MOZILLA_OFFICIAL)"
