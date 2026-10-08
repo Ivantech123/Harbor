@@ -436,7 +436,7 @@
           createLazyBrowser: true,
         });
         const icon = await getIconData(
-          `chrome://browser/content/harbor-images/favicons/${app.icon}.svg`
+          `chrome://browser/content/harbor-images/favicons/${app.icon}.png`
         );
         // Update the persistent tab state cache with |tabData| information.
         TabStateCache.update(tab.linkedBrowser.permanentKey, {
@@ -719,7 +719,7 @@
             button.dataset.url = app.url;
             button.style.setProperty(
               "--harbor-welcome-app-icon",
-              `url("chrome://browser/content/harbor-images/favicons/${app.icon}.svg")`
+              `url("chrome://browser/content/harbor-images/favicons/${app.icon}.png")`
             );
             button.style.setProperty("--harbor-welcome-app-color", app.color);
             button.toggleAttribute(
