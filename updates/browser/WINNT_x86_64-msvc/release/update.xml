@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<updates>
+  <update type="minor" displayVersion="1.0.0b1" appVersion="1.0.0b1" platformVersion="156.0.1" buildID="20261008025158">
+    <patch type="complete" URL="https://github.com/Ivantech123/Harbor/releases/download/1.0.0b1/windows.mar" hashFunction="sha512" hashValue="540694dafa542f7fbcb1b87a7998be90f68f619884578b1c50ea52efcd52d4f0a781f9f762a07851b82322a882af81c2876f94abdcfdacc2f68a2432986c2da1" size="114962918"/>
+  </update>
+</updates>
