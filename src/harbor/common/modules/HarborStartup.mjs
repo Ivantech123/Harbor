@@ -105,6 +105,9 @@ class HarborStartup {
       ChromeUtils.importESModule(
         "chrome://browser/content/harbor/HarborRuDirect.mjs"
       ).ensureRuDirect();
+      ChromeUtils.importESModule(
+        "chrome://browser/content/harbor/HarborRuSearch.mjs"
+      ).ensureYandexSearch();
       delete this.promiseInitializedResolve;
 
       setTimeout(() => {

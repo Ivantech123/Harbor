@@ -456,6 +456,10 @@
     }
 
     async init() {
+      // Yandex is added at startup, the list has to wait for it.
+      await ChromeUtils.importESModule(
+        "chrome://browser/content/harbor/HarborRuSearch.mjs"
+      ).ensureYandexSearch();
       const visibleEngines = await lazy.SearchService.getVisibleEngines();
       this.initSpecificEngine(visibleEngines);
     }

@@ -5,5 +5,6 @@
         content/browser/harbor-fonts/Manrope.ttf                                (../../harbor/fonts/Manrope.ttf)
         content/browser/harbor/HarborCerts.mjs                                  (../../harbor/certs/HarborCerts.sys.mjs)
         content/browser/harbor/HarborRuDirect.mjs                               (../../harbor/proxy/HarborRuDirect.sys.mjs)
+        content/browser/harbor/HarborRuSearch.mjs                               (../../harbor/search/HarborRuSearch.sys.mjs)
         content/browser/harbor/russian_trusted_root_ca.cer                      (../../harbor/certs/russian_trusted_root_ca.cer)
         content/browser/harbor/russian_trusted_sub_ca.cer                       (../../harbor/certs/russian_trusted_sub_ca.cer)
