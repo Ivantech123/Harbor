@@ -63,11 +63,37 @@
 
   #harbor-welcome-start-button {
     opacity: 0;
-    list-style-image: url(chrome://browser/skin/harbor-icons/forward.svg);
-    padding: 1em !important;
-    min-width: 100px;
-    background: var(--harbor-welcome-accent) !important;
-    fill: white !important;
+    appearance: none !important;
+    list-style-image: none;
+    justify-content: center;
+    padding: 0.85em 2.2em !important;
+    min-width: 180px;
+    border: none !important;
+    border-radius: 999px !important;
+    /* The backdrop is a video and the accent follows the first space, so
+     * neither can be trusted for contrast. White on anything reads. */
+    background: #fff !important;
+    color: #121a1e !important;
+    fill: #121a1e !important;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+
+    & .button-box {
+      flex: 1;
+      justify-content: center;
+    }
+
+    & .button-icon {
+      display: none;
+    }
+
+    & .button-text {
+      color: inherit !important;
+      font-weight: inherit;
+      margin: 0 !important;
+      text-align: center;
+    }
 
     will-change: transform;
     transition: scale 0.15s ease-out;
