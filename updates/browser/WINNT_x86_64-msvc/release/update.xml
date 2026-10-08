@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <updates>
-  <update type="minor" displayVersion="1.0.0b2" appVersion="1.0.0b2" platformVersion="156.0.1" buildID="20261008191729">
-    <patch type="complete" URL="https://github.com/Ivantech123/Harbor/releases/download/1.0.0b2/windows.mar" hashFunction="sha512" hashValue="f49b06152c68781fc660078f11b97d70dac3f17ea32ccdb99fb08769611bb55e8293712b679d2f600bcf760cb0ab5808ea2e8aa481974aa576ee755b1d8a407a" size="120880335"/>
+  <update type="minor" displayVersion="1.0.0b2.1" appVersion="1.0.0b2.1" platformVersion="156.0.1" buildID="20261008232608">
+    <patch type="complete" URL="https://github.com/Ivantech123/Harbor/releases/download/1.0.0b2.1/windows.mar" hashFunction="sha512" hashValue="3e2b03960ffbc9161f087b9c7ddf9998b8db04ca4dfb02a665230ec80d600fee311df1838633deb45a7b41b0ba108403813528e39924b235575f2d2779c6e18c" size="120959999"/>
   </update>
 </updates>
