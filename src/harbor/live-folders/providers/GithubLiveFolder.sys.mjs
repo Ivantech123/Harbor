@@ -26,8 +26,7 @@ export class nsGithubLiveFolderProvider extends nsHarborLiveFolderProvider {
       const hasAnyFilterEnabled =
         (this.state.options.authorMe ?? false) ||
         (this.state.options.assignedMe ?? true) ||
-        (this.state.options.reviewRequested ?? false) ||
-        (this.state.options.includeDrafts ?? true);
+        (this.state.options.reviewRequested ?? false);
 
       if (!hasAnyFilterEnabled) {
         return "harbor-live-folder-github-no-filter";

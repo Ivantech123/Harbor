@@ -20,7 +20,7 @@
       "brandShortName": "Harbor",
       "brandFullName": "Harbor Browser",
       "release": {
-        "displayVersion": "1.0.0",
+        "displayVersion": "1.0.0b1",
         "github": {
           "repo": "Ivantech123/Harbor"
         },
@@ -53,5 +53,5 @@
     ],
     "licenseType": "MPL-2.0"
   },
-  "updateHostname": ""
+  "updateHostname": "raw.githubusercontent.com/Ivantech123/Harbor/updates"
 }

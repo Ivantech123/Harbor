@@ -12,7 +12,7 @@ function untranslated(doc) {
 }
 
 async function waitForTranslation(doc) {
-  await BrowserTestUtils.waitForCondition(
+  await TestUtils.waitForCondition(
     () => !untranslated(doc).length,
     "Every string on the page is translated"
   ).catch(() => {});
@@ -58,7 +58,7 @@ add_task(async function test_mods_page_installs_and_removes() {
   await BrowserTestUtils.withNewTab(`${PAGES}mods.html`, async browser => {
     const doc = browser.contentDocument;
     const cards = () => doc.querySelectorAll("#mods-list .harbor-page-card");
-    await BrowserTestUtils.waitForCondition(
+    await TestUtils.waitForCondition(
       () => cards().length === catalog.length,
       "A card per mod in the store"
     );
@@ -66,11 +66,11 @@ add_task(async function test_mods_page_installs_and_removes() {
     ok(doc.getElementById("mods-status").hidden, "No error is shown");
 
     cards()[0].querySelector(".mod-action").click();
-    await BrowserTestUtils.waitForCondition(
+    await TestUtils.waitForCondition(
       () => gHarborMods.isModInstalled(id),
       "Clicking the button installs the mod"
     );
-    await BrowserTestUtils.waitForCondition(
+    await TestUtils.waitForCondition(
       () =>
         cards()[0]?.querySelector(".mod-action").dataset.l10nId ===
         "harbor-page-mods-remove",
@@ -78,7 +78,7 @@ add_task(async function test_mods_page_installs_and_removes() {
     );
 
     cards()[0].querySelector(".mod-action").click();
-    await BrowserTestUtils.waitForCondition(
+    await TestUtils.waitForCondition(
       async () => !(await gHarborMods.isModInstalled(id)),
       "Clicking it again removes the mod"
     );

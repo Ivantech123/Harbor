@@ -114,8 +114,8 @@ add_task(async function test_fetch_items_url_complex_options() {
     "Should include review-requested"
   );
   Assert.ok(
-    query.includes("draft:false"),
-    "Should exclude draft pull requests"
+    !query.includes("draft:false"),
+    "Drafts only exist for pull requests, an issue query has no draft filter"
   );
 
   Assert.ok(query.includes(" OR "), "Should contain OR operators");
@@ -165,13 +165,13 @@ add_task(async function test_html_parsing_logic() {
   Assert.equal(items[0].id, "mozilla/harbor#101");
   Assert.equal(
     items[0].url,
-    "https://github.com/harbor-browser/desktop/issues/101"
+    "https://github.com/mozilla/harbor/issues/101"
   );
 
   Assert.equal(items[1].title, "Add dark mode");
   Assert.equal(items[1].subtitle, "UserB");
   Assert.equal(items[1].id, "mozilla/harbor#102");
-  Assert.equal(items[1].url, "https://github.com/harbor-browser/desktop/pull/102");
+  Assert.equal(items[1].url, "https://github.com/mozilla/harbor/pull/102");
 
   sandbox.restore();
 });

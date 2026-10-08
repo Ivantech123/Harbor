@@ -2,12 +2,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# --- Harbor GitHub updater stub ---
-# Release links point at the Ivantech123/Harbor GitHub repo.
-# Auto-update stays off until updateHostname + MAR pipeline are live.
+# Updates come from GitHub: update.xml lives on the "updates" branch of the
+# repository (see updateHostname in surfer.json) and points at the MAR files
+# attached to the release.
 
 - name: harbor.updates.show-update-notification
-  value: false
+  value: true
 
 - name: harbor.updates.github.repo
   value: "Ivantech123/Harbor"
@@ -34,9 +34,5 @@
 - name: app.releaseNotesURL.prompt
   value: "https://github.com/Ivantech123/Harbor/releases/tag/%VERSION%"
 
-# Do not hit a foreign AUS. Re-enable when GitHub/Pages (or custom host) serves update.xml.
-- name: app.update.enabled
-  value: false
-
 - name: app.update.auto
-  value: false
+  value: true

@@ -19,7 +19,12 @@ const CERTS = [
 
 let pending;
 
-async function derUrlToBase64(url) {
+const PEM_RE =
+  /-----BEGIN CERTIFICATE-----([A-Za-z0-9+/=\s]+)-----END CERTIFICATE-----/;
+
+// The certificates are published both as DER and as PEM under the same
+// extension, accept either.
+async function certUrlToBase64(url) {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Harbor certs: failed to read ${url}`);
@@ -29,7 +34,8 @@ async function derUrlToBase64(url) {
   for (const byte of bytes) {
     binary += String.fromCharCode(byte);
   }
-  return btoa(binary);
+  const pem = binary.match(PEM_RE);
+  return pem ? pem[1].replace(/\s+/g, "") : btoa(binary);
 }
 
 function alreadyImported(certDB, nickname) {
@@ -44,7 +50,7 @@ async function importCert(certDB, cert) {
   if (alreadyImported(certDB, cert.nickname)) {
     return;
   }
-  const base64 = await derUrlToBase64(cert.url);
+  const base64 = await certUrlToBase64(cert.url);
   certDB.addCertFromBase64(base64, "C,,", cert.nickname);
 }
 
