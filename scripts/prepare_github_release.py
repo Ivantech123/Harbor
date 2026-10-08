@@ -90,7 +90,42 @@ def sha512(path):
   return digest.hexdigest()
 
 
-def rewrite_manifests(mar_path, mar_url):
+def reported_build_id():
+  """The build ID the packaged browser reports about itself.
+
+  The update check compares the manifest against this one. Packaging writes
+  a later ID into application.ini than the one compiled into the binary, and
+  with that in the manifest an updated browser takes the build it already
+  runs for a newer one and updates in a loop.
+  """
+  import time
+  sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+  import take_screenshots as browser
+
+  binaries = [
+    path
+    for path in glob.glob(os.path.join("engine", "obj-*", "dist", "*", "harbor*"))
+    if os.path.basename(path).lower() in ("harbor.exe", "harbor")
+    and os.path.basename(os.path.dirname(path)) != "bin"
+  ]
+  if not binaries:
+    raise RuntimeError("the packaged browser was not found in dist")
+
+  work = tempfile.mkdtemp(prefix="harbor-buildid-")
+  profile = os.path.join(work, "profile")
+  browser.write_profile(
+    profile, dict(browser.PREFS, **{"harbor.welcome-screen.seen": True}))
+  browser.launch(os.path.abspath(binaries[0]), profile)
+  client = browser.Marionette(browser.PORT)
+  try:
+    return str(client.run("return Services.appinfo.appBuildID;"))
+  finally:
+    client.quit()
+    time.sleep(4)
+    shutil.rmtree(work, ignore_errors=True)
+
+
+def rewrite_manifests(mar_path, mar_url, build_id):
   manifests = glob.glob(
     os.path.join(DIST_DIR, "update", "browser", "**", "update.xml"),
     recursive=True)
@@ -112,7 +147,12 @@ def rewrite_manifests(mar_path, mar_url):
         lambda m, value=value: m.group(1) + value + m.group(2), data)
       if count != 1:
         raise RuntimeError(f"{manifest}: no single patch {attribute}")
-    relative = os.path.relpath(manifest, os.path.join(DIST_DIR, "update"))
+    data, count = re.subn(
+      r'(<update\b[^>]*\bbuildID=")[^"]*(")',
+      lambda m: m.group(1) + build_id + m.group(2), data)
+    if count != 1:
+      raise RuntimeError(f"{manifest}: no single update buildID")
+    relative =os.path.relpath(manifest, os.path.join(DIST_DIR, "update"))
     # The update URL of the browser is {host}/updates/browser/...
     target = os.path.join(RELEASE_DIR, "updates", relative)
     os.makedirs(os.path.dirname(target), exist_ok=True)
@@ -127,6 +167,9 @@ def main():
   parser.add_argument("--brand", default="release")
   parser.add_argument("--mar-name", default="windows.mar",
                       help="Name of the MAR on the release")
+  parser.add_argument("--build-id",
+                      help="Build ID for the manifests, instead of asking "
+                           "the packaged browser for the one it reports")
   args = parser.parse_args()
 
   with open("surfer.json", "r", encoding="utf-8") as f:
@@ -148,7 +191,9 @@ def main():
   print(f"Signed {signed_mar}")
 
   mar_url = f"https://github.com/{repo}/releases/download/{tag}/{args.mar_name}"
-  for manifest in rewrite_manifests(signed_mar, mar_url):
+  build_id = args.build_id or reported_build_id()
+  print(f"The browser reports build {build_id}")
+  for manifest in rewrite_manifests(signed_mar, mar_url, build_id):
     print(f"Wrote {manifest}")
 
   for pattern in ("*.installer.exe", "*.win64.zip", "*.tar.xz", "*.dmg"):
@@ -158,7 +203,7 @@ def main():
         shutil.copy2(path, assets)
         print(f"Collected {os.path.basename(path)}")
 
-  print(f"\nVersion {version}, tag {tag}, MAR at {mar_url}")
+  print(f"\nVersion {version}, build {build_id}, tag {tag}, MAR at {mar_url}")
 
 
 if __name__ == "__main__":
