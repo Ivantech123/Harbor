@@ -773,7 +773,13 @@
         title: "harbor-welcome-start-browsing-title",
         descriptions: ["harbor-welcome-start-browsing-description-1"],
         buttons: [{ l10n: "harbor-welcome-start-browsing", primary: true }],
-        render() {},
+        render(content) {
+          const logo = document.createElement("img");
+          logo.className = "harbor-welcome-finish-logo";
+          logo.src = "chrome://branding/content/about-logo@2x.png";
+          logo.alt = "";
+          content.appendChild(logo);
+        },
       },
     ];
   }

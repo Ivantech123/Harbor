@@ -22,7 +22,7 @@ import tempfile
 import time
 from ctypes import wintypes
 
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageGrab
 
 PORT = 2829
 PAGES = "chrome://browser/content/harbor-pages/"
@@ -174,6 +174,22 @@ def capture(hwnd, path):
   return image.size
 
 
+def capture_screen(hwnd, path):
+  user32.SetForegroundWindow(hwnd)
+  time.sleep(0.4)
+  rect = wintypes.RECT()
+  user32.GetWindowRect(hwnd, ctypes.byref(rect))
+  # The window rectangle includes the invisible resize border on the sides
+  # and the bottom, which would show whatever is behind the window.
+  border = 8
+  image = ImageGrab.grab(
+    bbox=(rect.left + border, rect.top, rect.right - border,
+          rect.bottom - border),
+    all_screens=True)
+  image.convert("RGB").save(path, optimize=True)
+  return image.size
+
+
 # Mark: scenes
 
 WAIT_LOADED = """
@@ -240,6 +256,32 @@ SCENES = [
 ]
 
 
+# Buttons that move the setup on without changing anything on the machine:
+# no import from another browser, no default browser, no extension install.
+ONBOARDING_START = """
+  document.getElementById("harbor-welcome-start-button").click();
+  await new Promise(r => setTimeout(r, 2500));
+"""
+
+ONBOARDING_NEXT = """
+  const SAFE = [
+    "harbor-generic-next",
+    "harbor-welcome-import-no",
+    "harbor-welcome-block-ads-no",
+    "harbor-welcome-skip",
+    "harbor-welcome-dont-set-default-browser",
+  ];
+  const buttons = [...document.querySelectorAll(
+    "#harbor-welcome-page-sidebar-buttons button")];
+  const id = button => button.getAttribute("data-l10n-id");
+  const finish = buttons.find(b => id(b) === "harbor-welcome-start-browsing");
+  const next = SAFE.map(l10n => buttons.find(b => id(b) === l10n)).find(Boolean);
+  (next ?? finish)?.click();
+  await new Promise(r => setTimeout(r, 1800));
+  return next ? "next" : "done";
+"""
+
+
 def write_profile(path, prefs):
   os.makedirs(path, exist_ok=True)
   with open(os.path.join(path, "user.js"), "w", encoding="utf-8") as f:
@@ -278,13 +320,25 @@ def main():
 
   try:
     if wanted("onboarding"):
-      # A new profile starts on the welcome screen.
+      # A new profile starts on the first-run setup. Walk through it.
       process, client, pid = session(args.binary, PREFS, work)
       try:
         time.sleep(9)
-        size = capture(find_window(pid),
-                       os.path.join(args.out, "onboarding.png"))
-        print("onboarding", size)
+        hwnd = find_window(pid)
+
+        def shot(name):
+          # Off the screen rather than out of the window: the setup opens
+          # popups, which are windows of their own.
+          print(name, capture_screen(hwnd, os.path.join(args.out, f"{name}.png")))
+
+        shot("onboarding-1-start")
+        client.run(ONBOARDING_START)
+        for step in range(2, 12):
+          shot(f"onboarding-{step}")
+          if client.run(ONBOARDING_NEXT) == "done":
+            time.sleep(4)
+            shot("onboarding-finished")
+            break
       finally:
         client.quit()
         time.sleep(5)

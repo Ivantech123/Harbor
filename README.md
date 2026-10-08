@@ -31,6 +31,7 @@
 | --- | --- |
 | ![Vertical tabs](./docs/screenshots/site.png) | ![Split view](./docs/screenshots/split-view.png) |
 | ![Mod store](./docs/screenshots/mods.png) | ![Settings](./docs/screenshots/settings.png) |
+| ![First run](./docs/screenshots/onboarding-1-start.png) | ![Choosing colors](./docs/screenshots/onboarding-3.png) |
 
 ### Firefox Versions
 

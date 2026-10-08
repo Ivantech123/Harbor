@@ -40,7 +40,9 @@
 }
 
 #harbor-welcome {
-  --harbor-welcome-accent: var(--harbor-primary-color, #14988e);
+  /* Not the primary color: during setup it follows the first space and can
+   * be too dark to read as text on the dark panels. */
+  --harbor-welcome-accent: light-dark(#0c6f67, #4fd1c2);
   --harbor-welcome-sidebar-bg: light-dark(#e6eeef, #121a1e);
   --harbor-welcome-content-bg: light-dark(#f4f8f8f5, #1a262bed);
   --harbor-welcome-surface-bg: light-dark(#f7fbfb, #172226);
@@ -491,4 +493,10 @@
       background: var(--harbor-welcome-tile-bg);
     }
   }
+}
+
+.harbor-welcome-finish-logo {
+  width: 168px;
+  height: 168px;
+  filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.35));
 }
