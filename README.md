@@ -23,6 +23,15 @@
   </a>
 </div>
 
+![Harbor](./docs/promo/banner-en.png)
+
+### Screenshots
+
+| | |
+| --- | --- |
+| ![Vertical tabs](./docs/screenshots/site.png) | ![Split view](./docs/screenshots/split-view.png) |
+| ![Mod store](./docs/screenshots/mods.png) | ![Settings](./docs/screenshots/settings.png) |
+
 ### Firefox Versions
 
 - [`Release`](https://github.com/Ivantech123/Harbor/releases/latest) - Built using Firefox version `156.0.1`
